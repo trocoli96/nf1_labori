@@ -6,12 +6,19 @@
   padding-left:40px;
   padding-right:40px;
 }
-
+.search-bar{
+  width:100px;
+  height:10px;
+  margin-left:20px;
+  display:inline;
+  background-color:#636b6f;
+}
 .icon-image {
-  padding-top:4px;
-  padding-left:3%;
+  margin:6px 10px 4px 10px;
   width:35px;
-  border-radius:10px;
+  border-radius:5px;
+  display:inline-block;
+  float:left;
 }
 .App-logo {
   height: 40vmin;
