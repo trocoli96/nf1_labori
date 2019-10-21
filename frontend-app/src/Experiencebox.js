@@ -10,7 +10,7 @@ function Experiencebox() {
     return (
         <div>
             <header>
-                Tittle
+                Tittles
                 <button>+</button>
                 <img src={experiences[0].photoUrl} alt='labori'/>
             </header>
