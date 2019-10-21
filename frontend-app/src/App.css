@@ -1,7 +1,18 @@
-.App {
-  text-align: center;
+.Header{
+  height:8vh;
+  background-color: #283e4a;
+}
+.Header-content{
+  padding-left:40px;
+  padding-right:40px;
 }
 
+.icon-image {
+  padding-top:4px;
+  padding-left:3%;
+  width:35px;
+  border-radius:10px;
+}
 .App-logo {
   height: 40vmin;
 }
