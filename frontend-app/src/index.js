@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Profile from './Profile';
+import Profile from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Profile />, document.getElementById('root'));
