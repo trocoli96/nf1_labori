@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Experiencebox from './Experiencebox';
 
-function Profile() {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -25,4 +25,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default App;
