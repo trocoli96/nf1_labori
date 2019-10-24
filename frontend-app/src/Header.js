@@ -9,7 +9,7 @@ function Header() {
         <img alt="logo-icon" src={logo} className="icon-image"/>
       </div>
         <div className="search-bar">
-            Search
+            Searche
         </div>
     </div>
   );
