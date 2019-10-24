@@ -1,4 +1,4 @@
-php <?php
+<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -14,3 +14,5 @@ php <?php
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('users/{id}', 'UserController@getUser');
+Route::get('users', 'UserController@returnUsers');
