@@ -7,14 +7,14 @@
   padding-right:40px;
 }
 .search-bar{
-  padding:10px 100px 10px 10px;
-  margin-left:20px;
-  display:inline;
-  background-color:#636b6f;
+  padding:9px 100px 5px 4px;
+  margin:10px 20px 4px 20px;
+  display:inline-block;
+  background-color:#e1e9ee;
 }
 .icon-image {
   margin:6px 10px 4px 10px;
-  width:35px;
+  height:35px;
   border-radius:5px;
   display:inline-block;
   float:left;
