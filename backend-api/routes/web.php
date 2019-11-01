@@ -22,7 +22,7 @@ Route::get('experiences/{id}', 'ObjectController@returnExperiencie');
 Route::post('experience/', 'ObjectController@returnExperiencie');
 Route::put('experience/{id}', 'ObjectController@returnExperiencie');
 Route::get('educations/{id}', 'ObjectController@returnEducation');
-Route::post('education', 'ObjectController@returnEducation');
+Route::post('education', 'ObjectController@createEducation');
 Route::put('educations/{id}', 'ObjectController@returnEducations');
 Route::get('lincenses/{id}', 'ObjectController@returnLicense');
 Route::post('lincense', 'ObjectController@returnLicense');

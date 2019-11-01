@@ -1,5 +1,7 @@
 import React from 'react';
-import './App.css';
+import './App'
+import ExperienceBox from "./ExperienceBox";
+
 
 function App() {
     return (
@@ -17,6 +19,7 @@ function App() {
                     Learn React
                 </a>
             </header>
+            <ExperienceBox/>
         </div>
     );
 }
