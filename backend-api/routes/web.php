@@ -17,13 +17,6 @@ Route::get('/', function () {
 
 Route::get('users/{id}', 'ObjectController@returnUser');
 Route::get('users', 'ObjectController@returnUsers');
-Route::put('users/{id}', 'ObjectController@returnUser');
-Route::get('experiences/{id}', 'ObjectController@returnExperiencie');
-Route::post('experience/', 'ObjectController@returnExperiencie');
-Route::put('experience/{id}', 'ObjectController@returnExperiencie');
-Route::get('educations/{id}', 'ObjectController@returnEducation');
-Route::post('education', 'ObjectController@returnEducation');
-Route::put('educations/{id}', 'ObjectController@returnEducations');
-Route::get('lincenses/{id}', 'ObjectController@returnLicense');
-Route::post('lincense', 'ObjectController@returnLicense');
-Route::put('licenses/{id}', 'ObjectController@returnLicense');
+
+
+Route::post('api/v1/user', 'UserController@createUser');

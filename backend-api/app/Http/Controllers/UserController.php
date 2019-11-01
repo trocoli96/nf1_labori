@@ -3,25 +3,26 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function getuser($id){
-        return $id;
-    }
-    public function returnUsers() {
-        $user0 = array (
-            "id" => 1,
-            "nombre" => "Juan",
-            "email" => "juan@gmail.com"
+    public function createUser(Request $request)
+    {
 
-        );
-        $user1 = array (
-            "id" => 2,
-            "nombre" => "Juan",
-            "email" => "juan@gmail.com"
+        $request = $request->all();
 
-        );
-        return [$user0,$user1];
+        $user = User::create([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+            'password' => $request['password'],
+            'former_name' => $request['former_name'],
+            'headline' => $request['headline'],
+            'user_id' => 1,
+        ]);
+        return $user;
     }
+
 }

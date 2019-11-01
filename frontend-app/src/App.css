@@ -1,26 +1,33 @@
-.Header{
+.header{
   height:8vh;
   background-color: #283e4a;
+  justify-content:center;
+  display:flex;
 }
-.Header-content{
-  padding-left:40px;
-  padding-right:40px;
+#header-content{
+  width:88%;
+  justify-content: center;
+  height:3vh;
+
 }
-.search-bar{
-  padding:9px 100px 5px 4px;
-  margin:10px 20px 4px 20px;
+#header-content .search-bar{
+  padding:10px 100px 8px 4px;
   display:inline-block;
   background-color:#e1e9ee;
+  position: relative;
+  margin: 9px 0 0 0;
+  border:none;
+  border-radius:2px;
 }
-.icon-image {
-  margin:6px 10px 4px 10px;
-  height:35px;
-  border-radius:5px;
+#header-content .icon-image {
+  margin:9px 15px 0 0;
+  height:33px;
+  border-radius:2px;
   display:inline-block;
   float:left;
 }
 .App-logo {
-  height: 40vmin;
+  height: 30vmin;
 }
 
 .App-header {
