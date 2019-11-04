@@ -40,4 +40,10 @@ create table education(
     foreign key (user_id) references user (id)
 )
 
+alter table user add column updated_at timestamp default current_timestamp();
+alter table user add column create_at timestamp default current_timestamp();
+alter table experience add column updated_at timestamp default current_timestamp();
+alter table experience add column create_at timestamp default current_timestamp();
+alter table education add column updated_at timestamp default current_timestamp();
+alter table education add column create_at timestamp default current_timestamp();
 
