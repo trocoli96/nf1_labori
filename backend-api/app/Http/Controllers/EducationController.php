@@ -6,7 +6,7 @@ use App\Providers\education;
 Use Illuminate\Http\Request;
 
 
-class ObjectController extends Controller
+class EducationController extends Controller
 {
     public function createEducation(Request $request) {
         $request = $request->all();

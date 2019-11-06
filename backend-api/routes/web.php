@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('users/{id}', 'ObjectController@returnUser');
-Route::get('users', 'ObjectController@returnUsers');
+Route::post('user', 'UserController@createUser');
 Route::put('users/{id}', 'ObjectController@returnUser');
 Route::get('experiences/{id}', 'ObjectController@returnExperiencie');
 Route::post('experience/', 'ObjectController@returnExperiencie');
