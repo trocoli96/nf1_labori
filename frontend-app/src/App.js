@@ -1,6 +1,6 @@
 import React from 'react';
 import './App'
-import Button;
+import ButtonPopup from './Buttonpopup';
 
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
                 <p>
                     Edit <code>src/App.js</code> and save to reload.
                 </p>
+                <ButtonPopup open={"hola"}/>
                 <a
                     className="App-link"
                     href="https://reactjs.org"

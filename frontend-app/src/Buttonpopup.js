@@ -1,13 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
+import {Modal} from "@material-ui/core";
 
 
-function buttonpopup(){
-    return(<Button aria-describedby={id} variant="contained" onClick={handleClick}>
-            Open Popover
-        </Button>
+function ButtonPopup(props){
+
+    const [open, setOpen] = useState(false);
+
+    return(
+        <React.Fragment>
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <p>rioejroirjeeorij</p>
+            </Modal>
+            <Button variant="contained" onClick={() => setOpen(true)}>
+                Edit Profile
+            </Button>
+        </React.Fragment>
 
     )
 }
-export default buttonpopup;
+export default ButtonPopup;
