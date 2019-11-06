@@ -1,6 +1,6 @@
 import React from 'react';
 import './App'
-import ExperienceBox from "./ExperienceBox";
+import Button;
 
 
 function App() {
@@ -19,7 +19,6 @@ function App() {
                     Learn React
                 </a>
             </header>
-            <ExperienceBox/>
         </div>
     );
 }
