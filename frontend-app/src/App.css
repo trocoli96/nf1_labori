@@ -1,16 +1,25 @@
 .header{
   height:8vh;
   background-color: #283e4a;
-  justify-content:center;
+  justify-content:left;
   display:flex;
+  width:100%;
 }
-#header-content{
-  width:88%;
+#header-content-left{
+  width:50%;
   justify-content: center;
   height:3vh;
-
+  margin-left:20vh;
 }
-#header-content .search-bar{
+
+#header-content-right{
+  width:50%;
+  height:3vh;
+  display:flex;
+  padding:0 0 0 50vh;
+}
+
+#header-content-left .search-bar{
   padding:10px 100px 8px 4px;
   display:inline-block;
   background-color:#e1e9ee;
@@ -19,7 +28,7 @@
   border:none;
   border-radius:2px;
 }
-#header-content .icon-image {
+#header-content-left .icon-image {
   margin:9px 15px 0 0;
   height:33px;
   border-radius:2px;
@@ -27,20 +36,33 @@
   float:left;
 }
 .App-logo {
-  height: 30vmin;
+  height: 30px;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
 }
 
 .App-link {
   color: #09d3ac;
+}
+
+.nav-button{
+  background-color: transparent;
+  display:inline-block;
+  color:#e1e9ee;
+  height:8vh;
+  border:0 transparent hidden;
+}
+
+.button-header-text{
+  margin:0 0 200px 0;
+
 }

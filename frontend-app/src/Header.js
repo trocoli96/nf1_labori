@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
 import logo from "./logo-icon.png";
+import Homebutton from "./Homebutton";
+import Myprofilebutton from "./Myprofilebutton";
 
 function Header() {
   return (
     <div className="header">
-      <div id="header-content">
+      <div id="header-content-left">
         <img alt="logo-icon" src={logo} className="icon-image"/>
         <div className="search">
             <form className="search-bar-form">
@@ -13,6 +15,11 @@ function Header() {
                 </input>
             </form>
         </div>
+      </div>
+        <div id="header-content-right">
+         <textfield/>
+      <Homebutton />
+      <Myprofilebutton/>
     </div>
     </div>
 
