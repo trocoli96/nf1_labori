@@ -46,15 +46,14 @@ class SignUpPage extends Component {
 
         console.log('User Email : ' + this.state.email);
         const fetchData = async () => {
-            const url = 'http://127.0.0.1:80/api/user';
-
+            const url = 'http://127.0.0.1:80/user';
             const options = {
                 method: 'POST',
                 body: JSON.stringify(this.state),
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-type': 'application/json',
-                    //'Access-Control-Allow-Headers': 'Authorization',
+                    'Access-Control-Allow-Headers': 'Authorization',
 
                 }),
                 mode: 'cors',
