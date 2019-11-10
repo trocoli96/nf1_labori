@@ -11,7 +11,7 @@ function ButtonPopup(props){
     return(
         <React.Fragment>
             <Modal open={open} onClose={() => setOpen(false)}>
-                <p>rioejroirjeeorij</p>
+                <p>Editprofile</p>
             </Modal>
             <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
                 Edit Profile
