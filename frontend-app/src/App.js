@@ -1,12 +1,13 @@
 import React from 'react';
 import './App'
-import ButtonPopup from './Buttonpopup';
 import Header from './Header';
+import Profilepage from './Profilepage';
 
 function App() {
     return (
         <div className="App">
             <Header/>
+            <Profilepage/>
             <header className="App-header">
 
                 <p>
@@ -14,6 +15,7 @@ function App() {
                 </p>
 
             </header>
+
         </div>
     );
 }
