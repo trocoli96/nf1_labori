@@ -29,7 +29,7 @@ function ButtonAppBar() {
                   <MenuIcon />
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                  News
+                  Labori
               </Typography>
               <Button color="inherit">Login</Button>
           </Toolbar>
