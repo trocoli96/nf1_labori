@@ -20,6 +20,6 @@ function Profilepage() {
 
 
     );
-}
+};
 
 export default Profilepage;
