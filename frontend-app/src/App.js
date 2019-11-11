@@ -15,7 +15,8 @@ const App = () => {
                  <Route path={'/Profile'}/>
              </Router>
          </div>
+
     );
-}
+};
 
 export default App;
