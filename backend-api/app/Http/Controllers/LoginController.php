@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 
 use App\Email;
 use Illuminate\Http\Request;
-use Illuminate\Http
 
 
-class LoginController extends Controller
+class LoginController
 {
     public function login(Request $request)
     {
-        $this->validate($request,[
-            'email'       => 'bail|required|string|email',
-            'password'    => 'bail|required|string',
+        $request->validate([
+            'email'       => 'required|string|email',
+            'password'    => 'required|string',
         ]);
         return "Benvenuti";
 

@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Email extends Model
 {
-    const email = 'email';
+    public $table = 'user';
+
+
+    function user() {
+        print 'Inside `email()`';
+    }
 }
