@@ -18,50 +18,29 @@ a {
 .Header-content{
   padding-left:40px;
   padding-right:40px;
+body {
+    background-color: lightblue;
 }
 .search-bar{
-  padding:9px 100px 5px 4px;
-  margin:10px 20px 4px 20px;
-  display:inline-block;
-  background-color:#e1e9ee;
-}
-.icon-image {
-  margin:6px 10px 4px 10px;
-  height:35px;
-  border-radius:5px;
-  display:inline-block;
-  float:left;
-}
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background:linear-gradient(45deg, #0077b5,#008891);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: black;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.Login-main {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: black;
-  justify-content: center;
-  /*font-size: calc(10px + 2vmin);*/
-}
+    background-color:white;
 
 .App-link {
   color: #09d3ac;
 }
 
 /* LOGIN SECTION */
+
+
+
+.Login-main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    justify-content: center;
+    /*font-size: calc(10px + 2vmin);*/
+}
 
 .login {
   text-align: center;
