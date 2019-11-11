@@ -14,10 +14,11 @@
 Route::get('users/{id}', 'ObjectController@returnUser');
 Route::post('/user', 'UserController@createUser');
 Route::put('users/{id}', 'ObjectController@returnUser');
+Route::post('/login', 'LoginController@login');
 
-Route::get('experiences/{id}', 'ObjectController@returnExperiencie');
-Route::post('experience/', 'ObjectController@returnExperiencie');
-Route::put('experience/{id}', 'ObjectController@returnExperiencie');
+Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
+Route::post('experience/', 'ObjectController@returnExperiencies');
+Route::put('experience/{id}', 'ObjectController@returnExperiencies');
 
 Route::get('educations/{id}', 'ObjectController@returnEducation');
 Route::post('education', 'ObjectController@createEducation');
