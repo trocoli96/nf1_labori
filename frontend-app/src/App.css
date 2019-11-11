@@ -15,15 +15,13 @@ a {
   height:8vh;
   background-color: #283e4a;
 }
-.Header-content{
-  padding-left:40px;
-  padding-right:40px;
+
 body {
     background-color: lightblue;
 }
 .search-bar{
     background-color:white;
-
+}
 .App-link {
   color: #09d3ac;
 }
@@ -39,6 +37,7 @@ body {
     align-items: center;
     color: black;
     justify-content: center;
+    background-color: white;
     /*font-size: calc(10px + 2vmin);*/
 }
 
