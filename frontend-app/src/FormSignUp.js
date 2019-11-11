@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import './App.css';
+import Button from '@material-ui/core/Button';
 
 
 class SignUpPage extends Component {
@@ -41,7 +42,7 @@ class SignUpPage extends Component {
         if (!this.state.password) {
             return this.setState({ error: 'Password is required' });
         }
-        //console.log('State : ' + this.state);
+
         //console.log('User name : ' + this.state.firstName);
 
         //console.log('User Email : ' + this.state.email);
@@ -58,7 +59,7 @@ class SignUpPage extends Component {
                 }),
                 mode: 'cors',
             };
-
+            console.log('body : ' + options.body);
             return fetch(url, options)
                 .then(response => {
                     //debugger;
@@ -125,8 +126,10 @@ render(){
                             <label>Password (6 or more characters)</label>
                             <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
                                 <p>You agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy</p>
+                            <Button variant="contained" color="primary">
+                                <input type="submit" value="Agree & Join" />
+                            </Button>
 
-                            <input type="submit" value="Agree & Join" />
                                 <p>Already on LinkedIn? Sign in</p>
                         </form>
                 </header>
