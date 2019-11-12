@@ -1,22 +1,27 @@
 import React from 'react';
-import './App'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Profilepage from "./Profilepage";
+import FormSignUp from './FormSignUp';
+import './App.css';
+import Header from "./Header";
+import Login from "./Login";
+
+
 import Header from './Header';
 import Profilepage from './Profilepage';
 import FormSingUp from './FormSignUp'
 
 const App = () => {
     return (
-         <div className={'body'}>
-             <Header/>
-             <Router>
-                 <Route path={'/Home'}/>
-                 <Route path={'/Login'}/>
-                 <Route path={'/Singup'} component={FormSingUp}/>
-                 <Route path={'/Profile'} component={Profilepage}/>
-             </Router>
-         </div>
-
+        <div className={'body'}>
+            <Header/>
+            <Router>
+                <Route path={'/Home'}/>
+                <Route path={'/Login'} component={Login}/>
+                <Route path={'/Singup'} component={FormSignUp}/>
+                <Route path={'/Profile'} component={Profilepage}/>
+            </Router>
+        </div>
     );
 };
 
