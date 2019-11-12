@@ -6,11 +6,6 @@ import './App.css';
 import Header from "./Header";
 import Login from "./Login";
 
-
-import Header from './Header';
-import Profilepage from './Profilepage';
-import FormSingUp from './FormSignUp'
-
 const App = () => {
     return (
         <div className={'body'}>
