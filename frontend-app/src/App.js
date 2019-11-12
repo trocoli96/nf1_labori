@@ -2,7 +2,6 @@ import React from 'react';
 import './App'
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Header from './Header';
-import Profilepage from "./Profilepage";
 import Profilepage from './Profilepage';
 import FormSingUp from './FormSignUp'
 
