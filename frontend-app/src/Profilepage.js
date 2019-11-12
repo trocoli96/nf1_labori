@@ -1,23 +1,25 @@
 import React from 'react';
 import './App.css';
-import Header from "./Header";
+import ButtonPopup from "./Buttonpopup";
 
 function Profilepage() {
 
     return (
-        <div>
-       <Header />
-        <div id="profile-info">
-            <div className="user-info">
-            <p>Name and Lastname</p>
-            <p>Former name</p>
-            <p>City,Country</p>
-
-
+        <div className="profilepage">
+            <div id="profile-info">
+                <div className="user-info">
+                <p>Name and Lastname</p>
+                <p>Former name</p>
+                <p>City,Country</p>
+                </div>
+                <div className="user-edit">
+                    <ButtonPopup/>
+                </div>
+            </div>
         </div>
 
 
     );
-}
+};
 
 export default Profilepage;

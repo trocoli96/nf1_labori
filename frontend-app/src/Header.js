@@ -4,10 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {Link} from 'react-router-dom';
+import PersonIcon from '@material-ui/icons/Person';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import InputBase from '@material-ui/core/InputBase';
+
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,9 +35,16 @@ function ButtonAppBar() {
               <Typography variant="h6" className={classes.title}>
                   Labori
               </Typography>
-              <Button color="inherit">Login</Button>
+              <InputBase
+                  className={classes.input}
+                  placeholder="Search"
+                  inputProps={{ 'aria-label': 'search' }}
+              />
+              <IconButton color="inherit"><PersonIcon /><Typography variant="h6"> Profile</Typography></IconButton>
+              <IconButton color="inherit"><LockOpenIcon /><Typography variant="h6"> Log in</Typography></IconButton>
           </Toolbar>
       </AppBar>
+
   );
 }
 
