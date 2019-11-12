@@ -6,7 +6,7 @@ function Login() {
     return (
         <div className="login">
     <header className="login-header">
-        <h1 className={"login-welcome"}> Welcome Back</h1>
+        <h1 className={"welcome"}> Welcome Back</h1>
         <p className={"login-text"}>Don't miss your next opportunity. Sign in to stay updated on your professional world.</p>
     </header>
     <div className={"login-body"}>
@@ -23,3 +23,4 @@ function Login() {
 }
 
 export default Login;
+

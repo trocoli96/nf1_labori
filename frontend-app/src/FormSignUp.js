@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
-
+import TextField from '@material-ui/core/TextField';
 
 class SignUpPage extends Component {
     constructor(props) {
@@ -105,9 +105,16 @@ class SignUpPage extends Component {
 
 render(){
     return (
-            <div className="App">
-                <header className="App-header">
-
+            <div className="signup-page-full">
+                <header className="signup-header">
+                    <h1 className={"signup-welcome"}>
+                        Welcome to Labori!
+                    </h1>
+                    <p className={"login-text"}>
+                        Get the best from your professional life
+                    </p>
+                </header>
+                <div className={"form-full"}>
                         <form onSubmit={this.handleSubmit}>
                             {
                                 this.state.error &&
@@ -116,23 +123,61 @@ render(){
                                     {this.state.error}
                                 </h3>
                             }
-                            <label>First Name</label>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="name"
+                                label="First Name"
+                                name="name"
+                                autoComplete="text"
+                                autoFocus>
                             <input type="text"  value={this.state.firstName} onChange={this.handleFirstChange} />
-                            <label>Last Name</label>
+                            </TextField>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="surname"
+                                label="Surname"
+                                name="surname"
+                                autoComplete="text"
+                                autoFocus>
                             <input type="text"  value={this.state.lastName} onChange={this.handleLastChange} />
-                            <label>Email</label>
-                            <input type="email"  value={this.state.email} onChange={this.handleEmailChange} />
-
-                            <label>Password (6 or more characters)</label>
+                            </TextField>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus>
+                                <input type="email"  value={this.state.email} onChange={this.handleEmailChange} />
+                            </TextField>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="password"
+                                label="Password (6 or more characters)"
+                                name="password"
+                                autoComplete="password"
+                                autoFocus>
                             <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
-                                <p>You agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy</p>
-                            <Button variant="contained" color="primary">
-                                <input type="submit" value="Agree & Join" />
+                            </TextField>
+                                <p>You agree to the LABORI User Agreement, Privacy Policy, and Cookie Policy</p>
+                            <Button variant="contained" color="primary" type="submit" onclick >
+                                Agree & Join
                             </Button>
-
-                                <p>Already on LinkedIn? Sign in</p>
                         </form>
-                </header>
+                </div>
+                <p>Already on Labori? <a>Sign in</a></p>
             </div>
     );
 }
