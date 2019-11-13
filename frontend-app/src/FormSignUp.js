@@ -7,8 +7,8 @@ class SignUpPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName:'',
+            first_name: '',
+            last_name:'',
             email:'',
             password: '',
             error: '',
@@ -29,10 +29,10 @@ class SignUpPage extends Component {
     handleSubmit(evt) {
         evt.preventDefault();
 
-        if (!this.state.firstName) {
+        if (!this.state.first_name) {
             return this.setState({ error: 'First Name is required' });
         }
-        if (!this.state.lastName) {
+        if (!this.state.last_name) {
             return this.setState({ error: 'Last Name is required' });
         }
         if (!this.state.email) {
@@ -80,13 +80,13 @@ class SignUpPage extends Component {
 
     handleFirstChange(evt) {
         this.setState({
-            firstName: evt.target.value,
+            first_name: evt.target.value,
         });
     };
 
     handleLastChange(evt) {
         this.setState({
-            lastName: evt.target.value,
+            last_name: evt.target.value,
         });
     };
 

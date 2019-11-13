@@ -18,18 +18,16 @@ class LoginController
         $userPass = $request->only(['password']);
 
         $userRecord = User::where("email","=",$userEmail)
-            ->where("password","=",$userPass)
-            ->first();
+        ->where("password","=",$userPass)
+        ->first();
 
         $idGetter = $userRecord['id'];
-        $nameGetter = $userRecord['first_name'];
 
-        $comprovationMsgLogIn = array("You've been Logged. 
-                                    Nice to see ya again $idGetter");
         if(!empty($userRecord)){
-            return $comprovationMsgLogIn[0] . $nameGetter;
-        }
-        else{
+            return redirect()->action(
+                'ObjectController@returnUser', ['id' => $idGetter]);
+
+        }else{
             return $errors[0];
         }
 

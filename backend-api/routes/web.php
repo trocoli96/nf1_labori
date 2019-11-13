@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('users/{id}', 'ObjectController@returnUser');
+Route::get('users/{id}', 'Auth\ObjectController@returnUser');
 Route::post('/user', 'UserController@createUser');
 Route::put('users/{id}', 'ObjectController@returnUser');
 Route::post('/login', 'LoginController@login');
+Route::post('/editprofile', 'Auth\EditController@editUser');
 
 Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
 Route::post('experience/', 'ObjectController@returnExperiencies');
