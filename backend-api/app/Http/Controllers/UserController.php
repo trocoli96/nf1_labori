@@ -24,8 +24,6 @@ class UserController extends Controller
             'last_name' => $inputData['last_name'],
             'email' => $inputData['email'],
             'password' => $inputData['password'],
-            'former_name' => $inputData['former_name'],
-            'headline' => $inputData['headline'],
         ]);
 
         return $user;
