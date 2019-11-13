@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
 import ButtonPopup from "./Buttonpopup";
+import Header from "./Header";
 
 function Profilepage() {
 
     return (
         <div className="profilepage">
+
             <div id="profile-info">
                 <div className="user-info">
                 <p>Name and Lastname</p>

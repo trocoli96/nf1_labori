@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
+import Header from "./Header";
 
 
 class SignUpPage extends Component {
@@ -47,7 +48,7 @@ class SignUpPage extends Component {
 
         //console.log('User Email : ' + this.state.email);
         const fetchData = async () => {
-            const url = 'http://127.0.0.1:80/user';
+            const url = 'http://127.0.0.1:80/api/user';
             const options = {
                 method: 'POST',
                 body: JSON.stringify(this.state),
@@ -106,6 +107,7 @@ class SignUpPage extends Component {
 render(){
     return (
             <div className="App">
+                <Header/>
                 <header className="App-header">
 
                         <form onSubmit={this.handleSubmit}>
