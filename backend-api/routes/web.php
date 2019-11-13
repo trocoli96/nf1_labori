@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('users/{id}', 'Auth\ObjectController@returnUser');
 Route::post('/user', 'UserController@createUser');
 Route::put('users/{id}', 'ObjectController@returnUser');
@@ -27,4 +27,4 @@ Route::put('educations/{id}', 'ObjectController@returnEducations');
 
 Route::get('lincenses/{id}', 'ObjectController@returnLicense');
 Route::post('lincense', 'ObjectController@returnLicense');
-Route::put('licenses/{id}', 'ObjectController@returnLicense');
+Route::put('licenses/{id}', 'ObjectController@returnLicense');*/

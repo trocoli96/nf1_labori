@@ -3,7 +3,7 @@ import './App.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-class SignUpPage extends Component {
+class FormSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -172,7 +172,7 @@ render(){
                             <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
                             </TextField>
                                 <p>You agree to the LABORI User Agreement, Privacy Policy, and Cookie Policy</p>
-                            <Button variant="contained" color="primary" type="submit" onclick >
+                            <Button variant="contained" color="primary" type="submit">
                                 Agree & Join
                             </Button>
                         </form>
@@ -184,4 +184,4 @@ render(){
 }
 
 
-export default SignUpPage;
+export default FormSignUp;
