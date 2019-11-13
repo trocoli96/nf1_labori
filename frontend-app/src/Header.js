@@ -9,8 +9,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import InputBase from '@material-ui/core/InputBase';
+import {BrowserRouter as Router, Link, Route} from "react-router-dom";
+import Profilepage from "./Profilepage";
 
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -40,8 +42,8 @@ function ButtonAppBar() {
                   placeholder="Search"
                   inputProps={{ 'aria-label': 'search' }}
               />
-              <IconButton color="inherit"><PersonIcon /><Typography variant="h6"> Profile</Typography></IconButton>
-              <IconButton color="inherit"><LockOpenIcon /><Typography variant="h6"> Log in</Typography></IconButton>
+              <IconButton color="inherit"><PersonIcon /><Typography variant="h6"><Link to="/Profile"> Profile</Link></Typography></IconButton>
+              <IconButton color="inherit"><LockOpenIcon /><Typography variant="h6"><Link to="/Login">Log in</Link></Typography></IconButton>
           </Toolbar>
       </AppBar>
 

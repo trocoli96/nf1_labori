@@ -2,12 +2,10 @@ import React, {useState} from 'react';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const fetchdata = async () => {
@@ -20,7 +18,7 @@ const LoginForm = () => {
                     "Content-type":
                         "application/json"
                 }),
-                mode: "cors",
+                mode: "cors"
             };
             return fetch(url, options)
                 .then(response => {
@@ -29,15 +27,11 @@ const LoginForm = () => {
                         return response.json();
                     }
                     return Promise.reject(response.status);
-
                 }).catch(error => {
                     setError(error);
                     alert(error);
-
                 });
-
         };
-
         fetchdata();
     };
     return (
