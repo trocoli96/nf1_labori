@@ -60,7 +60,7 @@ class FormSignUp extends Component {
                 }),
                 mode: 'cors',
             };
-            //console.log('body : ' + options.body);
+
             return fetch(url, options)
                 .then(response => {
                     //debugger;
@@ -71,7 +71,7 @@ class FormSignUp extends Component {
                     return Promise.reject(response.status);
                 }).then(data => {
                     //debugger;
-                    //alert("Succesful, codigo 200"); alert("Error.\n\nOptions body:\n" + options.body +"\n\nURL called:\n" + url +
+                    // alert("Succesful, codigo 200"); alert("Error.\n\nOptions body:\n" + options.body +"\n\nURL called:\n" + url +
                 });
         };
 
