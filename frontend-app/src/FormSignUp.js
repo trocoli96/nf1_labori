@@ -3,12 +3,12 @@ import './App.css';
 import Button from '@material-ui/core/Button';
 
 
-class SignUpPage extends Component {
+class FormSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName:'',
+            first_name: '',
+            last_name:'',
             email:'',
             password: '',
             error: '',
@@ -29,10 +29,10 @@ class SignUpPage extends Component {
     handleSubmit(evt) {
         evt.preventDefault();
 
-        if (!this.state.firstName) {
+        if (!this.state.first_name) {
             return this.setState({ error: 'First Name is required' });
         }
-        if (!this.state.lastName) {
+        if (!this.state.last_name) {
             return this.setState({ error: 'Last Name is required' });
         }
         if (!this.state.email) {
@@ -47,7 +47,7 @@ class SignUpPage extends Component {
 
         //console.log('User Email : ' + this.state.email);
         const fetchData = async () => {
-            const url = 'http://127.0.0.1:80/user';
+            const url = 'http://127.0.0.1:80/api/user';
             const options = {
                 method: 'POST',
                 body: JSON.stringify(this.state),
@@ -59,7 +59,7 @@ class SignUpPage extends Component {
                 }),
                 mode: 'cors',
             };
-            console.log('body : ' + options.body);
+
             return fetch(url, options)
                 .then(response => {
                     //debugger;
@@ -80,13 +80,13 @@ class SignUpPage extends Component {
 
     handleFirstChange(evt) {
         this.setState({
-            firstName: evt.target.value,
+            first_name: evt.target.value,
         });
     };
 
     handleLastChange(evt) {
         this.setState({
-            lastName: evt.target.value,
+            last_name: evt.target.value,
         });
     };
 
@@ -117,16 +117,16 @@ render(){
                                 </h3>
                             }
                             <label>First Name</label>
-                            <input type="text"  value={this.state.firstName} onChange={this.handleFirstChange} />
+                            <input type="text"  value={this.state.first_name} onChange={this.handleFirstChange} />
                             <label>Last Name</label>
-                            <input type="text"  value={this.state.lastName} onChange={this.handleLastChange} />
+                            <input type="text"  value={this.state.last_name} onChange={this.handleLastChange} />
                             <label>Email</label>
                             <input type="email"  value={this.state.email} onChange={this.handleEmailChange} />
 
                             <label>Password (6 or more characters)</label>
                             <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
                                 <p>You agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy</p>
-                            <Button variant="contained" color="primary">
+                            <Button variant="contained" color="primary" >
                                 <input type="submit" value="Agree & Join" />
                             </Button>
 
@@ -139,4 +139,4 @@ render(){
 }
 
 
-export default SignUpPage;
+export default FormSignUp;

@@ -6,13 +6,11 @@ import './App.css';
 import Header from "./Header";
 import Login from "./Login";
 
-
-
 const App = () => {
     return (
         <div className={'body'}>
-            <Header/>
             <Router>
+                <Header />
                 <Route path={'/Home'}/>
                 <Route path={'/Login'} component={Login}/>
                 <Route path={'/Signup'} component={FormSignUp}/>

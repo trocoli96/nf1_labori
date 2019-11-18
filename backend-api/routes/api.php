@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,3 +15,23 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('users/{id}', 'AuthController@returnUser');
+Route::post('/user', 'AuthController@createUser');
+Route::put('users/{id}', 'AuthController@returnUser');
+Route::post('/login', 'AuthController@login');
+Route::post('/editprofile', 'AuthController@editUser');
+
+Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
+Route::post('experience/', 'ObjectController@returnExperiencies');
+Route::put('experience/{id}', 'ObjectController@returnExperiencies');
+
+Route::get('educations/{id}', 'ObjectController@returnEducation');
+Route::post('education', 'ObjectController@createEducation');
+Route::put('educations/{id}', 'ObjectController@returnEducations');
+
+Route::get('licenses/{id}', 'ObjectController@returnLicense');
+Route::post('license', 'ObjectController@returnLicense');
+Route::put('licenses/{id}', 'ObjectController@returnLicense');
+
