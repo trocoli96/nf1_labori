@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import Header from "./Header";
 
 
 class FormSignUp extends Component {
@@ -60,7 +59,7 @@ class FormSignUp extends Component {
                 }),
                 mode: 'cors',
             };
-            console.log('body : ' + options.body);
+
             return fetch(url, options)
                 .then(response => {
                     //debugger;
@@ -107,7 +106,6 @@ class FormSignUp extends Component {
 render(){
     return (
             <div className="App">
-                <Header/>
                 <header className="App-header">
 
                         <form onSubmit={this.handleSubmit}>

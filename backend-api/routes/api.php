@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,7 +31,7 @@ Route::get('educations/{id}', 'ObjectController@returnEducation');
 Route::post('education', 'ObjectController@createEducation');
 Route::put('educations/{id}', 'ObjectController@returnEducations');
 
-Route::get('lincenses/{id}', 'ObjectController@returnLicense');
-Route::post('lincense', 'ObjectController@returnLicense');
+Route::get('licenses/{id}', 'ObjectController@returnLicense');
+Route::post('license', 'ObjectController@returnLicense');
 Route::put('licenses/{id}', 'ObjectController@returnLicense');
 
