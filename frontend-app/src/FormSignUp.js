@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Header from "./Header";
 
 
-class SignUpPage extends Component {
+class FormSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -141,4 +141,4 @@ render(){
 }
 
 
-export default SignUpPage;
+export default FormSignUp;

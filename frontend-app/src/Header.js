@@ -9,9 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import InputBase from '@material-ui/core/InputBase';
-import {BrowserRouter as Router, Link, Route} from "react-router-dom";
-import Profilepage from "./Profilepage";
-
+import {Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({

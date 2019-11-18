@@ -77,7 +77,7 @@ class AuthController extends Controller
         $firstnameGetter = $userRecord['first_name'];
         $lastnameGetter = $userRecord['last_name'];
 
-        return "Bienvenido a la web de Labori $firstnameGetter $lastnameGetter. Aqui podrás encontrar trabajo fácilmente. Mira tu bandeja de entrada en $emailGetter para estar al día de tus notificaciones";
+        return [$emailGetter, $firstnameGetter, $lastnameGetter];
 
     }
     public function editUser(Request $request)
@@ -104,7 +104,14 @@ class AuthController extends Controller
             $emailGetter = $userRecord['email'];
             $firstnameGetter = $userRecord['first_name'];
 
-            return "Genial, ya nunca más serás $oldnameGetter , ahora eres $firstnameGetter y tu mail ahora es $emailGetter";
+            if ($olduserRecord['first_name'] === $data['first_name'])
+
+                return $error = ["Username is the same as previous"];
+
+            else {
+
+                return [$oldnameGetter, $emailGetter, $firstnameGetter];
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import ButtonPopup from "./Buttonpopup";
-import Header from "./Header";
+
 
 function Profilepage() {
 
