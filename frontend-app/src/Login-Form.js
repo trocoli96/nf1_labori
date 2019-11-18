@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,8 +35,7 @@ const LoginForm = () => {
         fetchdata();
     };
     return (
-        <div className={"login-form_full"}>
-
+        <div className={"form_full"}>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="field_login">
                     <TextField
@@ -70,7 +68,7 @@ const LoginForm = () => {
                         <input type="password" data-test="password" value={password} onChange={(event) => setPassword(event.target.value)} />
                     </TextField>
                 </div>
-                <Button variant="contained" color="primary" type="submit" onclick >
+                <Button variant="contained" color="primary" type="submit">
                     Sign in
                 </Button>
             </form>
