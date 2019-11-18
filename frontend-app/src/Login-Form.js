@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Header from "./Header";
+
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
