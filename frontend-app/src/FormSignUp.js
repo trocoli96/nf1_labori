@@ -60,7 +60,7 @@ class FormSignUp extends Component {
                 }),
                 mode: 'cors',
             };
-            console.log('body : ' + options.body);
+            //console.log('body : ' + options.body);
             return fetch(url, options)
                 .then(response => {
                     //debugger;
@@ -71,7 +71,7 @@ class FormSignUp extends Component {
                     return Promise.reject(response.status);
                 }).then(data => {
                     //debugger;
-                    // alert("Succesful, codigo 200"); alert("Error.\n\nOptions body:\n" + options.body +"\n\nURL called:\n" + url +
+                    //alert("Succesful, codigo 200"); alert("Error.\n\nOptions body:\n" + options.body +"\n\nURL called:\n" + url +
                 });
         };
 
@@ -133,9 +133,9 @@ render(){
                                 label="First Name"
                                 name="name"
                                 autoComplete="text"
-                                autoFocus>
-                            <input type="text"  value={this.state.firstName} onChange={this.handleFirstChange} />
-                            </TextField>
+                                autoFocus
+                                value={this.state.firstName}
+                                onChange={this.handleFirstChange} />
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -145,9 +145,9 @@ render(){
                                 label="Surname"
                                 name="surname"
                                 autoComplete="text"
-                                autoFocus>
-                            <input type="text"  value={this.state.lastName} onChange={this.handleLastChange} />
-                            </TextField>
+                                autoFocus
+                                value={this.state.lastName}
+                                onChange={this.handleLastChange} />
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -157,9 +157,9 @@ render(){
                                 label="Email"
                                 name="email"
                                 autoComplete="email"
-                                autoFocus>
-                                <input type="email"  value={this.state.email} onChange={this.handleEmailChange} />
-                            </TextField>
+                                autoFocus
+                                value={this.state.email}
+                                onChange={this.handleEmailChange} />
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -169,9 +169,9 @@ render(){
                                 label="Password (6 or more characters)"
                                 name="password"
                                 autoComplete="password"
-                                autoFocus>
-                            <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
-                            </TextField>
+                                autoFocus
+                                value={this.state.password}
+                                onChange={this.handlePassChange} />
                                 <p>You agree to the LABORI User Agreement, Privacy Policy, and Cookie Policy</p>
                             <Button variant="contained" color="primary" type="submit">
                                 Agree & Join
