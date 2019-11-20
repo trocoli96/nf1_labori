@@ -18,9 +18,9 @@ class AuthController extends Controller
         $userEmail = $request->only('email');
 
 
-        $query = User::where("email","=",$userEmail)->first();
+        $query = User::where("email", "=", $userEmail)->first();
 
-        If (!empty($query)) return $error="UserExist";
+        If (!empty($query)) return $error = (["UserExist"]);
 
         else $user = User::create([
             'first_name' => $inputData['first_name'],
@@ -35,10 +35,10 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
-    protected function create(array $data)
+   protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
@@ -46,29 +46,31 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
     public function login(Request $request)
     {
-        $errors = array("User not found");
+        $errors = (["User not found"]);
+        $errorpass = (["Incorrect pass motherfucker"]);
         $input = $request->all();
 
         $userEmail = $request->only(['email']);
-        $userPass = $request->only(['password']);
-
-        $userRecord = User::where("email","=",$userEmail)
-            ->where("password","=",$userPass)
+        $userRecord = User::where("email", "=", $userEmail)
             ->first();
-
         $idGetter = $userRecord['id'];
+        $passGetter = $userRecord['password'];
 
-        if(!empty($userRecord)){
-            return redirect()->action(
-                'AuthController@returnUser', ['id' => $idGetter]);
+      if (empty($userRecord)) {
+           return $errors;
+       }
+      elseif (Hash::check($input['password'],$passGetter)) {
+           return redirect()->action(
+               'AuthController@returnUser', ['id' => $idGetter]);
+           }
+            else {
+               return $errorpass;
+           }
 
-        }else{
-            return $errors[0];
-        }
-
-    }
+}
     public function returnUser ($id) {
         $userRecord = User::where("id","=",$id)
             ->first();
@@ -114,5 +116,6 @@ class AuthController extends Controller
             }
         }
     }
+
 
 }
