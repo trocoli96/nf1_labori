@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-const LoginForm = () => {
+import { Redirect } from 'react-router-dom';
+
+function LoginForm (props) {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -27,13 +30,16 @@ const LoginForm = () => {
             };
             return fetch(url, options)
                 .then(response => {
-                    if (response.status === 201) {
-                        alert(response.statusText);
-                        return response.json();
+                    if (response.status === 200) {
+                        console.log(response);
+                        //return <Redirect to={"s/Signup"}/>;
+                       alert(response.statusText);
+                       return response.json();
                     }
                     return Promise.reject(response.status);
                 }).catch(error => {
                     setError(error);
+                    console.log(error);
                     alert(error);
                 });
         };

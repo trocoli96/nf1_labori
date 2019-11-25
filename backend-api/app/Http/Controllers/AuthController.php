@@ -48,7 +48,7 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $errors = array("User not found");
+        $errors = array(["User not found"]);
         $input = $request->all();
 
         $userEmail = $request->only(['email']);
