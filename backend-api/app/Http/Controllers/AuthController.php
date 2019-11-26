@@ -62,12 +62,12 @@ class AuthController extends Controller
       if (empty($userRecord)) {
            return $errors;
        }
-      elseif (Hash::check($input['password'],$passGetter)) {
-           return $this ->respondWithToken(????);
-           }
-            else {
-               return $errorpass;
-           }
+            elseif (Hash::check($input['password'],$passGetter)) {
+               return $this ->respondWithToken($userRecord);
+               }
+                    else {
+                       return $errorpass;
+                   }
 
 }
     public function returnUser ($id) {
