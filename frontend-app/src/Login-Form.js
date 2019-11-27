@@ -38,10 +38,15 @@ function LoginForm ({history}) {
                         //return <Redirect to={"s/Signup"}/>;
                         //alert(response.statusText);
                         //return response.json();
-                        history.push('/Profile');
+                       history.push('/Profile');
                     }
                     //return Promise.reject(response.status);
-                }).catch(error => {
+
+                }
+
+
+
+                ).catch(error => {
                     setError(error);
                     console.log(error);
                     alert(error);
