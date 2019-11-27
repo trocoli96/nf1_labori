@@ -11,9 +11,26 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'v1'],function(){
+    Route::get('users/{id}', 'Auth\ObjectController@returnUser');
+    Route::post('/user', 'UserController@createUser');
+    Route::post('/login', 'LoginController@login');
+    Route::post('/editprofile', 'Auth\EditController@editUser');
+    Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
+    Route::post('experience/', 'ObjectController@returnExperiencies');
+    Route::put('experience/{id}', 'ObjectController@returnExperiencies');
+
+    Route::get('educations/{id}', 'ObjectController@returnEducation');
+    Route::post('education', 'ObjectController@createEducation');
+    Route::put('educations/{id}', 'ObjectController@returnEducations');
+
+    Route::get('lincenses/{id}', 'ObjectController@returnLicense');
+    Route::post('lincense', 'ObjectController@returnLicense');
+    Route::put('licenses/{id}', 'ObjectController@returnLicense');
 });
 
 

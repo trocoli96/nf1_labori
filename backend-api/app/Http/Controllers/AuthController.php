@@ -12,17 +12,29 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login' ,'createUser']]);
+    }
+
     public function createUser(Request $request)
     {
         $inputData = $request->all();
-        $userEmail = $request->only('email');
+
+        $userValidator = Validator::make($inputData, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+        if(!$userValidator->validate()) {
+            $errors = $userValidator->errors()->getMessages();
+            return $this->errorResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
 
-        $query = User::where("email","=",$userEmail)->first();
-
-        If (!empty($query)) return $error="UserExist";
-
-        else $user = User::create([
+        $user = User::create([
             'first_name' => $inputData['first_name'],
             'last_name' => $inputData['last_name'],
             'email' => $inputData['email'],
