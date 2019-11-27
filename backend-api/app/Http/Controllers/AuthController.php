@@ -12,17 +12,33 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'createUser']]);
+    }
+
     public function createUser(Request $request)
     {
         $inputData = $request->all();
-        $userEmail = $request->only('email');
 
+        $userValidator = Validator::make($inputData, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
 
-        $query = User::where("email","=",$userEmail)->first();
+        if(!$userValidator->validate()) {
+            $errors = $userValidator->errors()->getMessages();
+            return $this->errorResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-        If (!empty($query)) return $error="UserExist";
-
-        else $user = User::create([
+        $user = User::create([
             'first_name' => $inputData['first_name'],
             'last_name' => $inputData['last_name'],
             'email' => $inputData['email'],
@@ -32,54 +48,49 @@ class AuthController extends Controller
         return $user;
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
     public function login(Request $request)
     {
-        $errors = array("User not found");
-        $input = $request->all();
+        $credentials = request(['email', 'password']);
 
-        $userEmail = $request->only(['email']);
-        $userPass = $request->only(['password']);
-
-        $userRecord = User::where("email","=",$userEmail)
-            ->where("password","=",$userPass)
-            ->first();
-
-        $idGetter = $userRecord['id'];
-
-        if(!empty($userRecord)){
-            return redirect()->action(
-                'AuthController@returnUser', ['id' => $idGetter]);
-
-        }else{
-            return $errors[0];
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-    }
-    public function returnUser ($id) {
-        $userRecord = User::where("id","=",$id)
-            ->first();
-
-        $emailGetter = $userRecord['email'];
-        $firstnameGetter = $userRecord['first_name'];
-        $lastnameGetter = $userRecord['last_name'];
-
-        return [$emailGetter, $firstnameGetter, $lastnameGetter];
+        return $this->respondWithToken($token);
 
     }
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
     public function editUser(Request $request)
     {
 
@@ -113,6 +124,14 @@ class AuthController extends Controller
                 return [$oldnameGetter, $emailGetter, $firstnameGetter];
             }
         }
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 
 }
