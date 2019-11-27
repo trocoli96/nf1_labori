@@ -12,17 +12,33 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'createUser']]);
+    }
+
     public function createUser(Request $request)
     {
         $inputData = $request->all();
-        $userEmail = $request->only('email');
 
+        $userValidator = Validator::make($inputData, [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
 
-        $query = User::where("email", "=", $userEmail)->first();
+        if(!$userValidator->validate()) {
+            $errors = $userValidator->errors()->getMessages();
+            return $this->errorResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-        If (!empty($query)) return $error = (["UserExist"]);
-
-        else $user = User::create([
+        $user = User::create([
             'first_name' => $inputData['first_name'],
             'last_name' => $inputData['last_name'],
             'email' => $inputData['email'],
@@ -32,55 +48,49 @@ class AuthController extends Controller
         return $user;
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param array $data
-     * @return \App\User
-     */
-   protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
-
     public function login(Request $request)
     {
-        $errors = (["User not found"]);
-        $errorpass = (["Incorrect pass motherfucker"]);
-        $input = $request->all();
+        $credentials = request(['email', 'password']);
 
-        $userEmail = $request->only(['email']);
-        $userRecord = User::where("email", "=", $userEmail)
-            ->first();
-        $idGetter = $userRecord['id'];
-        $passGetter = $userRecord['password'];
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-      if (empty($userRecord)) {
-           return $errors;
-       }
-            elseif (Hash::check($input['password'],$passGetter)) {
-               return $this ->respondWithToken($userRecord);
-               }
-                    else {
-                       return $errorpass;
-                   }
-
-}
-    public function returnUser ($id) {
-        $userRecord = User::where("id","=",$id)
-            ->first();
-
-        $emailGetter = $userRecord['email'];
-        $firstnameGetter = $userRecord['first_name'];
-        $lastnameGetter = $userRecord['last_name'];
-
-        return [$emailGetter, $firstnameGetter, $lastnameGetter];
+        return $this->respondWithToken($token);
 
     }
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
     public function editUser(Request $request)
     {
 
