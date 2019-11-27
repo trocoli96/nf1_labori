@@ -1,142 +1,190 @@
-import React,{Component} from 'react';
+import React, {useState} from 'react';
 import './App.css';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
+const useStyles = makeStyles(theme => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
-class FormSignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            first_name: '',
-            last_name:'',
-            email:'',
-            password: '',
-            error: '',
-        };
+const SignUpForm = () => {
+    const [first_name, setName]= useState('');
+    const [last_name, setLastName]= useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleFirstChange = this.handleFirstChange.bind(this);
-        this.handleLastChange = this.handleLastChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.dismissError = this.dismissError.bind(this);
-    }
+    const data = {
 
-    dismissError() {
-        this.setState({ error: '' });
-    }
+        first_name: first_name,
 
-    handleSubmit(evt) {
-        evt.preventDefault();
+        last_name: last_name,
 
-        if (!this.state.first_name) {
-            return this.setState({ error: 'First Name is required' });
-        }
-        if (!this.state.last_name) {
-            return this.setState({ error: 'Last Name is required' });
-        }
-        if (!this.state.email) {
-            return this.setState({ error: 'Email is required' });
-        }
+        email: email,
 
-        if (!this.state.password) {
-            return this.setState({ error: 'Password is required' });
-        }
+        password: password,
+    };
 
-        //console.log('User name : ' + this.state.firstName);
-
-        //console.log('User Email : ' + this.state.email);
-        const fetchData = async () => {
-            const url = 'http://127.0.0.1:80/api/user';
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const fetchdata = async () => {
+            const url = "http://127.0.0.1:80/api/user";
             const options = {
-                method: 'POST',
-                body: JSON.stringify(this.state),
+                method: "POST",
+                body: JSON.stringify(data),
                 headers: new Headers({
-                    Accept: 'application/json',
-                    'Content-type': 'application/json',
-                    'Access-Control-Allow-Headers': 'Authorization',
-
+                    Accept: "application/json",
+                    "Content-type":"application/json",
+                    'Access-Control-Allow-Headers': 'Authorization'
                 }),
-                mode: 'cors',
+                mode: "cors"
             };
-
             return fetch(url, options)
                 .then(response => {
-                    //debugger;
-                    if(response.status === 201) {
+                    if (response.status === 201) {
                         alert(response.statusText);
                         return response.json();
                     }
                     return Promise.reject(response.status);
-                }).then(data => {
-                    //debugger;
-                    // alert("Succesful, codigo 200"); alert("Error.\n\nOptions body:\n" + options.body +"\n\nURL called:\n" + url +
+                }).catch(error => {
+                    setError(error);
+                    alert(error);
                 });
         };
-
-        fetchData();
-
-    }
-
-    handleFirstChange(evt) {
-        this.setState({
-            first_name: evt.target.value,
-        });
+        fetchdata()
     };
 
-    handleLastChange(evt) {
-        this.setState({
-            last_name: evt.target.value,
-        });
+        const classes = useStyles();
+
+        return (
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="first_name"
+                                    label="Nombre"
+                                    name="first_name"
+                                    autoComplete="Nombre"
+                                    autoFocus
+                                    type="text" value={first_name}
+                                    onChange={event => setName(event.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="last_name"
+                                    label="Apellido"
+                                    name="last_name"
+                                    autoComplete="apellido"
+                                    autoFocus
+
+                                    type="text" value={last_name}
+                                    onChange={event => setLastName(event.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+
+                                    type="email" data-test="email" value={email}
+                                    onChange={event => setEmail(event.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="password"
+                                    label="Password"
+                                    name="password"
+                                    autoComplete="current-password"
+                                    autoFocus
+                                    type="password" data-test="password" value={password} onChange={event => setPassword(event.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControlLabel
+                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                                    label="I want to receive inspiration, marketing promotions and updates via email."
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign Up
+                        </Button>
+                        <Grid container justify="flex-end">
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    Already have an account? Sign in
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </div>
+            </Container>
+        );
     };
 
-    handleEmailChange(evt) {
-        this.setState({
-            email: evt.target.value,
-        });
-    };
 
-    handlePassChange(evt) {
-        this.setState({
-            password: evt.target.value,
-        });
-    }
-
-
-render(){
-    return (
-            <div className="App">
-                <header className="App-header">
-
-                        <form onSubmit={this.handleSubmit}>
-                            {
-                                this.state.error &&
-                                <h3 data-test="error" onClick={this.dismissError}>
-                                    <button onClick={this.dismissError}>✖</button>
-                                    {this.state.error}
-                                </h3>
-                            }
-                            <label>First Name</label>
-                            <input type="text"  value={this.state.first_name} onChange={this.handleFirstChange} />
-                            <label>Last Name</label>
-                            <input type="text"  value={this.state.last_name} onChange={this.handleLastChange} />
-                            <label>Email</label>
-                            <input type="email"  value={this.state.email} onChange={this.handleEmailChange} />
-
-                            <label>Password (6 or more characters)</label>
-                            <input type="password"  value={this.state.password} onChange={this.handlePassChange} />
-                                <p>You agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy</p>
-                            <Button variant="contained" color="primary" >
-                                <input type="submit" value="Agree & Join" />
-                            </Button>
-
-                                <p>Already on LinkedIn? Sign in</p>
-                        </form>
-                </header>
-            </div>
-    );
-}
-}
-
-
-export default FormSignUp;
+export default SignUpForm ;
+//Brais
