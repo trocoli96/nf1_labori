@@ -77,7 +77,10 @@ class AuthController extends Controller
         $firstnameGetter = $userRecord['first_name'];
         $lastnameGetter = $userRecord['last_name'];
 
-        return [$emailGetter, $firstnameGetter, $lastnameGetter];
+        return [
+            'email' => $emailGetter,
+            'first_name' => $firstnameGetter,
+            'last_name' => $lastnameGetter];
 
     }
     public function editUser(Request $request)
