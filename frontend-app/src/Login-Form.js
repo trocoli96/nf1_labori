@@ -6,13 +6,18 @@ const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+
+    const data = {
+        email : email,
+        password : password,
+    };
     const handleSubmit = (event) => {
         event.preventDefault();
-        const fetchdata = async () => {
+        const fetchData = async () => {
             const url = "http://127.0.0.1:80/api/login";
             const options = {
                 method: "POST",
-                body: JSON.stringify(useState),
+                body: JSON.stringify(data),
                 headers: new Headers({
                     Accept: "application/json",
                     "Content-type":
@@ -32,7 +37,7 @@ const LoginForm = () => {
                     alert(error);
                 });
         };
-        fetchdata();
+        fetchData();
     };
     return (
         <div className={"form_full"}>
@@ -43,15 +48,14 @@ const LoginForm = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
                         label="Email"
                         name="email"
                         autoComplete="email"
-                        autoFocus>
-                        <input
-                            type="email" data-test="email" value={email}
-                            onChange={(event) => setEmail(event.target.value)}/>
-                    </TextField>
+                        autoFocus
+                        type="email"
+                        data-test="email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}/>
                 </div>
                 <div className="field_login">
                     <TextField
@@ -64,9 +68,10 @@ const LoginForm = () => {
                         name="password"
                         autoComplete="password"
                         autoFocus
-                    >
-                        <input type="password" data-test="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-                    </TextField>
+                        type="password"
+                        data-test="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)} />
                 </div>
                 <Button variant="contained" color="primary" type="submit">
                     Sign in
