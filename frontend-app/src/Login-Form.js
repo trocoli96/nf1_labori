@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
 
-function LoginForm (props) {
+
+function LoginForm ({history}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,6 +15,7 @@ function LoginForm (props) {
         email : email,
         password : password,
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const fetchData = async () => {
@@ -30,13 +32,15 @@ function LoginForm (props) {
             };
             return fetch(url, options)
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 200)
+                    {
                         console.log(response);
                         //return <Redirect to={"s/Signup"}/>;
-                       alert(response.statusText);
-                       return response.json();
+                        //alert(response.statusText);
+                        //return response.json();
+                        history.push('/Profile');
                     }
-                    return Promise.reject(response.status);
+                    //return Promise.reject(response.status);
                 }).catch(error => {
                     setError(error);
                     console.log(error);
@@ -79,11 +83,11 @@ function LoginForm (props) {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)} />
                 </div>
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="primary" type="submit" >
                     Sign in
                 </Button>
             </form>
         </div>
     );
 };
-export default LoginForm;
+export default withRouter(LoginForm);
