@@ -22,7 +22,7 @@ a {
 }
 
 body {
-    background-color: lightblue;
+    background-color: white;
 }
 .search-bar{
     background-color:white;
@@ -49,6 +49,7 @@ body {
     margin: auto;
     text-align: center;
     display: block;
+
 }
 
 .login {
