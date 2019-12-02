@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SignUpForm = () => {
+const SignUpForm = ({history}) => {
     const [first_name, setName]= useState('');
     const [last_name, setLastName]= useState('');
     const [email, setEmail] = useState('');
@@ -69,8 +69,9 @@ const SignUpForm = () => {
             return fetch(url, options)
                 .then(response => {
                     if (response.status === 201) {
-                        alert(response.statusText);
-                        return response.json();
+                        /*alert(response.statusText);
+                        return response.json();*/
+                        history.push('/Profile');
                     }
                     return Promise.reject(response.status);
                 }).catch(error => {
