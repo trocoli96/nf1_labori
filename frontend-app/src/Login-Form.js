@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-const LoginForm = () => {
+
+
+function LoginForm ({history}) {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -11,6 +15,7 @@ const LoginForm = () => {
         email : email,
         password : password,
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const fetchData = async () => {
@@ -27,13 +32,23 @@ const LoginForm = () => {
             };
             return fetch(url, options)
                 .then(response => {
-                    if (response.status === 201) {
-                        alert(response.statusText);
-                        return response.json();
+                    if (response.status === 200)
+                    {
+                        console.log(response);
+                        //return <Redirect to={"s/Signup"}/>;
+                        //alert(response.statusText);
+                        //return response.json();
+                       history.push('/Profile');
                     }
-                    return Promise.reject(response.status);
-                }).catch(error => {
+                    //return Promise.reject(response.status);
+
+                }
+
+
+
+                ).catch(error => {
                     setError(error);
+                    console.log(error);
                     alert(error);
                 });
         };
@@ -73,11 +88,11 @@ const LoginForm = () => {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)} />
                 </div>
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="primary" type="submit" >
                     Sign in
                 </Button>
             </form>
         </div>
     );
 };
-export default LoginForm;
+export default withRouter(LoginForm);
