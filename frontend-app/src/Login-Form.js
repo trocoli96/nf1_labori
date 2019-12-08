@@ -3,13 +3,15 @@ import {withRouter} from 'react-router-dom';
 import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {saveToken} from "./utils/localStorage";
+import {PROFILE} from "./routes/routes";
 
 
 function LoginForm ({history}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [setError] = useState('');
 
     const data = {
         email : email,
@@ -37,16 +39,15 @@ function LoginForm ({history}) {
                         console.log(response);
                         //return <Redirect to={"s/Signup"}/>;
                         //alert(response.statusText);
-                        //return response.json();
-                       history.push('/Profile');
+                        return response.json();
+                       //
                     }
-                    //return Promise.reject(response.status);
-
-                }
-
-
-
-                ).catch(error => {
+                    return Promise.reject(response.status);
+                }).then(data => {
+                    debugger;
+                    saveToken(data);
+                    history.push(PROFILE);
+                }).catch(error => {
                     setError(error);
                     console.log(error);
                     alert(error);
@@ -94,5 +95,5 @@ function LoginForm ({history}) {
             </form>
         </div>
     );
-};
+}
 export default withRouter(LoginForm);
