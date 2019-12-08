@@ -1,6 +1,7 @@
 import './App.css';
 import ButtonPopup from "./Buttonpopup";
 import React, {useEffect, useReducer} from 'react';
+import {getToken} from "./utils/localStorage";
 
 
 function Profilepage() {
@@ -8,6 +9,7 @@ function Profilepage() {
     const VIEW_USER = 'VIEW_USER';
     const SET_ERROR = 'SET_ERROR';
 
+    const token = getToken();
     const initialState = {
         userData: [],
         error: false,
@@ -31,7 +33,7 @@ function Profilepage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = 'http://127.0.0.1/api/users/2?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjFcL2FwaVwvbG9naW4iLCJpYXQiOjE1NzUzMTU1NDksImV4cCI6MTU3NTMxOTE0OSwibmJmIjoxNTc1MzE1NTQ5LCJqdGkiOiJYZjJzOGVSbjdmU0lxbVFrIiwic3ViIjoyNywicHJ2IjoiODdlMGFmMWVmOWZkMTU4MTJmZGVjOTcxNTNhMTRlMGIwNDc1NDZhYSJ9.eyyHp2Jj5QMTkF7A7N26IC97R0X8o8cgIT0gSUvCiWM';
+            const url = `http://127.0.0.1/api/users/2?token=${token.access_token}`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -55,8 +57,7 @@ function Profilepage() {
 };
         fetchData();
 
-    }, [])
-    debugger;
+    }, []);
             return state.userData ? (
                 <div className="profilepage">
 

@@ -5,19 +5,27 @@ import FormSignUp from './FormSignUp';
 import './App.css';
 import Header from "./Header";
 import Login from "./Login";
+import {HOME, PROFILE, SIGNUP, LOGIN} from "./routes/routes";
+import {getToken} from "./utils/localStorage";
+import {withRouter} from 'react-router-dom';
+
+const token = getToken();
 
 const App = () => {
-    return (
-        <div className={'body'}>
+    if (!token) {
+        return (<Login/>)
+    }
+
+    return (<div className={'body'}>
             <Router>
-                <Header />
-                <Route path={'/Home'}/>
-                <Route path={'/Login'} component={Login}/>
-                <Route path={'/Signup'} component={FormSignUp}/>
-                <Route path={'/Profile'} component={Profilepage}/>
+                <Header/>
+                <Route path={HOME} component={Profilepage}/>
+                <Route path={LOGIN} component={Login}/>
+                <Route path={SIGNUP} component={FormSignUp}/>
+                <Route path={PROFILE} component={Profilepage}/>
             </Router>
         </div>
     );
-};
 
-export default App;
+};
+export default withRouter(App);
