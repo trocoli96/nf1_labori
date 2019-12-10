@@ -23,6 +23,7 @@ const App = () => {
         dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
     }
 
+
     return (
         <div className={'body'}>
             <Router>

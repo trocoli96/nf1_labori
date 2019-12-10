@@ -27,6 +27,7 @@ function Profilepage() {
         }
 
         const fetchData = async () => {
+            // TODO: DISPATCH DE "IS FETCHING"
             const url = `http://127.0.0.1/api/users/`;
             const options = {
                 method: 'GET',
@@ -48,13 +49,16 @@ function Profilepage() {
                     }
                 })
                 .then(data => {
+                    // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email
                     });
                 })
-            .catch(error => console.log("Error"));
+            .catch(error => {
+                // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
+                console.log("Error")});
         };
 
         fetchData();
