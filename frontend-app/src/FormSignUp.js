@@ -67,15 +67,16 @@ const SignUpForm = ({history}) => {
             };
             return fetch(url, options)
                 .then(response => {
-                    if (response.status === 201) {
-                        /*alert(response.statusText);
-                        return response.json();*/
+                    if (response.status >= 200 && response.status < 400) {
+                        console.log("Registro correcto.");
+                        // TODO: history.push es lo correcto?
                         history.push('/Profile');
+                    } else {
+                        return Promise.reject(response.status);
                     }
-                    return Promise.reject(response.status);
                 }).catch(error => {
                     setError(error);
-                    alert(error);
+                    console.log("Error al hacer el signup: " + error);
                 });
         };
         fetchdata()

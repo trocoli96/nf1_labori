@@ -19,6 +19,7 @@ const AuthorizationReducer = (state = initialState, action) => {
     if (type === SAVE_CURRENT_TOKEN_ON_STATE) {
         if (localStorage.getItem("TOKEN_KEY")) {
             newState.token = localStorage.getItem("TOKEN_KEY");
+            console.log("Nuevo token guardado! " + newState.token);
         }
     }
     if (type === GET_CURRENT_TOKEN) {
