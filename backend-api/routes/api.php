@@ -16,6 +16,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('users/{id}', 'AuthController@me');
+Route::get('users/', 'AuthController@me');
 Route::post('/user', 'AuthController@createUser');
 Route::put('users/{id}', 'AuthController@me');
 Route::post('/edituser', 'AuthController@editUser');

@@ -15,7 +15,7 @@ function Login() {
                     <LoginForm/>
                 </div>
                 <div className={"login-form-links"}>
-                    <div><a href="#"> Forgot Password?</a></div>
+                    <div><a href="#">Forgot Password?</a></div>
                     <p>New to LaBori? <a href="#">Join now</a></p>
                 </div>
             </div>

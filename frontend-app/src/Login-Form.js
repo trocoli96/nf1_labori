@@ -36,7 +36,6 @@ function LoginForm ({history}) {
                 .then(response => {
                     if (response.status === 200)
                     {
-                        console.log(response);
                         //return <Redirect to={"s/Signup"}/>;
                         //alert(response.statusText);
                         return response.json();
@@ -44,6 +43,7 @@ function LoginForm ({history}) {
                     }
                     return Promise.reject(response.status);
                 }).then(data => {
+                    console.log(data);
                     debugger;
                     saveToken(data);
                     history.push(PROFILE);

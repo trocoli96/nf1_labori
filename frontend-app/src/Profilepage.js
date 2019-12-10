@@ -1,30 +1,25 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './App.css';
 import AuthContext from "./utils/AuthFront/context";
-
 import ButtonPopup from "./Buttonpopup";
 
 function Profilepage() {
 
+    // recogemos lo proveído por el context
     const {state, dispatch} = useContext(AuthContext);
 
+    // creamos los hooks de estado con los datos del usuario
     const [userData, setUserData] = useState({
         "first_name": null,
         "last_name": null,
-        "email": null,
+        "email": null
     });
+
+    // guardamos el token proveído por el estado
+    let token = state.token;
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
-
-        // lo primero, cogemos el token, de forma síncrona
-        const token = dispatch({type: "GET_CURRENT_TOKEN"});
-
-        // si no hay token, dispatchamos logout
-        if (!token) {
-            dispatch({"type": 'DO_LOGOUT'});
-            return;
-        }
 
         const fetchData = async () => {
             // TODO: DISPATCH DE "IS FETCHING"
@@ -35,7 +30,7 @@ function Profilepage() {
                     Accept: 'application/json',
                     'Access-Control-Allow-Headers': 'Authorization',
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token.access_token,
+                    Authorization: 'Bearer ' + token,
                 }),
                 mode: 'cors'
             };
@@ -43,6 +38,7 @@ function Profilepage() {
             return fetch(url, options)
                 .then(response => {
                     if (response.status >= 200 && response.status < 400) {
+                        console.log("Recogimos los datos de @me!");
                         return response.json();
                     } else {
                         return Promise.reject(response.status);
@@ -58,30 +54,30 @@ function Profilepage() {
                 })
             .catch(error => {
                 // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
-                console.log("Error")});
+                console.log("Error al hacer el fetch de @me")});
         };
 
         fetchData();
 
-    }, []);
+    }, [dispatch, token]);
 
-    /*return */
 
     return (<AuthContext.Consumer>
-        {props => userData.first_name ?
+        {props =>
+            // TODO: para cuando ya funcione bien, la lógica sería if state.isFetching ---> spinner
                 <div className="profilepage">
                     <div id="profile-info">
                         <div className="user-info">
-                            <p>Name and Last Name: {state.userData.email}</p>
-                            <p>Former name</p>
-                            <p>City,Country</p>
+                            <p>Name: {userData.first_name ? userData.first_name : "?" }</p>
+                            <p>Last Name: {userData.last_name ? userData.last_name : "?" }</p>
+                            <p>Email: {userData.email ? userData.email : "?" }</p>
                         </div>
                         <div className="user-edit">
                             <ButtonPopup/>
                         </div>
                     </div>
                 </div>
-             : <p>No hay first_name en userData</p>}
+        }
     </AuthContext.Consumer>)
 }
 

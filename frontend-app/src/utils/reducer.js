@@ -17,14 +17,20 @@ const AuthorizationReducer = (state = initialState, action) => {
     const {type} = {...action};
 
     if (type === SAVE_CURRENT_TOKEN_ON_STATE) {
-        newState.token = localStorage.getItem("token");
+        if (localStorage.getItem("TOKEN_KEY")) {
+            newState.token = localStorage.getItem("TOKEN_KEY");
+        }
     }
     if (type === GET_CURRENT_TOKEN) {
-        return state.token;
+        if (initialState.token) {
+            return initialState.token;
+        } else {
+            console.log("No hay token guardado, nada que devolver.");
+        }
     }
     if (type === DO_LOGOUT) {
         newState.token = null;
-        localStorage.removeItem("token");
+        localStorage.removeItem("TOKEN_KEY");
         // TODO: history.push a la página de login?
     }
     if (type === IS_FETCHING) {
