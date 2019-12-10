@@ -1,42 +1,33 @@
+import React, {useState, useEffect, useContext} from 'react';
 import './App.css';
-import ButtonPopup from "./Buttonpopup";
-import React, {useEffect, useReducer, useContext} from 'react';
 import AuthContext from "./utils/AuthFront/context";
+
+import ButtonPopup from "./Buttonpopup";
 
 function Profilepage() {
 
-    const AuthConsumer = useContext(AuthContext);
+    const {state, dispatch} = useContext(AuthContext);
 
-    const VIEW_USER = 'VIEW_USER';
-    const SET_ERROR = 'SET_ERROR';
+    const [userData, setUserData] = useState({
+        "first_name": null,
+        "last_name": null,
+        "email": null,
+    });
 
-    const initialState = {
-        userData: [],
-        error: false,
-    };
-
-    const userReducer = (state = initialState, action) => {
-        const newState = {...state};
-        const {type} = {...action};
-
-        if (type === VIEW_USER) {
-            newState.userData = action.userData;
-
-        }
-        if (type === SET_ERROR) {
-            newState.error = action.error;
-        }
-        return newState;
-    };
-
-    const [state, dispatch] = useReducer(userReducer, initialState);
-
+    // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
+
+        // lo primero, cogemos el token, de forma síncrona
+        const token = dispatch({type: "GET_CURRENT_TOKEN"});
+
+        // si no hay token, dispatchamos logout
+        if (!token) {
+            dispatch({"type": 'DO_LOGOUT'});
+            return;
+        }
+
         const fetchData = async () => {
             const url = `http://127.0.0.1/api/users/`;
-            const token = (event) => {
-                AuthConsumer.dispatch({type: 'GET_TOKEN'});
-            };
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -50,35 +41,44 @@ function Profilepage() {
 
             return fetch(url, options)
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status >= 200 && response.status < 400) {
                         return response.json();
+                    } else {
+                        return Promise.reject(response.status);
                     }
-                    return Promise.reject(response.status);
                 })
                 .then(data => {
-                    dispatch({type: VIEW_USER, userData: data});
+                    return setUserData({
+                        "first_name": data.first_name,
+                        "last_name": data.last_name,
+                        "email": data.email
+                    });
                 })
-                .catch(error => dispatch({type: SET_ERROR, error: true}));
+            .catch(error => console.log("Error"));
         };
+
         fetchData();
+
     }, []);
 
-    return state.userData ? (
-        <div className="profilepage">
-            <div id="profile-info">
-                <div className="user-info">
-                    <p>Name and Last Name: {state.userData.email}</p>
-                    <p>Former name</p>
-                    <p>City,Country</p>
-                </div>
-                <div className="user-edit">
-                    <ButtonPopup/>
-                </div>
-            </div>
-        </div>
+    /*return */
 
-
-    ) : <p>hola</p>;
+    return (<AuthContext.Consumer>
+        {props => userData.first_name ?
+                <div className="profilepage">
+                    <div id="profile-info">
+                        <div className="user-info">
+                            <p>Name and Last Name: {state.userData.email}</p>
+                            <p>Former name</p>
+                            <p>City,Country</p>
+                        </div>
+                        <div className="user-edit">
+                            <ButtonPopup/>
+                        </div>
+                    </div>
+                </div>
+             : <p>No hay first_name en userData</p>}
+    </AuthContext.Consumer>)
 }
 
 export default Profilepage;

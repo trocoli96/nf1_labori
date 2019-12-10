@@ -187,5 +187,5 @@ const SignUpForm = ({history}) => {
     };
 
 
-export default SignUpForm ;
+export default SignUpForm;
 //Brais
