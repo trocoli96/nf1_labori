@@ -11,7 +11,7 @@ import Login from "./Login";
 import {HOME, PROFILE, SIGNUP, LOGIN} from "./routes/routes";
 
 /* USECONTEXT PROVIDER */
-import AuthContext from "./utils/AuthFront/context";
+import {AuthContext} from "./utils/AuthFront/context";
 import {AuthReducer} from "./utils/reducer";
 
 const App = () => {
@@ -22,20 +22,26 @@ const App = () => {
     // si el token existe en localStorage, lo guardamos en nuestra variable de contexto al cargar la app
     // TODO (o más bien duda): ¿por qué no se llama a este dispatch antes que nada?
     useEffect(() => {
-        if (localStorage.getItem("TOKEN_KEY")) {
-            dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
-        }
-    }, [dispatch]);
+        dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
+    }, []);
 
+
+    if (!state.token) {
+        return (
+            <AuthContext.Provider value={{state, dispatch}}>
+                <Login/>
+            </AuthContext.Provider>)
+    }
+
+    //debugger;
     return (
         <div className={'body'}>
             <Router>
                 <AuthContext.Provider value={{state, dispatch}}>
                     <Header/>
-                    <Route path={HOME} component={Profilepage}/>
                     <Route path={LOGIN} component={Login}/>
                     <Route path={SIGNUP} component={FormSignUp}/>
-                    <Route path={PROFILE} component={Profilepage}/>
+                    <Route path={HOME} component={Profilepage}/>
                 </AuthContext.Provider>
             </Router>
         </div>

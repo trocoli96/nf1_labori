@@ -4,8 +4,8 @@ import './App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {saveToken} from "./utils/localStorage";
-import {PROFILE} from "./routes/routes";
-import AuthContext from "./utils/AuthFront/context";
+import {HOME} from "./routes/routes";
+import {AuthContext} from "./utils/AuthFront/context";
 
 function LoginForm({history}) {
 
@@ -22,7 +22,7 @@ function LoginForm({history}) {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         const fetchData = async () => {
             const url = "http://127.0.0.1:80/api/login";
             const options = {
@@ -41,11 +41,9 @@ function LoginForm({history}) {
                     }
                     return Promise.reject(response.status);
                 }).then(data => {
-                    console.log(data);
                     saveToken(data);
                     dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE"});
-                    // TODO: es history.push, o otra cosa? creo que history.push está haciendo que el profile aparezca debajo
-                    history.push(PROFILE);
+                    history.push(HOME);
                 }).catch(error => {
                     setError(error);
                     console.log(error);
@@ -55,7 +53,6 @@ function LoginForm({history}) {
     };
     return (
         <div className={"form_full"}>
-            <form className="login-form" onSubmit={handleSubmit}>
                 <div className="field_login">
                     <TextField
                         variant="outlined"
@@ -87,10 +84,9 @@ function LoginForm({history}) {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}/>
                 </div>
-                <Button variant="contained" color="primary" type="submit">
+                <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
                     Sign in
                 </Button>
-            </form>
         </div>
     );
 }

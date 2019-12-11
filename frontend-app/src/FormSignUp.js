@@ -69,7 +69,6 @@ const SignUpForm = ({history}) => {
                 .then(response => {
                     if (response.status >= 200 && response.status < 400) {
                         console.log("Registro correcto.");
-                        // TODO: history.push es lo correcto?
                         history.push('/Profile');
                     } else {
                         return Promise.reject(response.status);

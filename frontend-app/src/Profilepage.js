@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './App.css';
-import AuthContext from "./utils/AuthFront/context";
+import {AuthContext} from "./utils/AuthFront/context";
 import ButtonPopup from "./Buttonpopup";
 
 function Profilepage() {
@@ -15,22 +15,17 @@ function Profilepage() {
         "email": null
     });
 
-    // guardamos el token proveído por el estado
-    let token = state.token;
-
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
 
         const fetchData = async () => {
             // TODO: DISPATCH DE "IS FETCHING"
-            const url = `http://127.0.0.1/api/users/`;
+            const url = `http://127.0.0.1/api/users/?token=` + state.token;
             const options = {
                 method: 'GET',
                 headers: new Headers({
                     Accept: 'application/json',
-                    'Access-Control-Allow-Headers': 'Authorization',
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
+                    'Content-Type': 'application/json'
                 }),
                 mode: 'cors'
             };
@@ -38,7 +33,6 @@ function Profilepage() {
             return fetch(url, options)
                 .then(response => {
                     if (response.status >= 200 && response.status < 400) {
-                        console.log("Recogimos los datos de @me!");
                         return response.json();
                     } else {
                         return Promise.reject(response.status);
@@ -54,12 +48,14 @@ function Profilepage() {
                 })
             .catch(error => {
                 // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
-                console.log("Error al hacer el fetch de @me")});
+                console.log("Error al hacer el fetch de @me. Error: " + error);
+                dispatch({type: "DO_LOGOUT"});
+            });
         };
 
         fetchData();
 
-    }, [dispatch, token]);
+    }, []);
 
 
     return (<AuthContext.Consumer>
