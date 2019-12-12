@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import './App.css';
-import {AuthContext} from "./utils/AuthFront/context";
+import '../App.css';
+import {AuthContext} from "../utils/AuthFront/context";
 import ButtonPopup from "./Buttonpopup";
 
 function Profilepage() {
@@ -19,7 +19,7 @@ function Profilepage() {
     useEffect(() => {
 
         const fetchData = async () => {
-            // TODO: DISPATCH DE "IS FETCHING"
+            // TODO: USESTATE DE "IS FETCHING"
             const url = `http://127.0.0.1/api/users/?token=` + state.token;
             const options = {
                 method: 'GET',
@@ -39,7 +39,7 @@ function Profilepage() {
                     }
                 })
                 .then(data => {
-                    // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
+                    // TODO: "IS NOT FETCHING ANYMORE"
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
@@ -47,9 +47,12 @@ function Profilepage() {
                     });
                 })
             .catch(error => {
-                // TODO: DISPATCH DE "IS NOT FETCHING ANYMORE"
+                // TODO: "IS NOT FETCHING ANYMORE"
                 console.log("Error al hacer el fetch de @me. Error: " + error);
-                dispatch({type: "DO_LOGOUT"});
+                if (error === 401) {
+                    console.log("Token inválido, probablemente caducado. Hacemos logout.");
+                    dispatch({type: "DO_LOGOUT"});
+                }
             });
         };
 
@@ -60,7 +63,7 @@ function Profilepage() {
 
     return (<AuthContext.Consumer>
         {props =>
-            // TODO: para cuando ya funcione bien, la lógica sería if state.isFetching ---> spinner
+            // TODO: para mostrar el spinner de carga, la lógica sería if state.isFetching ---> spinner
                 <div className="profilepage">
                     <div id="profile-info">
                         <div className="user-info">

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './App.css';
+import '../App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
@@ -38,7 +38,6 @@ const SignUpForm = ({history}) => {
     const [last_name, setLastName]= useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
 
     const data = {
 
@@ -74,7 +73,6 @@ const SignUpForm = ({history}) => {
                         return Promise.reject(response.status);
                     }
                 }).catch(error => {
-                    setError(error);
                     console.log("Error al hacer el signup: " + error);
                 });
         };

@@ -1,10 +1,7 @@
-import React, {useReducer} from 'react';
-import {LOGIN} from "../routes/routes";
-import {withRouter} from 'react-router-dom';
+import {useReducer} from 'react';
 
 const initialState = {
-    token: null,
-    isFetching: false
+    token: null
 };
 
 // actions
@@ -18,13 +15,13 @@ const AuthorizationReducer = (state = initialState, action) => {
     if (type === SAVE_CURRENT_TOKEN_ON_STATE) {
         if (localStorage.getItem("TOKEN_KEY")) {
             newState.token = JSON.parse(localStorage.getItem("TOKEN_KEY"));
-            console.log("Nuevo token guardado! " + newState.token);
+            console.log("Token cogido de localStorage y guardado en state: " + newState.token);
         }
     }
     if (type === DO_LOGOUT) {
         newState.token = null;
         localStorage.removeItem("TOKEN_KEY");
-        console.log("Token caducado, hacemos logout.");
+        console.log("Token borrado del estado y de localStorage.");
     }
 
     return newState;

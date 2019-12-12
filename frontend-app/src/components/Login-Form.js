@@ -1,20 +1,19 @@
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
-import './App.css';
+import '../App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {saveToken} from "./utils/localStorage";
-import {HOME} from "./routes/routes";
-import {AuthContext} from "./utils/AuthFront/context";
+import {saveToken} from "../utils/localStorage";
+import {HOME} from "../routes/routes";
+import {AuthContext} from "../utils/AuthFront/context";
 
 function LoginForm({history}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
 
     // recogemos lo proveído por el context
-    const {state, dispatch} = useContext(AuthContext);
+    const {dispatch} = useContext(AuthContext);
 
     const data = {
         email: email,
@@ -22,7 +21,6 @@ function LoginForm({history}) {
     };
 
     const handleSubmit = (event) => {
-        //event.preventDefault();
         const fetchData = async () => {
             const url = "http://127.0.0.1:80/api/login";
             const options = {
@@ -41,16 +39,17 @@ function LoginForm({history}) {
                     }
                     return Promise.reject(response.status);
                 }).then(data => {
+                    console.log("Login correcto, guardamos token en localStorage y state, y redirigimos.");
                     saveToken(data);
                     dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE"});
                     history.push(HOME);
                 }).catch(error => {
-                    setError(error);
-                    console.log(error);
+                    console.log("Login incorrecto. Error: " + error);
                 });
         };
         fetchData();
     };
+
     return (
         <div className={"form_full"}>
                 <div className="field_login">

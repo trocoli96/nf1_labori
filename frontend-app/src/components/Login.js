@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import './App.css';
+import '../App.css';
 import LoginForm from "./Login-Form";
-import {AuthContext} from "./utils/AuthFront/context";
+import {AuthContext} from "../utils/AuthFront/context";
 
 function Login(props) {
 
