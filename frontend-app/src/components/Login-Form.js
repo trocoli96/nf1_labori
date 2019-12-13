@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 import '../App.css';
 import TextField from '@material-ui/core/TextField';
@@ -50,6 +50,7 @@ function LoginForm({history}) {
         fetchData();
     };
 
+    const emailRef = useRef();
     return (
         <div className={"form_full"}>
                 <div className="field_login">
@@ -61,10 +62,11 @@ function LoginForm({history}) {
                         label="Email"
                         name="email"
                         autoComplete="email"
-                        autoFocus
                         type="email"
                         data-test="email"
                         value={email}
+                        autoFocus
+                        inputRef={emailRef}
                         onChange={(event) => setEmail(event.target.value)}/>
                 </div>
                 <div className="field_login">
@@ -77,7 +79,6 @@ function LoginForm({history}) {
                         label="Password"
                         name="password"
                         autoComplete="password"
-                        autoFocus
                         type="password"
                         data-test="password"
                         value={password}
