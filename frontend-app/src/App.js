@@ -29,6 +29,7 @@ const App = () => {
     if (!state.token) {
         return (
             <AuthContext.Provider value={{state, dispatch}}>
+                <Header/>
                 <Login/>
             </AuthContext.Provider>)
     }
