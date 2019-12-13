@@ -4,7 +4,7 @@ import '../App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {saveToken} from "../utils/localStorage";
-import {HOME} from "../routes/routes";
+import {HOME, PROFILE} from "../routes/routes";
 import {AuthContext} from "../utils/AuthFront/context";
 
 function LoginForm({history}) {
@@ -41,8 +41,8 @@ function LoginForm({history}) {
                 }).then(data => {
                     console.log("Login correcto, guardamos token en localStorage y state, y redirigimos.");
                     saveToken(data);
-                    dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE"});
-                    history.push(HOME);
+                    dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE", history});
+                    history.push(PROFILE);
                 }).catch(error => {
                     console.log("Login incorrecto. Error: " + error);
                 });
@@ -52,7 +52,7 @@ function LoginForm({history}) {
 
     const emailRef = useRef();
     return (
-        <div className={"form_full"}>
+            <div className={"form_full"}>
                 <div className="field_login">
                     <TextField
                         variant="outlined"
@@ -87,7 +87,7 @@ function LoginForm({history}) {
                 <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
                     Sign in
                 </Button>
-        </div>
+            </div>
     );
 }
 

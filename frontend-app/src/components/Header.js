@@ -8,6 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link} from "react-router-dom";
 import {AuthContext} from "../utils/AuthFront/context";
+import './Header.css';
+import {LOGIN} from "../routes/routes";
 
 
 const useStyles = makeStyles(theme => ({
@@ -39,13 +41,19 @@ export default function ButtonAppBar() {
                     </Typography>
                     {state.token ?
                         <>
-                            <Button color="inherit"><Link to={'./profile'}>Profile</Link></Button>
-                            <Button onClick={e => {dispatch({type :'DO_LOGOUT'})}}  color="inherit">LogOut</Button>
+                            <Button color="inherit">
+                                <Link to={'./profile'} className="headerBtn">
+                                    Profile
+                                </Link>
+                            </Button>
+                            <Button onClick={e => {
+                                dispatch({type :'DO_LOGOUT'});
+                            }} ><span className="headerBtn">LogOut</span></Button>
                         </>
                         :
                         <>
-                            <Button color="inherit"><Link to={'./signup'}>SignUp</Link></Button>
-                            <Button color="inherit"><Link to={'./login'}>LogIn</Link></Button>
+                            <Button color="inherit"><Link to={'./signup'} className="headerBtn">SignUp</Link></Button>
+                            <Button color="inherit"><Link to={'./login'} className="headerBtn">LogIn</Link></Button>
                         </>
                     }
 

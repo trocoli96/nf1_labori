@@ -3,12 +3,12 @@ import React, {useEffect} from 'react';
 import './App.css';
 
 /* ROUTER & ROUTES */
-import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, withRouter} from 'react-router-dom';
 import Profilepage from "./components/Profilepage";
 import FormSignUp from './components/FormSignUp';
 import Header from "./components/Header";
 import Login from "./components/Login";
-import {HOME, SIGNUP, LOGIN} from "./routes/routes";
+import {HOME, SIGNUP, LOGIN, PROFILE} from "./routes/routes";
 
 /* USECONTEXT PROVIDER */
 import {AuthContext} from "./utils/AuthFront/context";
@@ -24,25 +24,26 @@ const App = () => {
         dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
     }, []);
 
-    // si el token es null porque no hay, redirigimos a la pagina de login
-    // TODO: habrá que repensar esto. al final, si alguien quiere ver la landing o el signup, creo que no le dejamos
-    if (!state.token) {
-        return (
-            <AuthContext.Provider value={{state, dispatch}}>
-                <Header/>
-                <Login/>
-            </AuthContext.Provider>)
-    }
 
+    const privateRoutes = (
+        <React.Fragment>
+            <Route path={PROFILE} component={Profilepage}/>
+        </React.Fragment>
+    );
+    const privateRedirectsOnNoToken = (
+        <Route path="*" render={() => <Redirect to={LOGIN} />} />
+    );
 
     return (
         <div className={'body'}>
             <Router>
                 <AuthContext.Provider value={{state, dispatch}}>
                     <Header/>
-                    <Route path={LOGIN} component={Login}/>
-                    <Route path={SIGNUP} component={FormSignUp}/>
-                    <Route path={HOME} component={Profilepage}/>
+                    <Route exact path={LOGIN} component={Login}/>
+                    <Route exact path={SIGNUP} component={FormSignUp}/>
+                    <Route exact path={HOME} component={FormSignUp}/>
+                    {state.token && privateRoutes}
+                    {!state.token && privateRedirectsOnNoToken}
                 </AuthContext.Provider>
             </Router>
         </div>

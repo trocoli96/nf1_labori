@@ -118,8 +118,6 @@ const SignUpForm = ({history}) => {
                                     label="Apellido"
                                     name="last_name"
                                     autoComplete="apellido"
-                                    autoFocus
-
                                     type="text" value={last_name}
                                     onChange={event => setLastName(event.target.value)}
                                 />
@@ -133,9 +131,7 @@ const SignUpForm = ({history}) => {
                                     id="email"
                                     label="Email"
                                     name="email"
-                                    autoComplete="email"
-                                    autoFocus
-
+                                    autoComplete="email"ç
                                     type="email" data-test="email" value={email}
                                     onChange={event => setEmail(event.target.value)}
                                 />
@@ -150,7 +146,6 @@ const SignUpForm = ({history}) => {
                                     label="Password"
                                     name="password"
                                     autoComplete="current-password"
-                                    autoFocus
                                     type="password" data-test="password" value={password} onChange={event => setPassword(event.target.value)}
                                 />
                             </Grid>
