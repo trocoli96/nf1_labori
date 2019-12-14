@@ -1,13 +1,18 @@
-import React, {useContext, useRef, useState} from 'react';
+/* BASIC STUFF */
+import React, {useContext, useState} from 'react';
+import {saveToken} from "../utils/localStorage";
+import {AuthContext} from "../utils/AuthFront/context";
+
+/* ROUTER & ROUTES */
 import {withRouter} from 'react-router-dom';
-import '../App.css';
+import {PROFILE} from "../routes/routes";
+
+/* COMPONENTS & STYLES */
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {Typography} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import {saveToken} from "../utils/localStorage";
-import {HOME, PROFILE} from "../routes/routes";
-import {AuthContext} from "../utils/AuthFront/context";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import '../App.css';
 
 function LoginForm({history}) {
 
@@ -62,7 +67,6 @@ function LoginForm({history}) {
         fetchData();
     };
 
-    const emailRef = useRef();
     return (
         <div className={"form_full"}>
             <div className="field_login">
@@ -78,7 +82,6 @@ function LoginForm({history}) {
                     data-test="email"
                     value={email}
                     autoFocus
-                    inputRef={emailRef}
                     onChange={(event) => setEmail(event.target.value)}/>
             </div>
             <div className="field_login">
@@ -96,7 +99,7 @@ function LoginForm({history}) {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}/>
             </div>
-            {error ? <Typography color="error">El usuario y/o la contraseña son incorrectos.</Typography> : null}
+            {error ? <Typography color="error">User and/or password are not correct.</Typography> : null}
             {isFetching ?
                 <CircularProgress/> :
                 <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>

@@ -1,7 +1,10 @@
+/* BASIC STUFF */
 import React, {useState, useEffect, useContext} from 'react';
-import '../App.css';
 import {AuthContext} from "../utils/AuthFront/context";
+
+/* COMPONENTS & STYLES */
 import ButtonPopup from "./Buttonpopup";
+import '../App.css';
 
 function Profilepage() {
 
@@ -19,7 +22,6 @@ function Profilepage() {
     useEffect(() => {
 
         const fetchData = async () => {
-            // TODO: USESTATE DE "IS FETCHING"
             const url = `http://127.0.0.1/api/users/?token=` + state.token;
             const options = {
                 method: 'GET',
@@ -39,43 +41,41 @@ function Profilepage() {
                     }
                 })
                 .then(data => {
-                    // TODO: "IS NOT FETCHING ANYMORE"
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email
                     });
                 })
-            .catch(error => {
-                // TODO: "IS NOT FETCHING ANYMORE"
-                console.log("Error al hacer el fetch de @me. Error: " + error);
-                if (error === 401) {
-                    console.log("Token inválido, probablemente caducado. Hacemos logout.");
-                    dispatch({type: "DO_LOGOUT"});
-                }
-            });
+                .catch(error => {
+                    console.log("Error al hacer el fetch de @me. Error: " + error);
+                    if (error === 401) {
+                        console.log("Token inválido, probablemente caducado. Hacemos logout.");
+                        dispatch({type: "DO_LOGOUT"});
+
+                    }
+                });
         };
 
         fetchData();
 
-    }, []);
+    }, [dispatch, state.token]);
 
 
     return (<AuthContext.Consumer>
         {props =>
-            // TODO: para mostrar el spinner de carga, la lógica sería if state.isFetching ---> spinner
-                <div className="profilepage">
-                    <div id="profile-info">
-                        <div className="user-info">
-                            <p>Name: {userData.first_name ? userData.first_name : "?" }</p>
-                            <p>Last Name: {userData.last_name ? userData.last_name : "?" }</p>
-                            <p>Email: {userData.email ? userData.email : "?" }</p>
-                        </div>
-                        <div className="user-edit">
-                            <ButtonPopup/>
-                        </div>
+            <div className="profilepage">
+                <div id="profile-info">
+                    <div className="user-info">
+                        <p>Name: {userData.first_name ? userData.first_name : "?"}</p>
+                        <p>Last Name: {userData.last_name ? userData.last_name : "?"}</p>
+                        <p>Email: {userData.email ? userData.email : "?"}</p>
+                    </div>
+                    <div className="user-edit">
+                        <ButtonPopup/>
                     </div>
                 </div>
+            </div>
         }
     </AuthContext.Consumer>)
 }

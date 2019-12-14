@@ -1,11 +1,15 @@
-import React, {useContext} from 'react';
+/* BASIC STUFF */
+import React from 'react';
+
+/* ROUTER & ROUTES */
+import {Link, withRouter} from 'react-router-dom';
+import {LOGIN, SIGNUP} from "../routes/routes";
+
+/* COMPONENTS & STYLES */
 import '../App.css';
 import LoginForm from "./Login-Form";
-import {AuthContext} from "../utils/AuthFront/context";
 
 function Login() {
-
-    const {state, dispatch} = useContext(AuthContext);
 
     return (
         <div className="login">
@@ -16,15 +20,21 @@ function Login() {
             </header>
             <div className={"login-body"}>
                 <div className={"login-form-section"}>
-                        <LoginForm/>
+                    <LoginForm/>
                 </div>
                 <div className={"login-form-links"}>
-                    <div><a href="#">Forgot Password?</a></div>
-                    <p>New to LaBori? <a href="#">Join now</a></p>
+                    <div>
+                        <Link style={{color: "#3f51b5"}} to={LOGIN} className="headerBtn">Forgot Password?</Link>
+                    </div>
+                    <p>
+                        New to LaBori? <Link style={{color: "#3f51b5"}} to={SIGNUP} className="headerBtn">
+                        Join now
+                    </Link>
+                    </p>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Login;
+export default withRouter(Login);

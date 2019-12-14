@@ -1,18 +1,18 @@
 /* BASIC STUFF */
 import React, {useEffect} from 'react';
-import './App.css';
+import {AuthContext} from "./utils/AuthFront/context";
+import {AuthReducer} from "./utils/reducer";
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
+import {HOME, SIGNUP, LOGIN, PROFILE} from "./routes/routes";
+
+/* COMPONENTS & STYLES */
 import Profilepage from "./components/Profilepage";
 import FormSignUp from './components/FormSignUp';
 import Header from "./components/Header";
 import Login from "./components/Login";
-import {HOME, SIGNUP, LOGIN, PROFILE} from "./routes/routes";
-
-/* USECONTEXT PROVIDER */
-import {AuthContext} from "./utils/AuthFront/context";
-import {AuthReducer} from "./utils/reducer";
+import './App.css';
 
 const App = () => {
 
@@ -22,9 +22,9 @@ const App = () => {
     // si el token existe en localStorage, lo guardamos en nuestra variable de contexto al cargar la app
     useEffect(() => {
         dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
-    }, []);
+    }, [dispatch]);
 
-
+    // renderizaremos estas rutas condicionalmente, en función de si hay o no hay token
     const privateRoutes = (
         <React.Fragment>
             <Route path={PROFILE} component={Profilepage}/>
