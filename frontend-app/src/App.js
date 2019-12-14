@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 
 /* ROUTER & ROUTES */
-import {BrowserRouter as Router, Redirect, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
 import Profilepage from "./components/Profilepage";
 import FormSignUp from './components/FormSignUp';
 import Header from "./components/Header";
@@ -31,7 +31,7 @@ const App = () => {
         </React.Fragment>
     );
     const privateRedirectsOnNoToken = (
-        <Route path="*" render={() => <Redirect to={LOGIN} />} />
+        <Route path="*" render={() => <Redirect to={LOGIN}/>}/>
     );
 
     return (
@@ -39,11 +39,19 @@ const App = () => {
             <Router>
                 <AuthContext.Provider value={{state, dispatch}}>
                     <Header/>
-                    <Route exact path={LOGIN} component={Login}/>
-                    <Route exact path={SIGNUP} component={FormSignUp}/>
-                    <Route exact path={HOME} component={FormSignUp}/>
-                    {state.token && privateRoutes}
-                    {!state.token && privateRedirectsOnNoToken}
+                    <Switch>
+                        <Route exact path={LOGIN}>
+                            {state.token ? <Redirect to={PROFILE}/> : <Login/>}
+                        </Route>
+                        <Route exact path={SIGNUP}>
+                            {state.token ? <Redirect to={PROFILE}/> : <FormSignUp/>}
+                        </Route>
+                        <Route exact path={HOME}>
+                            {state.token ? <Redirect to={PROFILE}/> : <FormSignUp/>}
+                        </Route>
+                        {state.token && privateRoutes}
+                        {!state.token && privateRedirectsOnNoToken}
+                    </Switch>
                 </AuthContext.Provider>
             </Router>
         </div>

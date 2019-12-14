@@ -3,12 +3,11 @@ import '../App.css';
 import LoginForm from "./Login-Form";
 import {AuthContext} from "../utils/AuthFront/context";
 
-function Login(props) {
+function Login() {
 
     const {state, dispatch} = useContext(AuthContext);
 
     return (
-
         <div className="login">
             <header className="login-header">
                 <h1 className={"welcome"}>Welcome Back</h1>
@@ -17,10 +16,7 @@ function Login(props) {
             </header>
             <div className={"login-body"}>
                 <div className={"login-form-section"}>
-
-                    <AuthContext.Provider value={{state, dispatch}}>
                         <LoginForm/>
-                    </AuthContext.Provider>
                 </div>
                 <div className={"login-form-links"}>
                     <div><a href="#">Forgot Password?</a></div>

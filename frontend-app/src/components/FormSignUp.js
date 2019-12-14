@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import '../App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {PROFILE} from "../routes/routes";
+import {saveToken} from "../utils/localStorage";
+import {AuthContext} from "../utils/AuthFront/context";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -33,11 +37,19 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SignUpForm = ({history}) => {
+function SignUpForm ({history}) {
+
     const [first_name, setName]= useState('');
     const [last_name, setLastName]= useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    // states para activar los warnings si el usuario se deja algo por rellenar
+    const [thereIsNoName, setThereIsNoName] = useState(false);
+    const [thereIsNoSurname, setThereIsNoSurname] = useState(false);
+    const [thereIsNoEmail, setThereIsNoEmail] = useState(false);
+    const [isShortPassword, setIsShortPassword] = useState(false);
+
 
     const data = {
 
@@ -50,8 +62,29 @@ const SignUpForm = ({history}) => {
         password: password,
     };
 
+    // recogemos lo proveído por el context
+    const {dispatch} = useContext(AuthContext);
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        // revisamos que los campos están bien rellenados
+        // returnamos el aviso si no
+        if (data.first_name.trim().length === 0) {
+            return setThereIsNoName(true);
+        }
+        if (data.last_name.trim().length === 0) {
+            return setThereIsNoSurname(true);
+        }
+        if (data.email.trim().length === 0) {
+            return setThereIsNoEmail(true);
+            // TODO: más que validar que haya algo escrito, habria que validar que tiene el formato correcto de un email
+        }
+        if (data.password.length < 8) {
+            return setIsShortPassword(true);
+        }
+
+
         const fetchdata = async () => {
             const url = "http://127.0.0.1:80/api/user";
             const options = {
@@ -67,12 +100,19 @@ const SignUpForm = ({history}) => {
             return fetch(url, options)
                 .then(response => {
                     if (response.status >= 200 && response.status < 400) {
-                        console.log("Registro correcto.");
-                        history.push('/Profile');
+                        return response.json();
                     } else {
                         return Promise.reject(response.status);
                     }
-                }).catch(error => {
+                }).then(response => {
+                    console.log("Registro correcto, guardamos token en localStorage y state, y redirigimos.");
+                    console.log(response.access_token);
+                    saveToken(response.access_token);
+                    // dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE"});
+                    // TODO: ENVIAR TOKEN DIRECTAMENTE AL DISPATCH???
+                    history.push(PROFILE);
+                })
+                .catch(error => {
                     console.log("Error al hacer el signup: " + error);
                 });
         };
@@ -105,8 +145,12 @@ const SignUpForm = ({history}) => {
                                     autoComplete="Nombre"
                                     autoFocus
                                     type="text" value={first_name}
-                                    onChange={event => setName(event.target.value)}
+                                    onChange={event => {
+                                        setName(event.target.value);
+                                        setThereIsNoName(false);
+                                    }}
                                 />
+                                {thereIsNoName ? <Typography color="error">Please enter your first name.</Typography> : null}
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -119,8 +163,12 @@ const SignUpForm = ({history}) => {
                                     name="last_name"
                                     autoComplete="apellido"
                                     type="text" value={last_name}
-                                    onChange={event => setLastName(event.target.value)}
+                                    onChange={event => {
+                                        setLastName(event.target.value);
+                                        setThereIsNoSurname(false);
+                                    }}
                                 />
+                                {thereIsNoSurname ? <Typography color="error">Please enter your last name.</Typography> : null}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -131,10 +179,14 @@ const SignUpForm = ({history}) => {
                                     id="email"
                                     label="Email"
                                     name="email"
-                                    autoComplete="email"ç
+                                    autoComplete="email"
                                     type="email" data-test="email" value={email}
-                                    onChange={event => setEmail(event.target.value)}
+                                    onChange={event => {
+                                        setEmail(event.target.value);
+                                        setThereIsNoEmail(false);
+                                    }}
                                 />
+                                {thereIsNoEmail ? <Typography color="error">Please enter your email.</Typography> : null}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -146,8 +198,12 @@ const SignUpForm = ({history}) => {
                                     label="Password"
                                     name="password"
                                     autoComplete="current-password"
-                                    type="password" data-test="password" value={password} onChange={event => setPassword(event.target.value)}
+                                    type="password" data-test="password" value={password} onChange={event => {
+                                        setPassword(event.target.value);
+                                        setIsShortPassword(false);
+                                }}
                                 />
+                                {isShortPassword ? <Typography color="error">Password is too short.</Typography> : null}
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
@@ -179,5 +235,5 @@ const SignUpForm = ({history}) => {
     };
 
 
-export default SignUpForm;
+export default withRouter(SignUpForm);
 //Brais

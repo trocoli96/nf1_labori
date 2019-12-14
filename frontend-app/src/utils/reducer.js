@@ -16,17 +16,24 @@ const AuthorizationReducer = (state = initialState, action) => {
 
     if (type === SAVE_CURRENT_TOKEN_ON_STATE) {
         if (localStorage.getItem("TOKEN_KEY")) {
-            newState.token = JSON.parse(localStorage.getItem("TOKEN_KEY"));
-            console.log("Token cogido de localStorage y guardado en state: " + newState.token);
+            if (localStorage.getItem("TOKEN_KEY")[0] === "\"") {
+                newState.token = JSON.parse(localStorage.getItem("TOKEN_KEY"));
+                console.log("Token cogido de localStorage y guardado en state: " + newState.token);
+            } else {
+                newState.token = localStorage.getItem("TOKEN_KEY");
+                console.log("Token cogido de localStorage y guardado en state: " + newState.token);
+
+            }
         }
-    }
-    if (type === DO_LOGOUT) {
-        newState.token = null;
-        localStorage.removeItem("TOKEN_KEY");
-        console.log("Token borrado del estado y de localStorage.");
-    }
+        if (type === DO_LOGOUT) {
+            newState.token = null;
+            localStorage.removeItem("TOKEN_KEY");
+            console.log("Token borrado del estado y de localStorage.");
+        }
 
-    return newState;
-};
+        return newState;
+    }
+    ;
+}
 
-export const AuthReducer = () => useReducer(AuthorizationReducer, initialState);
+    export const AuthReducer = () => useReducer(AuthorizationReducer, initialState);
