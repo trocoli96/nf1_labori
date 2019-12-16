@@ -15,11 +15,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('users/{id}', 'AuthController@me');
+Route::get('users/', 'AuthController@me');
+Route::get('users/', 'AuthController@me');
 Route::post('/user', 'AuthController@createUser');
 Route::put('users/{id}', 'AuthController@me');
+Route::post('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
-Route::post('/editprofile', 'AuthController@editUser');
+
+
 
 Route::get('experiences/{id}', 'ObjectController@returnExperiences');
 Route::post('/experience', 'ExperienceController@createExperience');
