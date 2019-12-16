@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 
 class ExperienceController extends Controller
@@ -26,4 +27,5 @@ class ExperienceController extends Controller
 
         return $post;
     }
-}
+
+};

@@ -21,7 +21,7 @@ Route::put('users/{id}', 'AuthController@me');
 Route::post('/login', 'AuthController@login');
 Route::post('/editprofile', 'AuthController@editUser');
 
-Route::get('experiences/{id}', 'ObjectController@returnExperiences');
+Route::get('experience/{id}', 'ExperienceController@showExperience');
 Route::post('/experience', 'ExperienceController@createExperience');
 Route::put('experience/{id}', 'ObjectController@returnExperiences');
 
