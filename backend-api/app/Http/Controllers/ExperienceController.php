@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 
 class ExperienceController extends Controller
@@ -10,9 +11,11 @@ class ExperienceController extends Controller
     public function createExperience(Request $request)
     {
         $request = $request->all();
-        $post = "";
+        $createExperience = "";
 
-        $post = Experience::create([
+        //Nombre para clarificar
+
+        $createExperience = Experience::create([
             'title' => $request['title'],
             'employment_type' => $request['employment_type'],
             'company' => $request['company'],
@@ -24,6 +27,31 @@ class ExperienceController extends Controller
             'description' => ($request['description'])
         ]);
 
-        return $post;
+        return $createExperience;
     }
-}
+    public function showExperience($id)
+    {
+        $error = 'Experience not found';
+
+        $experienceId = experience::where('id',"=",$id)
+            ->first();
+        $experienceInfo = array($experienceId['id'],
+            $experienceId['title'],
+            $experienceId['employment_type'],
+            $experienceId['company'],
+            $experienceId['location'],
+            $experienceId['start_date'],
+            $experienceId['end_date'],
+            $experienceId['user_id'],
+            $experienceId['headline'],
+            $experienceId['description']
+        );
+            if(!empty($experienceId)){
+                return $experienceInfo;
+            }
+            else{
+                return $error;
+            }
+    }
+
+};
