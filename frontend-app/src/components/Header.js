@@ -4,7 +4,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 
 /* ROUTER & ROUTES */
 import {Link} from "react-router-dom";
-import {PROFILE, SIGNUP, LOGIN} from "../routes/routes";
+import {PROFILE, SIGNUP, LOGIN, HOME} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
 import {makeStyles} from '@material-ui/core/styles';
@@ -12,8 +12,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import './Header.css';
 
 const useStyles = makeStyles(theme => ({
@@ -36,11 +34,8 @@ export default function ButtonAppBar() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon/>
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        Labori
+                        <Link to={HOME}><span style={{color: "white"}}>Labori</span></Link>
                     </Typography>
                     {state.token ?
                         <>
@@ -55,11 +50,10 @@ export default function ButtonAppBar() {
                         </>
                         :
                         <>
-                            <Button color="inherit"><Link to={SIGNUP} className="headerBtn">Sign up</Link></Button>
-                            <Button color="inherit"><Link to={LOGIN} className="headerBtn">Login</Link></Button>
+                            <Button color="inherit" href={SIGNUP}>Sign up</Button>
+                            <Button color="inherit" href={LOGIN}>Login</Button>
                         </>
                     }
-
                 </Toolbar>
             </AppBar>
         </div>
