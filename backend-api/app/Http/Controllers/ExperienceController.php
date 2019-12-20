@@ -33,7 +33,7 @@ class ExperienceController extends Controller
     {
         $error = 'Experience not found';
 
-        $experienceId = experience::where('id',"=",$id)
+        $experienceId = Experience::where('id',"=",$id)
             ->first();
         $experienceInfo = array($experienceId['id'],
             $experienceId['title'],
@@ -53,5 +53,30 @@ class ExperienceController extends Controller
                 return $error;
             }
     }
+    public function modifyExperience(Request $request)
+    {
+        $errorExperience = array("Experience doesn't exist");
+        $data = $request->all();
+        if (Experience::find($data['id']) === null) {
+            return $errorExperience;
+        }
+        else {
+            $data = Experience::find($request->id);
 
+            $data->title = $request->title;
+            $data->employment_type = $request->employment_type;
+            $data->location = $request->location;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
+            $data->headline = $request->headline;
+            $data->description = $request->description;
+            $data->company = $request->company;
+
+            $data->save();
+
+            $experienceRecord = Experience::where("id", "=", $data['id'])
+                ->first();
+        }
+        return $experienceRecord;
+    }
 };
