@@ -22,7 +22,7 @@ Route::put('users/{id}', 'AuthController@me');
 Route::post('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
 
-
+Route::post('/post', 'PostsController@createPost');
 
 Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
 Route::post('experience/', 'ObjectController@returnExperiencies');

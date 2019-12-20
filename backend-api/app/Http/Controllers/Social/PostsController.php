@@ -4,10 +4,12 @@
 namespace App\Http\Controllers\Social;
 
 use App\Post;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 
-class PostsController
+class PostsController extends Controller
 {
     public function createPost (Request $request)
     {

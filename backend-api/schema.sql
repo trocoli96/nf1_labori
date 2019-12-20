@@ -66,10 +66,10 @@ alter table experience add column created_at timestamp default current_timestamp
 alter table education add column updated_at timestamp default current_timestamp();
 alter table education add column created_at timestamp default current_timestamp();
 
-drop table if exists posts;
-drop table if exists likes;
-drop table if exists comments;
 drop table if exists event;
+drop table if exists comments;
+drop table if exists likes;
+drop table if exists posts;
 
 create table posts(
         id integer not null primary key auto_increment,
@@ -78,7 +78,6 @@ create table posts(
         created_at timestamp default current_timestamp() not null,
         updated_at timestamp default current_timestamp() not null,
         image_link varchar(255),
-        visible boolean not null,
         foreign key (user_id) references user (id)
 )
 

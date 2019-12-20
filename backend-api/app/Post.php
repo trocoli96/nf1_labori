@@ -17,6 +17,10 @@ class Post extends Authenticatable
         'image_link', 'created_at', 'post_text', 'user_id'
     ];
 
+    protected $guarded = [
+        'user_id', 'id'
+    ];
+
     protected $hidden = [
         'password', 'remember_token',
     ];
