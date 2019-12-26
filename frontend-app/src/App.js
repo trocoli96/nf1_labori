@@ -5,14 +5,15 @@ import {AuthReducer} from "./utils/reducer";
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
-import {HOME, SIGNUP, LOGIN, PROFILE} from "./routes/routes";
+import {HOME, SIGNUP, LOGIN, PROFILE, FEED} from "./routes/routes";
 
 /* COMPONENTS & STYLES */
-import Profilepage from "./components/Profilepage";
-import FormSignUp from './components/FormSignUp';
+import Profilepage from "./views/Profilepage";
+import FormSignUp from './views/FormSignUp';
 import Header from "./components/Header";
 import Login from "./components/Login";
-import Homepage from "./components/Homepage";
+import Homepage from "./views/Homepage";
+import FeedPage from "./views/FeedPage";
 import './App.css';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
     // renderizaremos estas rutas condicionalmente, en función de si hay o no hay token
     const privateRoutes = (
         <React.Fragment>
+            <Route path={FEED} component={FeedPage}/>
             <Route path={PROFILE} component={Profilepage}/>
         </React.Fragment>
     );
@@ -42,13 +44,13 @@ const App = () => {
                     <Header/>
                     <Switch>
                         <Route exact path={LOGIN}>
-                            {state.token ? <Redirect to={PROFILE}/> : <Login/>}
+                            {state.token ? <Redirect to={FEED}/> : <Login/>}
                         </Route>
                         <Route exact path={SIGNUP}>
-                            {state.token ? <Redirect to={PROFILE}/> : <FormSignUp/>}
+                            {state.token ? <Redirect to={FEED}/> : <FormSignUp/>}
                         </Route>
                         <Route exact path={HOME}>
-                            {state.token ? <Redirect to={PROFILE}/> : <Homepage/>}
+                            {state.token ? <Redirect to={FEED}/> : <Homepage/>}
                         </Route>
                         {state.token && privateRoutes}
                         {!state.token && privateRedirectsOnNoToken}

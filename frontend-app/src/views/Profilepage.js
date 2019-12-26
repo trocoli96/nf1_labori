@@ -3,7 +3,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 
 /* COMPONENTS & STYLES */
-import ButtonPopup from "./Buttonpopup";
+import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
 import {Container} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,6 +27,8 @@ const useStyles = makeStyles(theme =>({
     photocover: {
         height:150,
         background: 'blue',
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 3,
     },
     userinfo: {
         paddingLeft:'10px',

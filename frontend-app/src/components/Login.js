@@ -7,7 +7,7 @@ import {LOGIN, SIGNUP} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
 import '../App.css';
-import LoginForm from "./Login-Form";
+import LoginForm from "../views/Login-Form";
 
 function Login() {
 
