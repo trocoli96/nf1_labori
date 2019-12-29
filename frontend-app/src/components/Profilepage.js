@@ -5,8 +5,39 @@ import {AuthContext} from "../utils/AuthFront/context";
 /* COMPONENTS & STYLES */
 import ButtonPopup from "./Buttonpopup";
 import '../App.css';
+import {Container} from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+
+
+const useStyles = makeStyles(theme =>({
+    root: {
+        background: 'rgb(241,238,238)',
+        height:'2000px',
+    },
+    paper: {
+        padding: 2,
+        textAlign: 'center',
+        color: 'blue',
+    },
+    profile: {
+        padding: theme.spacing(5),
+    },
+    photocover: {
+        height:150,
+        background: 'blue',
+    },
+    userinfo: {
+        paddingLeft:'10px',
+        paddingTop:'10px',
+    },
+
+}));
 
 function Profilepage() {
+
+    const classes = useStyles();
 
     // recogemos lo proveído por el context
     const {state, dispatch} = useContext(AuthContext);
@@ -64,18 +95,20 @@ function Profilepage() {
 
     return (<AuthContext.Consumer>
         {props =>
-            <div className="profilepage">
-                <div id="profile-info">
-                    <div className="user-info">
-                        <p>Name: {userData.first_name ? userData.first_name : "?"}</p>
-                        <p>Last Name: {userData.last_name ? userData.last_name : "?"}</p>
-                        <p>Email: {userData.email ? userData.email : "?"}</p>
-                    </div>
-                    <div className="user-edit">
-                        <ButtonPopup/>
-                    </div>
-                </div>
-            </div>
+            <Container className={classes.root} maxWidth={'xl'}>
+                <Grid container spacing={6} className={classes.profile}>
+                    <Grid item xs={8}>
+                        <Container className={classes.photocover}> </Container>
+                        <Paper className={classes.userinfo}>
+                            <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
+                            <p>{userData.email ? userData.email : "?"}</p>
+                        <div>
+                            <ButtonPopup/>
+                        </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </Container>
         }
     </AuthContext.Consumer>)
 }
