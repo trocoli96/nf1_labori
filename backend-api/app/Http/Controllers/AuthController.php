@@ -89,22 +89,14 @@ class AuthController extends Controller
             $olduserRecord = User::where("id", "=", $data['id'])
                 ->first();
             $oldnameGetter = $olduserRecord['first_name'];
-
             $data = User::find($request->id);
-
             $data->first_name = $request->first_name;
-
             $data->email = $request->email;
-
-
             $data->save();
-
             $userRecord = User::where("id", "=", $data['id'])
                 ->first();
-
             $emailGetter = $userRecord['email'];
             $firstnameGetter = $userRecord['first_name'];
-
             if ($olduserRecord['first_name'] === $data['first_name'])
                 return $error = ["Username is the same as previous"];
             else {

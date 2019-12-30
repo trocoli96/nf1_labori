@@ -24,9 +24,9 @@ Route::post('/login', 'AuthController@login');
 
 
 
-Route::get('experience/{id}', 'ExperienceController@showExperience');
-Route::post('/experience', 'ExperienceController@createExperience');
-Route::put('experience/{id}', 'ExperienceController@modifyExperience');
+Route::get('experiences/{id}', 'ObjectController@returnExperiencies');
+Route::post('experience/', 'ObjectController@returnExperiencies');
+Route::put('experience/{id}', 'ObjectController@returnExperiencies');
 
 Route::get('educations/{id}', 'ObjectController@returnEducation');
 Route::post('education', 'ObjectController@createEducation');
