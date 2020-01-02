@@ -37,5 +37,6 @@ Route::post('license', 'ObjectController@returnLicense');
 Route::put('licenses/{id}', 'ObjectController@returnLicense');
 
 Route::get('likes/{id}', 'LikesController@getLikesFromPost');
+Route::post('like', 'LikesController@updateLike');
 
 
