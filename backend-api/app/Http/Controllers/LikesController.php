@@ -50,12 +50,13 @@ class LikesController extends Controller
             return abort(400, "Either userId or postId doesn't exist");
         }
 
-        // TODO: buscamos si la combinación user + post ya existe, y entonces borramos la fila
+        // buscamos si la combinación user + post ya existe, y entonces borramos la fila
         $likeAlreadyExists = DB::table('likes')->where('user_id', $userId)->where('post_id', $data['post_id'])->get();
 
-        if ($likeAlreadyExists !== null) {
-            //$likeAlreadyExists->delete();
-            return response("Like deleted");
+        if (!($likeAlreadyExists->isEmpty())) {
+            $rowToDelete = DB::table('likes')->where('user_id', $userId)->where('post_id', $data['post_id']);
+            $rowToDelete->delete();
+            return response("Like deleted succesfully: \n" . $likeAlreadyExists);
         }
 
         // si no existe, añadimos fila
@@ -66,7 +67,9 @@ class LikesController extends Controller
 
         $newLike->save();
 
-        return response("Like added succesfully", 200);
+        return response("Like added succesfully:\n" . $newLike, 200);
+
+        // TODO: AÑADIR TAMBIÉN EL REGISTRO DEL LIKE/UNLIKE EN LA TABLA DE EVENTOS
 
     }
 }
