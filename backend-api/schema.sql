@@ -72,43 +72,40 @@ drop table if exists likes;
 drop table if exists posts;
 
 create table posts(
-        id integer not null primary key auto_increment,
-        user_id integer not null,
-        post_text text not null,
-        created_at timestamp default current_timestamp() not null,
-        updated_at timestamp default current_timestamp() not null,
-        image_link varchar(255),
-        foreign key (user_id) references user (id)
+                      id integer not null primary key auto_increment,
+                      user_id integer not null,
+                      post_text text not null,
+                      created_at timestamp default current_timestamp() not null,
+                      updated_at timestamp default current_timestamp() not null,
+                      image_link varchar(255),
+                      foreign key (user_id) references user (id)
 )
-
 create table likes(
-        id integer not null primary key auto_increment,
-        user_id integer not null,
-        post_id integer not null,
-        created_at timestamp default current_timestamp() not null,
-        updated_at timestamp default current_timestamp() not null,
-        foreign key (user_id) references user (id),
-        foreign key (post_id) references posts (id)
+                      id integer not null primary key auto_increment,
+                      user_id integer not null,
+                      post_id integer not null,
+                      created_at timestamp default current_timestamp() not null,
+                      updated_at timestamp default current_timestamp() not null,
+                      foreign key (user_id) references user (id),
+                      foreign key (post_id) references posts (id)
 )
-
 create table comments(
-    id integer not null primary key auto_increment,
-    author_id integer not null,
-    post_id integer not null,
-    comment_body text not null,
-    created_at timestamp default current_timestamp() not null,
-    updated_at timestamp default current_timestamp() not null,
-    foreign key (author_id) references user (id),
-    foreign key (post_id) references posts (id)
+                         id integer not null primary key auto_increment,
+                         author_id integer not null,
+                         post_id integer not null,
+                         comment_body text not null,
+                         created_at timestamp default current_timestamp() not null,
+                         updated_at timestamp default current_timestamp() not null,
+                         foreign key (author_id) references user (id),
+                         foreign key (post_id) references posts (id)
 )
-
 create table event(
-    id integer not null primary key auto_increment,
-    name varchar (255) not null,
-    user_id integer not null,
-    object_id varchar (255) not null,
-    object_type varchar (255) not null,
-    created_at timestamp default current_timestamp() not null,
-    updated_at timestamp default current_timestamp() not null,
-    foreign key (user_id) references user (id)
+                      id integer not null primary key auto_increment,
+                      name varchar (255) not null,
+                      user_id integer not null,
+                      object_id varchar (255) not null,
+                      object_type varchar (255) not null,
+                      created_at timestamp default current_timestamp() not null,
+                      updated_at timestamp default current_timestamp() not null,
+                      foreign key (user_id) references user (id)
 )
