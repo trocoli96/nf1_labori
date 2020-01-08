@@ -38,10 +38,11 @@ const useStyles = makeStyles({
                 <p>fkwjfgeklrjger</p>
                     </CardContent>
                 </Card>
-            </Modal>
+
             <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
                 Edit Profile
             </Button>
+            </Modal>
         </React.Fragment>
 
     )

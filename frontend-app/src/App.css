@@ -120,3 +120,8 @@ button {
 .center-spacing{
     margin:0 200px;
 }
+.column{
+    float:left;
+    width:33.33%;
+
+}

@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme =>({
     columnCenter:{
         float: 'left',
         width: '50%',
-        backgroundColor: 'white',
+        backgroundColor: 'grey',
         height: '60em',
     },
     columnSides: {

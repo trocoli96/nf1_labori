@@ -4,7 +4,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 
 /* ROUTER & ROUTES */
 import {Link} from "react-router-dom";
-import {PROFILE, SIGNUP, LOGIN, HOME} from "../routes/routes";
+import {PROFILE, SIGNUP, LOGIN, HOME, FEED} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
 import {makeStyles} from '@material-ui/core/styles';
@@ -39,6 +39,11 @@ export default function ButtonAppBar() {
                     </Typography>
                     {state.token ?
                         <>
+                            <Button color="inherit">
+                                <Link to={FEED} className="headerBtn">
+                                    Home
+                                </Link>
+                            </Button>
                             <Button color="inherit">
                                 <Link to={PROFILE} className="headerBtn">
                                     Profile
