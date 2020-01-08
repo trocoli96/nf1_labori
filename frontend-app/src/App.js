@@ -31,6 +31,7 @@ const App = () => {
         <React.Fragment>
             <Route path={FEED} component={FeedPage}/>
             <Route path={PROFILE} component={Profilepage}/>
+            <Route path={FEED} component={FeedPage}/>
         </React.Fragment>
     );
     const privateRedirectsOnNoToken = (

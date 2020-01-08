@@ -10,13 +10,15 @@ import TextField from "@material-ui/core/TextField";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {Container} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme =>({
     textfield: {
         background: 'white',
         width: '80%',
         borderColor: 'black',
-        margin:'1em',
+        marginLeft:'1em',
+        marginTop:'1em',
     },
     root: {
         background: 'rgb(241,238,238)',
@@ -65,6 +67,9 @@ function FeedPage(){
                                             ),
                                         }}
                                     />
+                                    <Button variant="contained" color="primary">
+                                    Primary
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </div>

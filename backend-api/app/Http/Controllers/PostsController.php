@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\Social;
+namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
 {
+
+
+
     public function createPost (Request $request)
     {
         $post = Post::create([
