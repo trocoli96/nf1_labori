@@ -1,6 +1,7 @@
 /* BASIC STUFF */
 import React, {useState, useEffect, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
 import ButtonPopup from "../components/Buttonpopup";
@@ -42,7 +43,7 @@ function Profilepage() {
     const classes = useStyles();
 
     // recogemos lo proveído por el context
-    const {state, dispatch} = useContext(AuthContext);
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     // creamos los hooks de estado con los datos del usuario
     const [userData, setUserData] = useState({
@@ -55,7 +56,7 @@ function Profilepage() {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/users/?token=` + state.token;
+            const url = `http://127.0.0.1/api/users/?token=` + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -92,7 +93,7 @@ function Profilepage() {
 
         fetchData();
 
-    }, [dispatch, state.token]);
+    }, [dispatch]);
 
 
     return (<AuthContext.Consumer>

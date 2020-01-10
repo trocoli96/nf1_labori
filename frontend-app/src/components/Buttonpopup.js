@@ -31,6 +31,9 @@ const useStyles = makeStyles({
     const classes = useStyles();
 
     return(
+        <p>Texto temporal, el código original daba error</p>
+        /*
+        TODO: LO DEJAMOS ASI DE MOMENTO PORQUE ESTE CODIGO DABA ERROR
         <React.Fragment>
             <Modal open={open} onClose={() => setOpen(false)}>
                 <Card className={classes.card}>
@@ -43,8 +46,7 @@ const useStyles = makeStyles({
                 Edit Profile
             </Button>
             </Modal>
-        </React.Fragment>
-
+        </React.Fragment>*/
     )
 }
 export default ButtonPopup;

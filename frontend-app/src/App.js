@@ -1,7 +1,8 @@
 /* BASIC STUFF */
-import React, {useEffect} from 'react';
+import React from 'react';
 import {AuthContext} from "./utils/AuthFront/context";
 import {AuthReducer} from "./utils/reducer";
+import getToken from "./utils/tokenHelper";
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
@@ -21,22 +22,33 @@ const App = () => {
     // recogemos el reducer, para luego pasarlo a los componentes que requieran sus datos a través de context
     const [state, dispatch] = AuthReducer();
 
-    // si el token existe en localStorage, lo guardamos en nuestra variable de contexto al cargar la app
-    useEffect(() => {
-        dispatch({type: 'SAVE_CURRENT_TOKEN_ON_STATE'});
-    }, [dispatch]);
+    // guardamos el token para comprobar luego hacia dónde debemos dirigir en función de la ruta
+    let currentToken = getToken();
 
-    // renderizaremos estas rutas condicionalmente, en función de si hay o no hay token
-    const privateRoutes = (
-        <React.Fragment>
-            <Route path={FEED} component={FeedPage}/>
-            <Route path={PROFILE} component={Profilepage}/>
-            <Route path={FEED} component={FeedPage}/>
-        </React.Fragment>
-    );
-    const privateRedirectsOnNoToken = (
-        <Route path="*" render={() => <Redirect to={LOGIN}/>}/>
-    );
+    // si no hay token, serán estas rutas
+    // TODO: Seguro que hay una forma más limpia que repetir dos veces las rutas
+    if (currentToken === null) {
+        return (
+            <div className={'body'}>
+                <Router>
+                    <AuthContext.Provider value={{state, dispatch}}>
+                        <Header/>
+                        <Switch>
+                            <Route exact path={LOGIN} component={Login}/>
+                            <Route exact path={SIGNUP} component={FormSignUp}/>
+                            <Route exact path={HOME} component={Homepage}/>
+                            <Route exact path={PROFILE}>
+                                <Redirect to={LOGIN}/>
+                            </Route>
+                            <Route exact path={FEED}>
+                                <Redirect to={LOGIN}/>
+                            </Route>
+                        </Switch>
+                    </AuthContext.Provider>
+                </Router>
+            </div>
+        )
+    }
 
     return (
         <div className={'body'}>
@@ -45,16 +57,16 @@ const App = () => {
                     <Header/>
                     <Switch>
                         <Route exact path={LOGIN}>
-                            {state.token ? <Redirect to={FEED}/> : <Login/>}
+                            <Redirect to={FEED}/>
                         </Route>
                         <Route exact path={SIGNUP}>
-                            {state.token ? <Redirect to={FEED}/> : <FormSignUp/>}
+                            <Redirect to={FEED}/>
                         </Route>
                         <Route exact path={HOME}>
-                            {state.token ? <Redirect to={FEED}/> : <Homepage/>}
+                            <Redirect to={FEED}/>
                         </Route>
-                        {state.token && privateRoutes}
-                        {!state.token && privateRedirectsOnNoToken}
+                        <Route exact path={PROFILE} component={Profilepage}/>
+                        <Route exact path={FEED} component={FeedPage}/>
                     </Switch>
                 </AuthContext.Provider>
             </Router>
