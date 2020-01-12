@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 class AuthController extends Controller
 {
     /**
@@ -31,7 +32,7 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
             'password' => ['required', 'string', 'min:8'],
         ]);
-        if(!$userValidator->validate()) {
+        if (!$userValidator->validate()) {
             $errors = $userValidator->errors()->getMessages();
             return $this->errorResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -41,16 +42,18 @@ class AuthController extends Controller
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
         ]);
-        return  $this->login($request);
+        return $this->login($request);
     }
+
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->respondWithToken($token);
     }
+
     /**
      * Get the authenticated User.
      *
@@ -60,6 +63,7 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
+
     /**
      * Log the user out (Invalidate the token).
      *
@@ -70,6 +74,7 @@ class AuthController extends Controller
         auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
+
     /**
      * Refresh a token.
      *
@@ -79,39 +84,39 @@ class AuthController extends Controller
     {
         return $this->respondWithToken(auth()->refresh());
     }
+
     public function editUser(Request $request)
     {
-        $errorone = array('usuario no existe');
         $data = $request->all();
-        if (User::find($data['id']) === null) {
-            return $errorone;
-        } else {
-            $olduserRecord = User::where("id", "=", $data['id'])
-                ->first();
-            $oldnameGetter = $olduserRecord['first_name'];
 
-            $data = User::find($request->id);
+        User::findOrFail($data['id']);
 
-            $data->first_name = $request->first_name;
+        $olduserRecord = User::where("id", "=", $data['id'])
+            ->first();
+        $oldnameGetter = $olduserRecord['first_name'];
 
-            $data->email = $request->email;
+        $data = User::find($request->id);
+
+        $data->first_name = $request->first_name;
+
+        $data->email = $request->email;
 
 
-            $data->save();
+        $data->save();
 
-            $userRecord = User::where("id", "=", $data['id'])
-                ->first();
+        $userRecord = User::where("id", "=", $data['id'])
+            ->first();
 
-            $emailGetter = $userRecord['email'];
-            $firstnameGetter = $userRecord['first_name'];
+        $emailGetter = $userRecord['email'];
+        $firstnameGetter = $userRecord['first_name'];
 
-            if ($olduserRecord['first_name'] === $data['first_name'])
-                return $error = ["Username is the same as previous"];
-            else {
-                return [$oldnameGetter, $emailGetter, $firstnameGetter];
-            }
+        if ($olduserRecord['first_name'] === $data['first_name'])
+            return response()->json(["error" => "Username is the same as previous"], 400);
+        else {
+            return response()->json([$oldnameGetter, $emailGetter, $firstnameGetter], 200);
         }
     }
+
     protected function respondWithToken($token)
     {
         return response()->json([
