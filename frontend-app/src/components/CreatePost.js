@@ -11,8 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from '@material-ui/core/Button';
-import {CircularProgress, Typography} from "@material-ui/core";
-import ButtonPostedSuccesfull from "./ButtonPostedSuccesfull";
+import {CircularProgress, Modal, Typography} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme =>({
@@ -32,7 +31,7 @@ function CreatePost() {
     const [post_text, setPostText] = useState('');
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
-    const [published, setPublished] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const data = {
         post_text: post_text,
@@ -61,7 +60,7 @@ function CreatePost() {
                     return Promise.reject(response.status);
                 }).then(data => {
                     setIsFetching(false);
-                    setPublished(true);
+                    setOpen(true);
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -88,8 +87,13 @@ function CreatePost() {
                             ),
                         }}
                         onChange={(e) => setPostText(e.target.value)}/>
-                    {published ?
-                        <ButtonPostedSuccesfull/> : null
+                    {open ?
+                        <Modal open={open}>
+                            <p>Congratulations Laborier! Your post has been created!</p>
+                            <Button onClick={() => setOpen(false)}>
+                                Close
+                            </Button>
+                        </Modal> : null
                     }
                     {error ?
                         <Typography color="error">There was a problem posting your amazing post!</Typography> : null}
