@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useContext, useState} from 'react';
+import React from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 
 /* COMPONENTS & STYLES */
@@ -15,11 +15,13 @@ const useStyles = makeStyles(theme =>({
         height:'2000px',
         width:'100%',
         paddingTop: '30px',
+        paddingLeft: 200 ,
+        paddingRight: 200 ,
     },
     columnCenter:{
         float: 'left',
         width: '50%',
-        backgroundColor: 'grey',
+        backgroundColor: 'white',
         height: '60em',
     },
     columnSides: {

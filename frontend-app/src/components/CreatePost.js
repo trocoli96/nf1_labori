@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
@@ -17,12 +17,36 @@ import {CircularProgress, Modal, Typography} from "@material-ui/core";
 const useStyles = makeStyles(theme =>({
     textfield: {
         background: 'white',
-        width: '80%',
+        width: '100%',
         borderColor: 'black',
-        marginLeft:'1em',
-        marginTop:'1em',
+        paddingLeft: 10,
+        marginTop:0,
+        borderRadius: 0,
     },
+    paper: {
+        marginTop: 200,
+        marginLeft: 600,
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+    buttonClose: {
+        marginLeft: 100,
+    },
+    title: {
+        marginTop: 0,
+        marginBottom: 0,
+        paddingLeft: 10,
+    },
+    postbutton:{
+        paddingLeft: '50%' ,
+        paddingRight: '50%',
+    }
 }));
+
 
 function CreatePost() {
 
@@ -35,6 +59,14 @@ function CreatePost() {
 
     const data = {
         post_text: post_text,
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     const post = (e) => {
@@ -60,7 +92,7 @@ function CreatePost() {
                     return Promise.reject(response.status);
                 }).then(data => {
                     setIsFetching(false);
-                    setOpen(true);
+                    handleOpen();
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -72,37 +104,53 @@ function CreatePost() {
         fetchData();
     };
 
+
         return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={8}>
-                    <TextField
-                        variant="outlined"
-                        placeholder="Write a post..."
-                        className={classes.textfield}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <BorderColorIcon/>
-                                </InputAdornment>
-                            ),
-                        }}
-                        onChange={(e) => setPostText(e.target.value)}/>
-                    {open ?
-                        <Modal open={open}>
-                            <p>Congratulations Laborier! Your post has been created!</p>
-                            <Button onClick={() => setOpen(false)}>
-                                Close
+                    <Grid item xd={8}>
+                        <span className={classes.title}>Create a post</span>
+                        <TextField
+                            variant="outlined"
+                            placeholder="Share your experience with other Laboriers..."
+                            multiline={true}
+                            rows={3}
+                            rowsMax={3}
+                            className={classes.textfield}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <BorderColorIcon/>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            onChange={(e) => setPostText(e.target.value)}/>
+
+                        {error ?
+                            <Typography color="error">There was a problem posting your amazing post!</Typography> : null}
+                        {isFetching ?
+                            <CircularProgress/> :
+                            <Button variant="contained" color="primary" onClick={post} className={classes.postbutton}>
+                                Post!
                             </Button>
-                        </Modal> : null
-                    }
-                    {error ?
-                        <Typography color="error">There was a problem posting your amazing post!</Typography> : null}
-                    {isFetching ?
-                        <CircularProgress/> :
-                        <Button variant="contained" color="primary" onClick={post}>
-                            Post!
-                        </Button>
-                    }
+                        }
+                        <Modal
+                            aria-labelledby="simple-modal-title"
+                            aria-describedby="simple-modal-description"
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <div className={classes.paper}>
+                                <h2 id="simple-modal-title">Congratulations!</h2>
+                                <p id="simple-modal-description">
+                                    Well done Laborier! You successfully posted your first post!
+                                </p>
+                                <Button variant="contained" color="primary" onClick={handleClose} className={classes.buttonClose}>
+                                    Close
+                                </Button>
+                            </div>
+                        </Modal>
+                    </Grid>
                 </Grid>
             }
         </AuthContext.Consumer>)
