@@ -22,13 +22,13 @@ const useStyles = makeStyles(theme =>({
     columnCenter:{
         float: 'left',
         width: '50%',
-        backgroundColor: 'white',
+        backgroundColor: 'rgb(241,238,238)',
         height: '60em',
     },
     columnSides: {
         float: 'left',
         width: '25%',
-        backgroundColor: 'white',
+        backgroundColor: 'rgb(241,238,238)',
         height: '60em',
         justifyContent: 'center',
     },
@@ -45,7 +45,6 @@ function FeedPage(){
                 <div className={classes.columnSides}>
                     <ProfileInfoFeed/>
                 </div>
-
                 <div className={classes.columnCenter}>
                             <Grid container spacing={6} className={classes.profile}>
                                 <CreatePost/>

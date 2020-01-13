@@ -6,7 +6,7 @@ import getToken from "../utils/tokenHelper";
 /* COMPONENTS & STYLES */
 import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
-import {Container} from "@material-ui/core";
+import {CircularProgress, Container} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -103,8 +103,8 @@ function Profilepage() {
                     <Grid item xs={8}>
                         <Container className={classes.photocover}> </Container>
                         <Paper className={classes.userinfo}>
-                            <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
-                            <p>{userData.email ? userData.email : "?"}</p>
+                            <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
+                            <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
                         <div>
                             <ButtonPopup/>
                         </div>
