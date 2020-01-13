@@ -37,4 +37,9 @@ class PostsController extends Controller
             return $post;
         }
     }
+
+    public function returnPost()
+    {
+
+    }
 }

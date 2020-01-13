@@ -20,6 +20,14 @@ services:
     networks:
       - app-network
 
+  #redis
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - app-network
+
   #Nginx Service
   webserver:
     image: nginx:alpine
