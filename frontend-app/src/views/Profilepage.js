@@ -1,11 +1,12 @@
 /* BASIC STUFF */
 import React, {useState, useEffect, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
-import ButtonPopup from "./Buttonpopup";
+import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
-import {Container} from "@material-ui/core";
+import {CircularProgress, Container} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -27,6 +28,8 @@ const useStyles = makeStyles(theme =>({
     photocover: {
         height:150,
         background: 'blue',
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 3,
     },
     userinfo: {
         paddingLeft:'10px',
@@ -40,7 +43,7 @@ function Profilepage() {
     const classes = useStyles();
 
     // recogemos lo proveído por el context
-    const {state, dispatch} = useContext(AuthContext);
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     // creamos los hooks de estado con los datos del usuario
     const [userData, setUserData] = useState({
@@ -53,7 +56,7 @@ function Profilepage() {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/users/?token=` + state.token;
+            const url = `http://127.0.0.1/api/users/?token=` + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -90,7 +93,7 @@ function Profilepage() {
 
         fetchData();
 
-    }, [dispatch, state.token]);
+    }, [dispatch]);
 
 
     return (<AuthContext.Consumer>
@@ -100,8 +103,8 @@ function Profilepage() {
                     <Grid item xs={8}>
                         <Container className={classes.photocover}> </Container>
                         <Paper className={classes.userinfo}>
-                            <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
-                            <p>{userData.email ? userData.email : "?"}</p>
+                            <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
+                            <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
                         <div>
                             <ButtonPopup/>
                         </div>

@@ -4,7 +4,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 
 /* ROUTER & ROUTES */
 import {Link} from "react-router-dom";
-import {PROFILE, SIGNUP, LOGIN, HOME} from "../routes/routes";
+import {PROFILE, SIGNUP, LOGIN, HOME, FEED} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
 import {makeStyles} from '@material-ui/core/styles';
@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import './Header.css';
+import getToken from "../utils/tokenHelper";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar() {
     const classes = useStyles();
-    const {state, dispatch} = useContext(AuthContext);
+    const {dispatch} = useContext(AuthContext); // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     return (
         <div className={classes.root}>
@@ -37,8 +38,13 @@ export default function ButtonAppBar() {
                     <Typography variant="h6" className={classes.title}>
                         <Link to={HOME}><span style={{color: "white"}}>Labori</span></Link>
                     </Typography>
-                    {state.token ?
+                    {getToken() ?
                         <>
+                            <Button color="inherit">
+                                <Link to={FEED} className="headerBtn">
+                                    Home
+                                </Link>
+                            </Button>
                             <Button color="inherit">
                                 <Link to={PROFILE} className="headerBtn">
                                     Profile

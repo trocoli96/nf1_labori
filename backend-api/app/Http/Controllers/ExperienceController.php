@@ -77,6 +77,7 @@ class ExperienceController extends Controller
             $experienceRecord = Experience::where("id", "=", $data['id'])
                 ->first();
         }
-        return $experienceRecord;
+
+        return response()->json($experienceRecord, 200);
     }
 };

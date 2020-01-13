@@ -1,10 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../App.css';
-import Button from '@material-ui/core/Button';
-import {Modal} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+
 
 
 const useStyles = makeStyles({
@@ -25,12 +22,15 @@ const useStyles = makeStyles({
     },
 });
 
-    function ButtonPopup(props){
+   function ButtonPopup(props){
 
-    const [open, setOpen] = useState(false);
-    const classes = useStyles();
+ //   const [open, setOpen] = useState(false);
+ //   const classes = useStyles();
 
     return(
+        <p>Texto temporal, el código original daba error</p>
+        /*
+        TODO: LO DEJAMOS ASI DE MOMENTO PORQUE ESTE CODIGO DABA ERROR
         <React.Fragment>
             <Modal open={open} onClose={() => setOpen(false)}>
                 <Card className={classes.card}>
@@ -38,12 +38,12 @@ const useStyles = makeStyles({
                 <p>fkwjfgeklrjger</p>
                     </CardContent>
                 </Card>
-            </Modal>
+
             <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
                 Edit Profile
             </Button>
-        </React.Fragment>
-
+            </Modal>
+        </React.Fragment>*/
     )
 }
 export default ButtonPopup;

@@ -10,8 +10,15 @@ class Post extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'posts';
+
+
     protected $fillable = [
-        'title', 'date', 'body_content',
+        'image_link', 'created_at', 'post_text', 'user_id'
+    ];
+
+    protected $guarded = [
+        'user_id', 'id'
     ];
 
     protected $hidden = [
