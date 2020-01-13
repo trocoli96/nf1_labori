@@ -18,10 +18,8 @@ const useStyles = makeStyles(theme =>({
     textfield: {
         background: 'white',
         width: '100%',
-        borderColor: 'black',
-        paddingLeft: 10,
+        marginLeft: 30,
         marginTop:0,
-        borderRadius: 0,
     },
     paper: {
         marginTop: 200,
@@ -39,11 +37,19 @@ const useStyles = makeStyles(theme =>({
     title: {
         marginTop: 0,
         marginBottom: 0,
+        marginLeft: 20,
         paddingLeft: 10,
     },
     postbutton:{
-        paddingLeft: '50%' ,
-        paddingRight: '50%',
+        marginLeft:'30px !important',
+        marginTop: '0px !important',
+        marginBottom: '0px !important',
+        marginRight: '0px !important',
+        width:'100%',
+        borderRadius: '0px',
+    },
+    createpost:{
+        marginTop:30,
     }
 }));
 
@@ -107,16 +113,17 @@ function CreatePost() {
 
         return (<AuthContext.Consumer>
             {props =>
-                <Grid item xs={8}>
-                    <Grid item xd={8}>
+                <Grid item xs={11}>
+                    <Grid item xd={10} className={classes.createpost}>
                         <span className={classes.title}>Create a post</span>
                         <TextField
                             variant="outlined"
-                            placeholder="Share your experience with other Laboriers..."
+                            placeholder="Share your thoughts with other Laboriers..."
                             multiline={true}
                             rows={3}
                             rowsMax={3}
                             className={classes.textfield}
+                            borderRadius={0}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">

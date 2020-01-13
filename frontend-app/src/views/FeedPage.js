@@ -8,6 +8,7 @@ import '../App.css';
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
+import ProfileInfoFeed from "../components/ProfileInfoFeed";
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles(theme =>({
         width: '25%',
         backgroundColor: 'white',
         height: '60em',
+        justifyContent: 'center',
     },
 
 }));
@@ -41,6 +43,7 @@ function FeedPage(){
         {props =>
             <Container className={classes.root} maxWidth={'xl'}>
                 <div className={classes.columnSides}>
+                    <ProfileInfoFeed/>
                 </div>
 
                 <div className={classes.columnCenter}>
