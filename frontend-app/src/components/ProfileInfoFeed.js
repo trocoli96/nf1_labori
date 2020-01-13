@@ -7,14 +7,13 @@ import getToken from "../utils/tokenHelper";
 import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
 import {Container} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 
 
-
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
     paper: {
         padding: 2,
         textAlign: 'center',
@@ -22,17 +21,17 @@ const useStyles = makeStyles(theme =>({
     },
     profile: {
         padding: theme.spacing(5),
-        width:'100%',
-        margin:0,
+        width: '100%',
+        margin: 0,
     },
     photocover: {
         marginLeft: theme.spacing(11),
     },
     userinfo: {
-        paddingTop:'10px',
+        paddingTop: '10px',
         textAlign: 'center',
     },
-    gridfeed:{
+    gridfeed: {
         padding: '0px !important',
     }
 }));
@@ -85,7 +84,6 @@ function ProfileInfoFeed() {
                     if (error === 401) {
                         console.log("Token inválido, probablemente caducado. Hacemos logout.");
                         dispatch({type: "DO_LOGOUT"});
-
                     }
                 });
         };
@@ -97,20 +95,20 @@ function ProfileInfoFeed() {
 
     return (<AuthContext.Consumer>
         {props =>
-                <Grid container spacing={6} className={classes.profile}>
-                    <Grid item xs={12} className={classes.gridfeed}>
-                        <Paper className={classes.userinfo}>
-                            <Container>
-                                <Avatar className={classes.photocover}>H</Avatar>
-                            </Container>
-                            <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
-                            <p>{userData.email ? userData.email : "?"}</p>
-                            <div>
-                                <ButtonPopup/>
-                            </div>
-                        </Paper>
-                    </Grid>
+            <Grid container spacing={6} className={classes.profile}>
+                <Grid item xs={12} className={classes.gridfeed}>
+                    <Paper className={classes.userinfo}>
+                        <Container>
+                            <Avatar className={classes.photocover}>H</Avatar>
+                        </Container>
+                        <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
+                        <p>{userData.email ? userData.email : "?"}</p>
+                        <div>
+                            <ButtonPopup/>
+                        </div>
+                    </Paper>
                 </Grid>
+            </Grid>
         }
     </AuthContext.Consumer>)
 }
