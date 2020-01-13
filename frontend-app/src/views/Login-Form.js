@@ -82,7 +82,13 @@ function LoginForm({history}) {
                     data-test="email"
                     value={email}
                     autoFocus
-                    onChange={(event) => setEmail(event.target.value)}/>
+                    onChange={(event) => setEmail(event.target.value)}
+                    onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                            // Do code here
+                            handleSubmit();
+                        }
+                    }}/>
             </div>
             <div className="field_login">
                 <TextField
@@ -97,12 +103,26 @@ function LoginForm({history}) {
                     type="password"
                     data-test="password"
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}/>
+                    onChange={(event) => setPassword(event.target.value)}
+                    onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                            // Do code here
+                            handleSubmit();
+                        }
+                    }}
+                />
+
             </div>
             {error ? <Typography color="error">User and/or password are not correct.</Typography> : null}
             {isFetching ?
                 <CircularProgress/> :
-                <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    onClick={handleSubmit}
+
+                >
                     Sign in
                 </Button>
             }

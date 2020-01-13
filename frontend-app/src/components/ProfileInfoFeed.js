@@ -6,13 +6,12 @@ import getToken from "../utils/tokenHelper";
 /* COMPONENTS & STYLES */
 import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
-import {Container} from "@material-ui/core";
+import {CircularProgress, Container} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
-
-
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme =>({
     paper: {
@@ -21,12 +20,19 @@ const useStyles = makeStyles(theme =>({
         color: 'blue',
     },
     profile: {
-        padding: theme.spacing(5),
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
         width:'100%',
         margin:0,
     },
     photocover: {
-        marginLeft: theme.spacing(11),
+        textAlign:'center',
+        marginBottom:'20%',
+    },
+    icon: {
+        display: 'inline-flex',
     },
     userinfo: {
         paddingTop:'10px',
@@ -34,6 +40,13 @@ const useStyles = makeStyles(theme =>({
     },
     gridfeed:{
         padding: '0px !important',
+    },
+    text:{
+        fontSize: '90%',
+        lineHeight:'2px',
+    },
+    title:{
+        lineHeight:'2px',
     }
 }));
 
@@ -53,7 +66,6 @@ function ProfileInfoFeed() {
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
-
         const fetchData = async () => {
             const url = `http://127.0.0.1/api/users/?token=` + getToken();
             const options = {
@@ -100,14 +112,13 @@ function ProfileInfoFeed() {
                 <Grid container spacing={6} className={classes.profile}>
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
-                            <Container>
-                                <Avatar className={classes.photocover}>H</Avatar>
+                            <Container className={classes.photocover}>
+                                <Avatar className={classes.icon}>H</Avatar>
                             </Container>
-                            <h3>{userData.first_name ? userData.first_name : "?"} {userData.last_name ? userData.last_name : "?"}</h3>
-                            <p>{userData.email ? userData.email : "?"}</p>
-                            <div>
-                                <ButtonPopup/>
-                            </div>
+                            <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
+                            <p className={classes.text}>{userData.email ? userData.email : <CircularProgress/>}</p>
+                                <Divider/>
+                            <p>Saved Items</p>
                         </Paper>
                     </Grid>
                 </Grid>
