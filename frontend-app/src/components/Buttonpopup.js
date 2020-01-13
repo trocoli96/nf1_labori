@@ -1,49 +1,67 @@
 import React from 'react';
 import '../App.css';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Button from "@material-ui/core/Button";
 
 
+function ButtonPopup(props) {
 
-const useStyles = makeStyles({
-    card: {
-        minWidth: 275,
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    },
-    bullet: {
-        display: 'center-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
+    const useStyles = makeStyles(theme => ({
+        paper: {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: theme.palette.background.paper,
+            border: '0px solid #000',
+            boxShadow: theme.shadows[5],
+            top: "50%",
+            left: "50%",
+            marginLeft: "-200px",
+            marginTop: "-150px"
+        },
+        popupHeader: {
+            padding: theme.spacing(2, 4, 3),
+            backgroundColor: "#3f51b5",
+            color: "white"
+        },
+        textPadding: {
+            padding: theme.spacing(2, 4, 3),
+        }
+    }));
 
-   function ButtonPopup(props){
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
 
- //   const [open, setOpen] = useState(false);
- //   const classes = useStyles();
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
-    return(
-        <p>Texto temporal, el código original daba error</p>
-        /*
-        TODO: LO DEJAMOS ASI DE MOMENTO PORQUE ESTE CODIGO DABA ERROR
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
         <React.Fragment>
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Card className={classes.card}>
-                    <CardContent>
-                <p>fkwjfgeklrjger</p>
-                    </CardContent>
-                </Card>
-
+            <Modal
+                open={open}
+                onClose={handleClose}
+            >
+                <div className={classes.paper}>
+                    <div className={classes.popupHeader}>
+                        <h2>Edit your profile</h2>
+                    </div>
+                    <div className={classes.textPadding}>
+                        <p>
+                            Name, last name, headline...
+                        </p>
+                    </div>
+                </div>
+            </Modal>
             <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
                 Edit Profile
             </Button>
-            </Modal>
-        </React.Fragment>*/
+        </React.Fragment>
     )
 }
+
 export default ButtonPopup;
