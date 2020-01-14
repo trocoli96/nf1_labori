@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class PostsController extends Controller
@@ -38,8 +39,31 @@ class PostsController extends Controller
         }
     }
 
-    public function returnPost()
+    public function returnPosts()
     {
 
+        $posts = Post::select(
+            'posts.id',
+            'posts.user_id',
+            'posts.post_text',
+            'posts.created_at',
+            'posts.updated_at',
+            'posts.image_link',
+            'user.first_name',
+            'user.last_name',
+            'user.former_name'
+        )
+            ->from('posts')
+            ->join('user', function($query)
+            {
+                $query->on('user.id', '=', 'posts.user_id');
+            }
+                )
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        return $posts;
     }
+
 }
+
