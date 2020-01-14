@@ -7,13 +7,13 @@ import getToken from "../utils/tokenHelper";
 import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
     paper: {
         padding: 2,
         textAlign: 'center',
@@ -24,8 +24,8 @@ const useStyles = makeStyles(theme =>({
         paddingBottom: theme.spacing(5),
         paddingRight: theme.spacing(2),
         paddingLeft: theme.spacing(2),
-        width:'100%',
-        margin:0,
+        width: '100%',
+        margin: 0,
     },
     photocover: {
         textAlign:'center',
@@ -35,10 +35,10 @@ const useStyles = makeStyles(theme =>({
         display: 'inline-flex',
     },
     userinfo: {
-        paddingTop:'10px',
+        paddingTop: '10px',
         textAlign: 'center',
     },
-    gridfeed:{
+    gridfeed: {
         padding: '0px !important',
     },
     text:{
