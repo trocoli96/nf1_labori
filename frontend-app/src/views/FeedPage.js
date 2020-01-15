@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
 import ProfileInfoFeed from "../components/ProfileInfoFeed";
+import FeedPosts from "../components/FeedPosts";
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -46,10 +47,13 @@ function FeedPage(){
                     <ProfileInfoFeed/>
                 </div>
                 <div className={classes.columnCenter}>
-                            <Grid container spacing={6} className={classes.profile}>
-                                <CreatePost/>
-                            </Grid>
-                        </div>
+                    <Grid container spacing={6}>
+                    <CreatePost/>
+                    </Grid>
+                    <Grid container spacing={6}>
+                    <FeedPosts/>
+                    </Grid>
+                </div>
 
             <div className={classes.columnSides}>
             </div>

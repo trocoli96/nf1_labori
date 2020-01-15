@@ -6,7 +6,7 @@ import getToken from "./utils/tokenHelper";
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
-import {HOME, SIGNUP, LOGIN, PROFILE, FEED} from "./routes/routes";
+import {HOME, SIGNUP, LOGIN, PROFILE, FEED, POST} from "./routes/routes";
 
 /* COMPONENTS & STYLES */
 import Profilepage from "./views/Profilepage";
@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import Homepage from "./views/Homepage";
 import FeedPage from "./views/FeedPage";
 import './App.css';
+import SeePost from "./components/SeePost";
 
 const App = () => {
 
@@ -67,6 +68,7 @@ const App = () => {
                         </Route>
                         <Route exact path={PROFILE} component={Profilepage}/>
                         <Route exact path={FEED} component={FeedPage}/>
+                        <Route exact path={POST} component={SeePost}/>
                     </Switch>
                 </AuthContext.Provider>
             </Router>

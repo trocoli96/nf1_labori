@@ -11,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from '@material-ui/core/Button';
-import {CircularProgress, Modal, Typography} from "@material-ui/core";
+import {CircularProgress, Typography} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme =>({
@@ -54,6 +54,7 @@ const useStyles = makeStyles(theme =>({
 }));
 
 
+
 function CreatePost() {
 
     const classes = useStyles();
@@ -61,18 +62,9 @@ function CreatePost() {
     const [post_text, setPostText] = useState('');
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
-    const [open, setOpen] = useState(false);
 
     const data = {
         post_text: post_text,
-    };
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
     };
 
     const post = (e) => {
@@ -98,7 +90,6 @@ function CreatePost() {
                     return Promise.reject(response.status);
                 }).then(data => {
                     setIsFetching(false);
-                    handleOpen();
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -109,6 +100,8 @@ function CreatePost() {
         };
         fetchData();
     };
+
+
 
 
         return (<AuthContext.Consumer>
@@ -141,22 +134,6 @@ function CreatePost() {
                                 Post!
                             </Button>
                         }
-                        <Modal
-                            aria-labelledby="simple-modal-title"
-                            aria-describedby="simple-modal-description"
-                            open={open}
-                            onClose={handleClose}
-                        >
-                            <div className={classes.paper}>
-                                <h2 id="simple-modal-title">Congratulations!</h2>
-                                <p id="simple-modal-description">
-                                    Well done Laborier! You successfully posted your first post!
-                                </p>
-                                <Button variant="contained" color="primary" onClick={handleClose} className={classes.buttonClose}>
-                                    Close
-                                </Button>
-                            </div>
-                        </Modal>
                     </Grid>
                 </Grid>
             }

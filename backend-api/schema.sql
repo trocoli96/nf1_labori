@@ -109,3 +109,4 @@ create table event(
                       updated_at timestamp default current_timestamp() not null,
                       foreign key (user_id) references user (id)
 )
+

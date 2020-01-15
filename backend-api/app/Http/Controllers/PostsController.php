@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class PostsController extends Controller
@@ -37,4 +38,51 @@ class PostsController extends Controller
             return $post;
         }
     }
+
+    public function returnPosts(Request $request, $length)
+    {
+
+        $posts = Post::select(
+            'posts.id',
+            'posts.user_id',
+            'posts.post_text',
+            'posts.created_at',
+            'posts.updated_at',
+            'posts.image_link',
+            'user.first_name',
+            'user.last_name',
+            'user.former_name'
+        )
+            ->from('posts')
+            ->join('user', function($query)
+            {
+                $query->on('user.id', '=', 'posts.user_id');
+            }
+                )
+            ->orderBy('created_at', 'desc')
+            ->paginate($length);
+
+        return $posts;
+    }
+    public function returnPost(Request $request, $id)
+    {
+        // primero nos aseguramos que hay un parámetro en la URL
+        if (empty($id)) {
+            // TODO return a response
+            return abort(400, "Parameter {id} is empty.");
+        }
+
+        // luego nos aseguramos que el post existe
+        if (Post::find($id) === null) {
+            // TODO return a response
+            return abort(400, "That postId doesn't exist.");
+        }
+
+        // y luego devolvemos el post
+        $post = DB::table('posts')->where('id', $id)->first();
+
+        return response()->json($post);
+    }
+
 }
+
