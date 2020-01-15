@@ -39,7 +39,7 @@ class PostsController extends Controller
         }
     }
 
-    public function returnPosts()
+    public function returnPosts(Request $request, $length)
     {
 
         $posts = Post::select(
@@ -60,7 +60,7 @@ class PostsController extends Controller
             }
                 )
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate($length);
 
         return $posts;
     }

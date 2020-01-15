@@ -2,7 +2,6 @@
 import React, {useState} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
-import FeedPosts from "./FeedPosts";
 
 /* COMPONENTS & STYLES */
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from '@material-ui/core/Button';
-import {CircularProgress, Modal, Typography} from "@material-ui/core";
+import {CircularProgress, Typography} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme =>({
@@ -63,18 +62,9 @@ function CreatePost() {
     const [post_text, setPostText] = useState('');
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
-    const [open, setOpen] = useState(false);
 
     const data = {
         post_text: post_text,
-    };
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
     };
 
     const post = (e) => {
