@@ -64,6 +64,25 @@ class PostsController extends Controller
 
         return $posts;
     }
+    public function returnPost(Request $request, $id)
+    {
+        // primero nos aseguramos que hay un parámetro en la URL
+        if (empty($id)) {
+            // TODO return a response
+            return abort(400, "Parameter {id} is empty.");
+        }
+
+        // luego nos aseguramos que el post existe
+        if (Post::find($id) === null) {
+            // TODO return a response
+            return abort(400, "That postId doesn't exist.");
+        }
+
+        // y luego devolvemos el post
+        $post = DB::table('posts')->where('id', $id)->first();
+
+        return response()->json($post);
+    }
 
 }
 

@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
+import FeedPosts from "./FeedPosts";
 
 /* COMPONENTS & STYLES */
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +55,7 @@ const useStyles = makeStyles(theme =>({
 }));
 
 
+
 function CreatePost() {
 
     const classes = useStyles();
@@ -98,7 +100,6 @@ function CreatePost() {
                     return Promise.reject(response.status);
                 }).then(data => {
                     setIsFetching(false);
-                    handleOpen();
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -109,6 +110,8 @@ function CreatePost() {
         };
         fetchData();
     };
+
+
 
 
         return (<AuthContext.Consumer>
@@ -141,22 +144,6 @@ function CreatePost() {
                                 Post!
                             </Button>
                         }
-                        <Modal
-                            aria-labelledby="simple-modal-title"
-                            aria-describedby="simple-modal-description"
-                            open={open}
-                            onClose={handleClose}
-                        >
-                            <div className={classes.paper}>
-                                <h2 id="simple-modal-title">Congratulations!</h2>
-                                <p id="simple-modal-description">
-                                    Well done Laborier! You successfully posted your first post!
-                                </p>
-                                <Button variant="contained" color="primary" onClick={handleClose} className={classes.buttonClose}>
-                                    Close
-                                </Button>
-                            </div>
-                        </Modal>
                     </Grid>
                 </Grid>
             }

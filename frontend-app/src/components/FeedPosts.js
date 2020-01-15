@@ -7,6 +7,11 @@ import '../App.css';
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import Button from "@material-ui/core/Button";
+import ChatIcon from '@material-ui/icons/Chat';
 
 const useStyles = makeStyles(theme =>({
     postslist:{
@@ -16,6 +21,37 @@ const useStyles = makeStyles(theme =>({
     },
     singlepost:{
         marginBottom: 20,
+        padding: 10,
+    },
+    profileicon:{
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+        display: 'inline-flex',
+        position:'relative',
+    },
+    authorbox:{
+        display:'flex',
+        position:'relative',
+    },
+    authorinfo:{
+        display:'inline',
+        position:'relative',
+        marginLeft: '10px',
+        marginTop: '-5px',
+    },
+    text:{
+        fontSize: '80%',
+        lineHeight:'2px',
+    },
+    title:{
+        lineHeight:'2px',
+    },
+    postbuttons:{
+        paddingTop:'1px',
+        paddingBottom:'1px',
+    },
+    iconbuttons:{
+        marginRight:'4px',
     }
 }));
 
@@ -78,13 +114,28 @@ function FeedPosts() {
         fetchData();
 
     }, []);
+
     return (<AuthContext.Consumer>
         {props =>
             <Grid item xs={11}>
                 <Grid item xd={10} className={classes.postslist}>
                         {state.postsData && state.postsData.map(data => (
                             <Paper className={classes.singlepost}>
-                                {data.post_text}
+                                <Grid item xd={10} className={classes.authorbox}>
+                                    <Avatar className={classes.profileicon}/>
+                                    <span className={classes.authorinfo}>
+                                        <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
+                                        <p className={classes.text}>{data.former_name} - {data.created_at}</p>
+
+                                    </span>
+                                </Grid>
+                                <p>{data.post_text}</p>
+                                <Divider/>
+                                <Grid item xs={11}>
+                                    <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like!</Button>
+                                    <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
+
+                                </Grid>
                             </Paper>
                         ))}
                 </Grid>
