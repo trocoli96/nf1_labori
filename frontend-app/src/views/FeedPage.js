@@ -14,7 +14,9 @@ import FeedPosts from "../components/FeedPosts";
 const useStyles = makeStyles(theme =>({
     root: {
         background: 'rgb(241,238,238)',
-        height:'2000px',
+        display: 'inline-block',
+        height: 'auto',
+        minHeight: '1500px',
         width:'100%',
         paddingTop: '30px',
         paddingLeft: 200 ,
@@ -24,7 +26,7 @@ const useStyles = makeStyles(theme =>({
         float: 'left',
         width: '50%',
         backgroundColor: 'rgb(241,238,238)',
-        height: '60em',
+        height: 'auto',
     },
     columnSides: {
         float: 'left',

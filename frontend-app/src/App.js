@@ -16,7 +16,7 @@ import Login from "./components/Login";
 import Homepage from "./views/Homepage";
 import FeedPage from "./views/FeedPage";
 import './App.css';
-import SeePost from "./components/SeePost";
+import SeePost from "./views/SeePost";
 
 const App = () => {
 

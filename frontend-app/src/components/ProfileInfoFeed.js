@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     },
     icon: {
         display: 'inline-flex',
+        width: theme.spacing(7),
+        height: theme.spacing(7),
+        fontSize: '150%',
     },
     userinfo: {
         paddingTop: '10px',
@@ -61,7 +64,8 @@ function ProfileInfoFeed() {
     const [userData, setUserData] = useState({
         "first_name": null,
         "last_name": null,
-        "email": null
+        "email": null,
+        "shortname": null
     });
 
     // useEffect para coger los datos del usuario al cargar
@@ -89,7 +93,8 @@ function ProfileInfoFeed() {
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
-                        "email": data.email
+                        "email": data.email,
+                        "shortname": data.shortname
                     });
                 })
                 .catch(error => {
@@ -113,7 +118,7 @@ function ProfileInfoFeed() {
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
                             <Container className={classes.photocover}>
-                                <Avatar className={classes.icon}>H</Avatar>
+                                <Avatar className={classes.icon}>{userData.shortname ? userData.shortname : null}</Avatar>
                             </Container>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
                             <p className={classes.text}>{userData.email ? userData.email : <CircularProgress/>}</p>
