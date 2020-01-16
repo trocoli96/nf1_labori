@@ -110,3 +110,4 @@ create table event(
                       foreign key (user_id) references user (id)
 )
 
+alter table user add column shortname varchar (255) not null;
