@@ -17,7 +17,7 @@ import Homepage from "./views/Homepage";
 import FeedPage from "./views/FeedPage";
 import './App.css';
 import SeePost from "./views/SeePost";
-
+alguna barbaridad
 const App = () => {
 
     // recogemos el reducer, para luego pasarlo a los componentes que requieran sus datos a través de context
