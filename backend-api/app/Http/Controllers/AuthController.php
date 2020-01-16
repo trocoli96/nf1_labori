@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -92,32 +93,40 @@ class AuthController extends Controller
     {
         $data = $request->all();
 
-        User::findOrFail($data['id']);
+        // 1. conseguir el ID del usuario a partir del token
+        $userId = Auth::id();
 
-        $olduserRecord = User::where("id", "=", $data['id'])
-            ->first();
-        $oldnameGetter = $olduserRecord['first_name'];
+        // 2. crear el modelo de put en base a los datos que vienen por el request
+        $newData = User::find($userId);
 
-        $data = User::find($request->id);
-        $data->first_name = $request->first_name;
-        $data->email = $request->email;
-        $data->former_name = $request->former_name;
-        $data->headline = $request->headline;
-
-
-        $data->save();
-
-        $userRecord = User::where("id", "=", $data['id'])
-            ->first();
-
-        $emailGetter = $userRecord['email'];
-        $firstnameGetter = $userRecord['first_name'];
-
-        if ($olduserRecord['first_name'] === $data['first_name'])
-            return response()->json(["error" => "Username is the same as previous"], 400);
-        else {
-            return response()->json([$oldnameGetter, $emailGetter, $firstnameGetter], 200);
+        if (!empty($data['first_name'])) {
+            $newData['first_name'] = $data['first_name'];
         }
+
+        if (!empty($data['last_name'])) {
+            $newData['last_name'] = $data['last_name'];
+        }
+
+        if (!empty($data['email'])) {
+            $newData['email'] = $data['email'];
+        }
+
+        if (!empty($data['former_name'])) {
+            $newData['former_name'] = $data['former_name'];
+        }
+
+        if (!empty($data['password'])) {
+            $newData['password'] = $data['password'];
+        }
+
+        $newData['shortname'] = substr($newData['first_name'], 0,1).substr($newData['last_name'],0,1);
+
+        // TODO: validacion de email y password
+
+        // 3. enviar ese modelo de put
+        $newData->save();
+
+        return response()->json($newData, 200);
     }
 
     protected function respondWithToken($token)
