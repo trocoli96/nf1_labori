@@ -12,9 +12,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - name: Frontend
-        run: cd frontend-app
       - name: Yarn Install
         run: yarn install
+        working-directory: frontend-app
       - name: Yarn Build
         run: yarn build
+          working-directory: frontend-app
