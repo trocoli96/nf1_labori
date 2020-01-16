@@ -39,6 +39,9 @@ Route::put('licenses/{id}', 'ObjectController@returnLicense');
 Route::get('likes/{id}', 'LikesController@getLikesFromPost');
 Route::post('like', 'LikesController@updateLike');
 
+Route::get('comment/{id}', 'CommentsController@showComments');
+Route::post('/comments', 'CommentsController@createComents');
+Route::put('comment/{id}', 'Comments@modifyComments');
 
 
 
