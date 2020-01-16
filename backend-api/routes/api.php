@@ -16,13 +16,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('users/', 'AuthController@me');
+Route::get('users/', 'AuthController@me');
 Route::post('/user', 'AuthController@createUser');
+Route::put('users/{id}', 'AuthController@me');
 Route::post('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
 
 Route::post('/post', 'PostsController@createPost');
-Route::get('/posts/{length}', 'PostsController@returnPosts');
-Route::get('/post/{id}', 'PostsController@returnPost');
 
 Route::get('experience/{id}', 'ExperienceController@showExperience');
 Route::post('/experience', 'ExperienceController@createExperience');
@@ -39,6 +39,9 @@ Route::put('licenses/{id}', 'ObjectController@returnLicense');
 Route::get('likes/{id}', 'LikesController@getLikesFromPost');
 Route::post('like', 'LikesController@updateLike');
 
+Route::get('comment/{id}', 'CommentsController@showComments');
+Route::post('/comments', 'CommentsController@createComents');
+Route::put('comment/{id}', 'Comments@modifyComments');
 
 
 
