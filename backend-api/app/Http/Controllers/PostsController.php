@@ -49,6 +49,7 @@ class PostsController extends Controller
             'posts.created_at',
             'posts.updated_at',
             'posts.image_link',
+            'user.shortname',
             'user.first_name',
             'user.last_name',
             'user.former_name'
@@ -66,6 +67,13 @@ class PostsController extends Controller
     }
     public function returnPost(Request $request, $id)
     {
+        $userId = Auth::id();
+        $userIdDoesExist = User::find($userId);
+
+        if ($userIdDoesExist === null) {
+            // TODO return a response
+            return abort(400, "User doesn't exist");
+        }
         // primero nos aseguramos que hay un parámetro en la URL
         if (empty($id)) {
             // TODO return a response

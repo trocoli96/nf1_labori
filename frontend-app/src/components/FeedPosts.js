@@ -1,6 +1,8 @@
 /* BASIC STUFF */
-import React, {useReducer, useEffect} from 'react';
+import React, {useReducer, useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
+import moment from "moment";
 
 /* COMPONENTS & STYLES */
 import '../App.css';
@@ -12,6 +14,9 @@ import Divider from '@material-ui/core/Divider';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Button from "@material-ui/core/Button";
 import ChatIcon from '@material-ui/icons/Chat';
+import ReplyIcon from '@material-ui/icons/Reply';
+import Modal from '@material-ui/core/Modal';
+
 
 const useStyles = makeStyles(theme =>({
     postslist:{
@@ -52,6 +57,30 @@ const useStyles = makeStyles(theme =>({
     },
     iconbuttons:{
         marginRight:'4px',
+    },
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '0px solid #000',
+        boxShadow: theme.shadows[5],
+        top: "50%",
+        left: "50%",
+        marginLeft: "-200px",
+        marginTop: "-150px"
+    },
+    popupHeader: {
+        padding: theme.spacing(2, 4, 3),
+        backgroundColor: "#3f51b5",
+        color: "white"
+    },
+    textPadding: {
+        padding: theme.spacing(2, 4, 3),
+        justifyContent: 'center',
+    },
+    loadmore:{
+        position: 'absolute',
+        right: '48%',
     }
 }));
 
@@ -60,38 +89,17 @@ function FeedPosts() {
 
     const classes = useStyles();
 
-    const SET_POSTS_DATA = 'SET_POSTS_DATA';
-    const SET_ERROR = 'SET_ERROR';
-    const SET_LENGTH = 'SET_LENGTH';
+    // recogemos lo proveído por el context
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
-    const initialstate ={
-        postsData: [],
-        error:false,
-        lengths: 5,
-    };
+    const [postsData, setPostsData] = useState([]);
+    const [error, setError] = useState(false);
+    const [length, setLength] = useState(5);
 
-    const postsReducer = (state = initialstate, action) => {
-        const newState = {...state};
-        const { type } = {...action};
-
-        if (type === SET_POSTS_DATA){
-            newState.postsData = action.data;
-        }
-        if (type === SET_ERROR){
-            newState.error = action.error;
-        }
-        if (type === SET_LENGTH){
-            newState.lengths = action.lengths;
-        }
-        return newState;
-    };
-
-
-    const [state, dispatch] = useReducer(postsReducer, initialstate);
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/posts/` + [initialstate.lengths];
+            const url = `http://127.0.0.1/api/posts/` + [length];
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -109,43 +117,75 @@ function FeedPosts() {
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                    dispatch({ type: SET_POSTS_DATA, data: data.data });
+                    return setPostsData(data);
                 })
-                .catch(error => dispatch({ type: SET_ERROR, error:true }));
+                .catch(error => {
+                    if (error === 401){
+                        setError(true);
+                        dispatch({type: "DO_LOGOUT"});
+                    }
+                });
         };
-
-        dispatch({ type: SET_ERROR, error: false});
 
         fetchData();
 
-    }, []);
+    }, [dispatch, length]);
 
+    const [open, setOpen] = useState(false);
+    const [copied, setCopied] = useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={11}>
                     <Grid item xd={10} className={classes.postslist}>
-                        {state.postsData && state.postsData.map(data => (
+                        {postsData.data && postsData.data.map((data) => (
                             <Paper className={classes.singlepost}>
                                 <Grid item xd={10} className={classes.authorbox}>
-                                    <Avatar className={classes.profileicon}/>
+                                    <Avatar className={classes.profileicon}>
+                                        {data.shortname}
+                                    </Avatar>
                                     <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
-                                        <p className={classes.text}>{data.former_name} - {data.created_at}</p>
-
+                                        <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").endOf('hour').fromNow()}</p>
                                     </span>
                                 </Grid>
                                 <p>{data.post_text}</p>
                                 <Divider/>
                                 <Grid item xs={11}>
-                                    <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like!</Button>
+                                    <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
                                     <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-
+                                    <Button className={classes.postbuttons}><ReplyIcon className={classes.iconbuttons} onClick={() => setOpen(true)}/>Share</Button>
+                                    <Modal open={open} onClose={handleClose}>
+                                        <div className={classes.paper}>
+                                            <div className={classes.popupHeader}>
+                                                <h2>Share this post</h2>
+                                            </div>
+                                            <div className={classes.textPadding}>
+                                                <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
+                                                    <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
+                                                </CopyToClipboard>
+                                                {copied ? <span>Copied!</span> : null}
+                                            </div>
+                                        </div>
+                                    </Modal>
                                 </Grid>
                             </Paper>
                         ))}
                     </Grid>
-                    <Button>hola</Button>
+                        <Grid item xs={11}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.loadmore}
+                            onClick={() => setLength(length + 5) }
+                            >
+                            LOAD MORE
+                            </Button>
+                        </Grid>
                 </Grid>
 
             }

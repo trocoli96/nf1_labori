@@ -39,8 +39,11 @@ class AuthController extends Controller
         $user = User::create([
             'first_name' => $inputData['first_name'],
             'last_name' => $inputData['last_name'],
+            'former_name' => $inputData['former_name'],
+            'headline' => $inputData['headline'],
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
+            'shortname' => substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1),
         ]);
         return $this->login($request);
     }
@@ -96,10 +99,10 @@ class AuthController extends Controller
         $oldnameGetter = $olduserRecord['first_name'];
 
         $data = User::find($request->id);
-
         $data->first_name = $request->first_name;
-
         $data->email = $request->email;
+        $data->former_name = $request->former_name;
+        $data->headline = $request->headline;
 
 
         $data->save();
