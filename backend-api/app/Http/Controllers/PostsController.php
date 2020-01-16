@@ -71,6 +71,7 @@ class PostsController extends Controller
         $userIdDoesExist = User::find($userId);
 
         if ($userIdDoesExist === null) {
+            // TODO return a response
             return abort(400, "User doesn't exist");
         }
         // primero nos aseguramos que hay un parámetro en la URL
