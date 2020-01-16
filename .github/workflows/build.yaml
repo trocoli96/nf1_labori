@@ -16,7 +16,5 @@ jobs:
         run: cd frontend-app
       - name: Yarn Install
         run: yarn install
-      - name: Yarn Lint
-        run: yarn lint
       - name: Yarn Build
         run: yarn build
