@@ -17,4 +17,4 @@ jobs:
         working-directory: frontend-app
       - name: Yarn Build
         run: yarn build
-          working-directory: frontend-app
+        working-directory: frontend-app
