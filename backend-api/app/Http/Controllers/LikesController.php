@@ -80,7 +80,7 @@ class LikesController extends Controller
         // e incrementamos también en Redis
         $postLikeCounter = Redis::incr("like_counter_" . $data['post_id']);
 
-        return response("Like added succesfully:\n" . $newLike, 200);
+        return response()->json($newLike, 200);
 
         // TODO: AÑADIR TAMBIÉN EL REGISTRO DEL LIKE/UNLIKE EN LA TABLA DE EVENTOS
 

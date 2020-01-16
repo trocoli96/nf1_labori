@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useReducer, useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import moment from "moment";
@@ -150,7 +150,7 @@ function FeedPosts() {
                                     </Avatar>
                                     <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
-                                        <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").endOf('hour').fromNow()}</p>
+                                        <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                                     </span>
                                 </Grid>
                                 <p>{data.post_text}</p>

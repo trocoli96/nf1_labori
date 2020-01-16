@@ -87,7 +87,11 @@ class PostsController extends Controller
         }
 
         // y luego devolvemos el post
-        $post = DB::table('posts')->where('id', $id)->first();
+
+        $post = DB::table('posts')
+            ->leftJoin('user', 'posts.user_id', '=', 'user.id')
+            ->where('posts.id', $id)
+            ->first();
 
         return response()->json($post);
     }
