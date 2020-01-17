@@ -45,7 +45,7 @@ class AuthController extends Controller
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
             'shortname' => substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1),
-        ]);
+            ]);
         return $this->login($request);
     }
 
