@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import '../App.css';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -12,9 +12,14 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {CircularProgress} from "@material-ui/core";
+import getToken from "../utils/tokenHelper";
+import {AuthContext} from "../utils/AuthFront/context";
 
 
 function ButtonPopup(props) {
+
+    // recogemos lo proveído por el context
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     const useStyles = makeStyles(theme => ({
         paper: {
@@ -26,7 +31,7 @@ function ButtonPopup(props) {
             top: "50%",
             left: "50%",
             marginLeft: "-200px",
-            marginTop: "-150px"
+            marginTop: "-300px"
         },
         popupHeader: {
             padding: theme.spacing(2, 4, 3),
@@ -108,7 +113,6 @@ function ButtonPopup(props) {
 
         // para mandar mensajes de error si la contraseña es corta o no existe
         if (valuesField1.password.length > 0) {
-
             if (valuesField1.password.length < 8) {
                 setError("Password should contain at least 8 characters");
                 return setIsSubmitting(false);
@@ -118,20 +122,13 @@ function ButtonPopup(props) {
                     return setIsSubmitting(false);
                 }
             }
-
         }
 
         let newUserData = {};
-        let firstNameToSend = "";
-        let lastNameToSend = "";
-        let emailToSend = "";
-        let passwordToSend = "";
-
-        // hacemos trim
-        firstNameToSend = firstName.trim();
-        lastNameToSend = lastName.trim();
-        emailToSend = email.trim();
-        passwordToSend = valuesField1.password.trim();
+        let firstNameToSend = firstName.trim();
+        let lastNameToSend = lastName.trim();
+        let emailToSend = email.trim();
+        let passwordToSend = valuesField1.password.trim();
 
         // si tras el trim aun sigue habiendo algo, lo agregamos a newUserData
         if (firstNameToSend !== "") {
@@ -155,9 +152,46 @@ function ButtonPopup(props) {
 
         console.log(newUserData);
 
-        // TODO fetch de put
+        const fetchData = async () => {
+            const url = `http://127.0.0.1/api/edituser/?token=` + getToken();
+            const options = {
+                method: 'PUT',
+                headers: new Headers({
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }),
+                mode: 'cors'
+            };
 
-        return setIsSubmitting(false);
+            fetch(url, options)
+                .then(response => {
+                    if (response.status >= 200 && response.status < 400) {
+                        return response.json();
+                    } else {
+                        return Promise.reject(response.status);
+                    }
+                })
+                .then(data => {
+                    console.log("Respuesta: \n" + data);
+                     props.setUserData({
+                        "first_name": data.first_name,
+                        "last_name": data.last_name,
+                        "email": data.email
+                    });
+                    return setIsSubmitting(false);
+                })
+                .catch(error => {
+                    if (error === 401) {
+                        console.log("Token inválido, probablemente caducado. Hacemos logout.");
+                        dispatch({type: "DO_LOGOUT"});
+                    }
+                    console.log("Error al actualizar los datos de user. Error: " + error);
+                    setError("An error ocurred. Please try again.");
+                    return setIsSubmitting(false);
+                });
+        };
+
+        fetchData();
 
     }, [isSubmitting]);
 
