@@ -137,44 +137,51 @@ function FeedPosts() {
     const handleClose = () => {
         setOpen(false);
     };
-
+    debugger;
     return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={11}>
                     <Grid item xd={10} className={classes.postslist}>
-                        {postsData.data && postsData.data.map((data) => (
-                            <Paper className={classes.singlepost}>
-                                <Grid item xd={10} className={classes.authorbox}>
-                                    <Avatar className={classes.profileicon} style={{ backgroundColor: 'blue'}}>
-                                        {data.shortname}
-                                    </Avatar>
-                                    <span className={classes.authorinfo}>
+                        {postsData.data && postsData.data.map((data) => {
+                            const style = {
+                                avatar: {
+                                    backgroundColor: data.color
+                                }
+                            };
+                            return (
+                                <Paper className={classes.singlepost}>
+                                    <Grid item xd={10} className={classes.authorbox}>
+                                        <Avatar className={classes.profileicon}>
+                                            {data.shortname}
+                                        </Avatar>
+                                        <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
                                         <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                                     </span>
-                                </Grid>
-                                <p>{data.post_text}</p>
-                                <Divider/>
-                                <Grid item xs={11}>
-                                    <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
-                                    <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                    <Button className={classes.postbuttons}><ReplyIcon className={classes.iconbuttons} onClick={() => setOpen(true)}/>Share</Button>
-                                    <Modal open={open} onClose={handleClose}>
-                                        <div className={classes.paper}>
-                                            <div className={classes.popupHeader}>
-                                                <h2>Share this post</h2>
+                                    </Grid>
+                                    <p>{data.post_text}</p>
+                                    <Divider/>
+                                    <Grid item xs={11}>
+                                        <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
+                                        <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
+                                        <Button className={classes.postbuttons}><ReplyIcon className={classes.iconbuttons} onClick={() => setOpen(data.id)}/>Share</Button>
+                                        <Modal open={open === data.id} onClose={handleClose}>
+                                            <div className={classes.paper}>
+                                                <div className={classes.popupHeader}>
+                                                    <h2>Share this post</h2>
+                                                </div>
+                                                <div className={classes.textPadding}>
+                                                    <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
+                                                        <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
+                                                    </CopyToClipboard>
+                                                    {copied ? <span>Copied!</span> : null}
+                                                </div>
                                             </div>
-                                            <div className={classes.textPadding}>
-                                                <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
-                                                    <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
-                                                </CopyToClipboard>
-                                                {copied ? <span>Copied!</span> : null}
-                                            </div>
-                                        </div>
-                                    </Modal>
-                                </Grid>
-                            </Paper>
-                        ))}
+                                        </Modal>
+                                    </Grid>
+                                </Paper>
+                            )
+                        })}
                     </Grid>
                         <Grid item xs={11}>
                         <Button
@@ -189,6 +196,7 @@ function FeedPosts() {
                 </Grid>
 
             }
+
         </AuthContext.Consumer>
     );
 }

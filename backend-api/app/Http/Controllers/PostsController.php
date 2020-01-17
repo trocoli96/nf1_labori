@@ -52,7 +52,8 @@ class PostsController extends Controller
             'user.shortname',
             'user.first_name',
             'user.last_name',
-            'user.former_name'
+            'user.former_name',
+            'user.color'
         )
             ->from('posts')
             ->join('user', function($query)
