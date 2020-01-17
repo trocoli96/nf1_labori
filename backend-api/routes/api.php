@@ -19,8 +19,7 @@ Route::get('users/', 'AuthController@me');
 Route::get('user/', 'AuthController@me');//ruta para ver usuario cuando sean amigos
 
 Route::post('/user', 'AuthController@createUser');
-
-Route::post('/users/{id}', 'AuthController@editUser');
+Route::put('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
 
 Route::post('/post', 'PostsController@createPost');

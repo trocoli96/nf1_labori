@@ -106,7 +106,7 @@ function Profilepage() {
                             <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
                         <div>
-                            <ButtonPopup/>
+                            <ButtonPopup setUserData={setUserData}/>
                         </div>
                         </Paper>
                     </Grid>
