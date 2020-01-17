@@ -5,7 +5,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 
 /* ROUTER & ROUTES */
 import {withRouter} from 'react-router-dom';
-import {PROFILE} from "../routes/routes";
+import {FEED} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
 import Button from '@material-ui/core/Button';
@@ -55,7 +55,7 @@ function LoginForm({history}) {
                     saveToken(data);
                     dispatch({type: "SAVE_CURRENT_TOKEN_ON_STATE"});
                     setIsFetching(false);
-                    history.push(PROFILE);
+                    history.push(FEED);
                 }).catch(error => {
                     console.log("Login incorrecto. Error: " + error);
                     setIsFetching(false);

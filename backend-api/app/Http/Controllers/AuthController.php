@@ -24,6 +24,10 @@ class AuthController extends Controller
 
     public function createUser(Request $request)
     {
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+        $random = substr(str_shuffle($permitted_chars), 0, 6);
+        $color = str_split($random);
 
         $inputData = $request->all();
         $userValidator = Validator::make($inputData, [
@@ -43,6 +47,7 @@ class AuthController extends Controller
             'headline' => $inputData['headline'],
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
+            'color' => '#'.$random,
             'shortname' => substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1),
         ]);
         return $this->login($request);

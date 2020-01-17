@@ -145,7 +145,7 @@ function FeedPosts() {
                         {postsData.data && postsData.data.map((data) => (
                             <Paper className={classes.singlepost}>
                                 <Grid item xd={10} className={classes.authorbox}>
-                                    <Avatar className={classes.profileicon}>
+                                    <Avatar className={classes.profileicon} style={{ backgroundColor: 'blue'}}>
                                         {data.shortname}
                                     </Avatar>
                                     <span className={classes.authorinfo}>
