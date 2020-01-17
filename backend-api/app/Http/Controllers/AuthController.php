@@ -44,12 +44,10 @@ class AuthController extends Controller
         $user = User::create([
             'first_name' => $inputData['first_name'],
             'last_name' => $inputData['last_name'],
-            'former_name' => $inputData['former_name'],
-            'headline' => $inputData['headline'],
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
             'color' => '#'.$random,
-            'shortname' => substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1),
+            'shortname' => strtoupper(substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1)),
             ]);
         return $this->login($request);
     }
