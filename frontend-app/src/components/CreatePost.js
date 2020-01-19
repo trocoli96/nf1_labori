@@ -26,7 +26,6 @@ function CreatePost() {
     const data = {
         post_text: post_text,
     };
-debugger;
     const post = (e) => {
         setError(false);
         setIsFetching(true);

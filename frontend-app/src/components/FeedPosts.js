@@ -82,7 +82,7 @@ function FeedPosts() {
                             return (
                                 <Paper className={classes.singlepost}>
                                     <Grid item xd={10} className={classes.authorbox}>
-                                        <Avatar className={classes.profileicon}>
+                                        <Avatar className={classes.profileicon} style={{backgroundColor: data.color}}>
                                             {data.shortname}
                                         </Avatar>
                                         <span className={classes.authorinfo}>
@@ -90,7 +90,7 @@ function FeedPosts() {
                                         <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                                     </span>
                                     </Grid>
-                                    <p>{data.post_text}</p>
+                                    <p style={{marginLeft: 10}}>{data.post_text}</p>
                                     <Divider/>
                                     <Grid item xs={11}>
                                         <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>

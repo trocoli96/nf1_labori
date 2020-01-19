@@ -26,7 +26,8 @@ function ProfileInfoFeed() {
         "first_name": null,
         "last_name": null,
         "email": null,
-        "shortname": null
+        "shortname": null,
+        "color": null
     });
 
     // useEffect para coger los datos del usuario al cargar
@@ -55,7 +56,8 @@ function ProfileInfoFeed() {
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email,
-                        "shortname": data.shortname
+                        "shortname": data.shortname,
+                        "color": data.color
                     });
                 })
                 .catch(error => {
@@ -79,7 +81,7 @@ function ProfileInfoFeed() {
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
                             <Container className={classes.photocover}>
-                                <Avatar className={classes.iconprofileFeed}>{userData.shortname ? userData.shortname : null}</Avatar>
+                                <Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>
                             </Container>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
                             <p className={classes.textprofileFeed}>{userData.email ? userData.email : <CircularProgress/>}</p>
