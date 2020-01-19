@@ -11,6 +11,7 @@ create table user
     former_name     varchar(255),
     current_company integer,
     headline        varchar(255),
+    color           varchar(255),
     updated_at timestamp default current_timestamp(),
     created_at timestamp default current_timestamp(),
     foreign key (current_company) references company (id),

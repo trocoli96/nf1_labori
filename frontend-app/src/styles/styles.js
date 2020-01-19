@@ -226,5 +226,16 @@ export const useStyles = makeStyles(theme => ({
     userexperience: {
         padding: '10px'
     },
+    paperExperience: {
+        position: 'absolute',
+        width: 700,
+        backgroundColor: theme.palette.background.paper,
+        border: '0px solid #000',
+        boxShadow: theme.shadows[5],
+        top: "50%",
+        left: "50%",
+        marginLeft: "-350px",
+        marginTop: "-300px"
+    },
 
 }));

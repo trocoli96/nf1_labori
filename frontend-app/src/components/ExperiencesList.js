@@ -2,13 +2,14 @@ import React, {useState, useEffect} from "react";
 import {Grid} from "@material-ui/core";
 import getToken from "../utils/tokenHelper";
 
-function ExperiencesList() {
+function ExperiencesList(props) {
 
     const [experiences, setExperiences] = useState([]);
 
-
     // useEffect para hacer fetch de la experiencia laboral
     useEffect(() => {
+
+        if (!props.updateExperiences) return;
 
         const fetchData = async () => {
             const url = 'http://127.0.0.1/api/experiences?token=' + getToken();
@@ -30,16 +31,18 @@ function ExperiencesList() {
                     }
                 })
                 .then(data => {
+                    props.setUpdateExperiences(false);
                     return setExperiences(data);
                 })
                 .catch(error => {
+                    props.setUpdateExperiences(false);
                     return console.log(error);
                 })
         };
 
         fetchData();
 
-    }, []);
+    }, [props.updateExperiences]);
 
 
     return (

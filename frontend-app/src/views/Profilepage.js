@@ -10,11 +10,8 @@ import ButtonPopup from "../components/Buttonpopup";
 import AddExperienceButton from "../components/AddExperienceButton";
 import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-
 
 
 function Profilepage() {
@@ -30,6 +27,8 @@ function Profilepage() {
         "last_name": null,
         "email": null
     });
+
+    const [updateExperiences, setUpdateExperiences] = useState(true);
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
@@ -98,12 +97,12 @@ function Profilepage() {
                                     <h3>My experience</h3>
                                 </Grid>
                                 <Grid container item xs={6} justify="flex-end">
-                                    <AddExperienceButton/>
+                                    <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item>
-                                    <ExperiencesList/>
+                                    <ExperiencesList updateExperiences={updateExperiences} setUpdateExperiences={setUpdateExperiences}/>
                                 </Grid>
                             </Grid>
                         </Paper>
