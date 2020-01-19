@@ -1,4 +1,9 @@
+/* BASIC STUFF */
 import React, {useState, useEffect, useContext} from 'react';
+import getToken from "../utils/tokenHelper";
+import {AuthContext} from "../utils/AuthFront/context";
+
+/* COMPONENTS & STYLES */
 import '../styles/App.css';
 import {useStyles} from '../styles/styles';
 import Modal from '@material-ui/core/Modal';
@@ -12,8 +17,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {CircularProgress} from "@material-ui/core";
-import getToken from "../utils/tokenHelper";
-import {AuthContext} from "../utils/AuthFront/context";
 
 
 function ButtonPopup(props) {
@@ -75,7 +78,9 @@ function ButtonPopup(props) {
 
     // para revisar si hay datos que enviar o los campos estan en blanco
     function isEmpty(obj) {
-        for (var x in obj) { return false; }
+        for (var x in obj) {
+            return false;
+        }
         return true;
     }
 
@@ -127,8 +132,6 @@ function ButtonPopup(props) {
             console.log("Nada que enviar");
             return setIsSubmitting(false);
         }
-        console.log("Esto es lo que enviaremos:");
-        console.log(newUserData);
 
         const fetchData = async () => {
             const url = `http://127.0.0.1/api/edituser/?token=` + getToken();
@@ -151,14 +154,13 @@ function ButtonPopup(props) {
                     }
                 })
                 .then(data => {
-                    console.log(data);
-                     props.setUserData({
+                    props.setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email
                     });
-                     setOpen(false);
-                     return setIsSubmitting(false);
+                    setOpen(false);
+                    return setIsSubmitting(false);
                 })
                 .catch(error => {
                     if (error === 401) {
@@ -174,7 +176,6 @@ function ButtonPopup(props) {
         fetchData();
 
     }, [isSubmitting]);
-
 
 
     // si cerramos el modal, reseteamos los valores

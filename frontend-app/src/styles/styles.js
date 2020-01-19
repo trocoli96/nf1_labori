@@ -1,45 +1,45 @@
 import {makeStyles} from "@material-ui/core/styles";
 import heroImage from "../media/marten-bjork-6dW3xyQvcYE-unsplash.jpg";
 
-export const useStyles = makeStyles(theme =>({
-    postslist:{
+export const useStyles = makeStyles(theme => ({
+    postslist: {
         marginTop: '30px !important',
         marginLeft: '30px !important',
         width: '100% !important',
     },
-    singlepost:{
+    singlepost: {
         marginBottom: 20,
         padding: 10,
     },
-    profileicon:{
+    profileicon: {
         width: `${theme.spacing(7)}px !important`,
         height: `${theme.spacing(7)}px !important`,
         display: 'inline-flex !important',
-        position:'relative !important',
+        position: 'relative !important',
     },
-    authorbox:{
-        display:'flex !important',
-        position:'relative !important',
+    authorbox: {
+        display: 'flex !important',
+        position: 'relative !important',
     },
-    authorinfo:{
-        display:'inline !important',
-        position:'relative !important',
+    authorinfo: {
+        display: 'inline !important',
+        position: 'relative !important',
         marginLeft: '10px !important',
         marginTop: '-5px !important',
     },
-    text:{
+    text: {
         fontSize: '80%',
-        lineHeight:'2px',
+        lineHeight: '2px',
     },
-    title:{
-        lineHeight:'2px',
+    title: {
+        lineHeight: '2px',
     },
-    postbuttons:{
-        paddingTop:'1px',
-        paddingBottom:'1px',
+    postbuttons: {
+        paddingTop: '1px',
+        paddingBottom: '1px',
     },
-    iconbuttons:{
-        marginRight:'4px',
+    iconbuttons: {
+        marginRight: '4px',
     },
     paper: {
         position: 'absolute',
@@ -56,7 +56,7 @@ export const useStyles = makeStyles(theme =>({
         padding: theme.spacing(2, 4, 3),
         justifyContent: 'center',
     },
-    loadmore:{
+    loadmore: {
         position: 'absolute !important',
         right: '48% !important',
     },
@@ -69,7 +69,7 @@ export const useStyles = makeStyles(theme =>({
         background: 'white !important',
         width: '100% !important',
         marginLeft: '30px !important',
-        marginTop:0,
+        marginTop: 0,
     },
     titlecreatepost: {
         marginTop: 0,
@@ -77,16 +77,16 @@ export const useStyles = makeStyles(theme =>({
         marginLeft: 20,
         paddingLeft: 10,
     },
-    postbutton:{
-        marginLeft:'30px !important',
+    postbutton: {
+        marginLeft: '30px !important',
         marginTop: '0px !important',
         marginBottom: '0px !important',
         marginRight: '0px !important',
-        width:'100%',
+        width: '100%',
         borderRadius: '0px',
     },
-    createpost:{
-        marginTop:'30px !important',
+    createpost: {
+        marginTop: '30px !important',
     },
     root: {
         flexGrow: 1,
@@ -106,8 +106,8 @@ export const useStyles = makeStyles(theme =>({
         margin: 0,
     },
     photocover: {
-        textAlign:'center',
-        marginBottom:'20%',
+        textAlign: 'center',
+        marginBottom: '20%',
     },
     iconprofileFeed: {
         display: 'inline-flex  !important',
@@ -122,21 +122,21 @@ export const useStyles = makeStyles(theme =>({
     gridfeed: {
         padding: '0px !important',
     },
-    textprofileFeed:{
+    textprofileFeed: {
         fontSize: '90%',
-        lineHeight:'2px',
+        lineHeight: '2px',
     },
     rootFeed: {
         background: 'rgb(241,238,238)',
         display: 'inline-block !important',
         height: 'auto !important',
         minHeight: '1500px !important',
-        width:'100% !important',
+        width: '100% !important',
         paddingTop: '30px !important',
-        paddingLeft: '200px !important' ,
-        paddingRight: '200px !important' ,
+        paddingLeft: '200px !important',
+        paddingRight: '200px !important',
     },
-    columnFeedCenter:{
+    columnFeedCenter: {
         float: 'left !important',
         width: '50% !important',
         backgroundColor: 'rgb(241,238,238)',
@@ -192,7 +192,7 @@ export const useStyles = makeStyles(theme =>({
     },
     rootProfile: {
         background: 'rgb(241,238,238)',
-        height:'2000px',
+        height: '2000px',
     },
     paperProfile: {
         padding: 2,
@@ -203,14 +203,14 @@ export const useStyles = makeStyles(theme =>({
         padding: theme.spacing(5),
     },
     photocoverProfile: {
-        height:150,
+        height: 150,
         background: 'blue',
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
     },
     userinfoProfile: {
-        paddingLeft:'10px',
-        paddingTop:'10px',
+        paddingLeft: '10px',
+        paddingTop: '10px',
     },
     notificationCopied: {
         width: '100%',
@@ -218,4 +218,24 @@ export const useStyles = makeStyles(theme =>({
             marginTop: theme.spacing(2),
         },
     },
+    experience: {
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5)
+
+    },
+    userexperience: {
+        padding: '10px'
+    },
+    paperExperience: {
+        position: 'absolute',
+        width: 700,
+        backgroundColor: theme.palette.background.paper,
+        border: '0px solid #000',
+        boxShadow: theme.shadows[5],
+        top: "50%",
+        left: "50%",
+        marginLeft: "-350px",
+        marginTop: "-300px"
+    },
+
 }));

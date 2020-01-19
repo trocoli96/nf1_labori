@@ -27,7 +27,7 @@ Route::get('/posts/{posts}', 'PostsController@returnPosts');
 Route::get('/post/{id}', 'PostsController@returnPost');
 Route::put('/editpost/{id}', 'PostsController@editPost');
 
-Route::get('experience/{id}', 'ExperienceController@showExperience');
+Route::get('/experiences', 'ExperienceController@showExperiences');
 Route::post('/experience', 'ExperienceController@createExperience');
 Route::put('experience/{id}', 'ExperienceController@modifyExperience');
 

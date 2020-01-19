@@ -4,14 +4,14 @@ import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
+import ExperiencesList from "../components/ExperiencesList";
 import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
+import AddExperienceButton from "../components/AddExperienceButton";
 import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-
 
 
 function Profilepage() {
@@ -27,6 +27,8 @@ function Profilepage() {
         "last_name": null,
         "email": null
     });
+
+    const [updateExperiences, setUpdateExperiences] = useState(true);
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
@@ -81,9 +83,28 @@ function Profilepage() {
                         <Paper className={classes.userinfoProfile}>
                             <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
-                        <div>
-                            <ButtonPopup setUserData={setUserData}/>
-                        </div>
+                            <div>
+                                <ButtonPopup setUserData={setUserData}/>
+                            </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={6} className={classes.experience}>
+                    <Grid item xs={12} md={8}>
+                        <Paper className={classes.userexperience}>
+                            <Grid container spacing={5}>
+                                <Grid item xs={6}>
+                                    <h3>My experience</h3>
+                                </Grid>
+                                <Grid container item xs={6} justify="flex-end">
+                                    <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={5}>
+                                <Grid item>
+                                    <ExperiencesList updateExperiences={updateExperiences} setUpdateExperiences={setUpdateExperiences}/>
+                                </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                 </Grid>
