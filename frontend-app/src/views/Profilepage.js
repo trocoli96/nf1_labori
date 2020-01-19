@@ -93,15 +93,15 @@ function Profilepage() {
                     <Grid item xs={12} md={8}>
                         <Paper className={classes.userexperience}>
                             <Grid container spacing={5}>
-                                <Grid item xs={6}>
-                                    <h3>My experience</h3>
+                                <Grid item xs={6} style={{paddingLeft: 50}}>
+                                    <h3>Experience</h3>
                                 </Grid>
                                 <Grid container item xs={6} justify="flex-end">
                                     <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={5}>
-                                <Grid item>
+                                <Grid item xs={12}>
                                     <ExperiencesList updateExperiences={updateExperiences} setUpdateExperiences={setUpdateExperiences}/>
                                 </Grid>
                             </Grid>
