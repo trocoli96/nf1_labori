@@ -4,6 +4,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
+import ExperiencesList from "../components/ExperiencesList";
 import ButtonPopup from "../components/Buttonpopup";
 import '../App.css';
 import {CircularProgress, Container} from "@material-ui/core";
@@ -137,7 +138,7 @@ function Profilepage() {
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item>
-
+                                    <ExperiencesList/>
                                 </Grid>
                             </Grid>
                         </Paper>
