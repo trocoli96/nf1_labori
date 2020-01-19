@@ -10,7 +10,8 @@ import {CircularProgress, Container} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme =>({
     root: {
@@ -23,7 +24,9 @@ const useStyles = makeStyles(theme =>({
         color: 'blue',
     },
     profile: {
-        padding: theme.spacing(5),
+        paddingTop: theme.spacing(5),
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5),
     },
     photocover: {
         height:150,
@@ -34,6 +37,14 @@ const useStyles = makeStyles(theme =>({
     userinfo: {
         paddingLeft:'10px',
         paddingTop:'10px',
+    },
+    experience: {
+        paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5)
+
+    },
+    userexperience: {
+        padding:'10px'
     },
 
 }));
@@ -108,6 +119,27 @@ function Profilepage() {
                         <div>
                             <ButtonPopup setUserData={setUserData}/>
                         </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={6} className={classes.experience}>
+                    <Grid item xs={8}>
+                        <Paper className={classes.userexperience}>
+                            <Grid container spacing={5}>
+                                <Grid item xs={6}>
+                                    <h3>My experience</h3>
+                                </Grid>
+                                <Grid container item xs={6} justify="flex-end">
+                                    <IconButton color="primary" aria-label="add experience">
+                                        <AddIcon/>
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={5}>
+                                <Grid item>
+
+                                </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                 </Grid>
