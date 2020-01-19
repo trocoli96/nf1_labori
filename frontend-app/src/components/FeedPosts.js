@@ -1,9 +1,10 @@
 /* BASIC STUFF */
+import {useStyles} from '../styles/styles';
 import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import moment from "moment";
-import {useStyles} from '../styles/styles';
+
 
 /* COMPONENTS & STYLES */
 import '../styles/App.css';
@@ -15,8 +16,9 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Button from "@material-ui/core/Button";
 import ChatIcon from '@material-ui/icons/Chat';
 import ReplyIcon from '@material-ui/icons/Reply';
-import Modal from '@material-ui/core/Modal';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 
 
@@ -66,13 +68,12 @@ function FeedPosts() {
 
     }, [dispatch, length]);
 
-    const [open, setOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const handleClose = () => {
-        setOpen(false);
+        setCopied(false);
     };
-    debugger;
+
     return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={11}>
@@ -94,24 +95,33 @@ function FeedPosts() {
                                     <Grid item xs={11}>
                                         <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
                                         <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                        <Button className={classes.postbuttons}><ReplyIcon className={classes.iconbuttons} onClick={() => setOpen(data.id)}/>Share</Button>
-                                        <Modal open={open === data.id} onClose={handleClose}>
-                                            <div className={classes.paper}>
-                                                <div className={classes.popupHeader}>
-                                                    <h2>Share this post</h2>
-                                                </div>
-                                                <div className={classes.textPadding}>
-                                                    <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
-                                                        <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
-                                                    </CopyToClipboard>
-                                                    {copied ? <span>Copied!</span> : null}
-                                                </div>
-                                            </div>
-                                        </Modal>
+                                        <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
+                                            <Button className={classes.postbuttons} onClick={() => setCopied(true)}><ReplyIcon className={classes.iconbuttons}/>Share</Button>
+                                        </CopyToClipboard>
+
                                     </Grid>
                                 </Paper>
                             )
                         })}
+                        {copied ? <Snackbar
+                                message="Copied to Clipboard!"
+                                open={copied}
+                                autoHideDuration={2000}
+                                onClose={handleClose}
+                                color="green"
+                                action={
+                                    <React.Fragment>
+                                        <IconButton
+                                            aria-label="close"
+                                            color="inherit"
+                                            onClick={handleClose}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </React.Fragment>
+                                }
+                            />
+                                : null}
                     </Grid>
                         <Grid item xs={11}>
                         <Button
@@ -126,7 +136,6 @@ function FeedPosts() {
                 </Grid>
 
             }
-
         </AuthContext.Consumer>
     );
 }

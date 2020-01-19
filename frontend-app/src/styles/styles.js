@@ -211,5 +211,11 @@ export const useStyles = makeStyles(theme =>({
     userinfoProfile: {
         paddingLeft:'10px',
         paddingTop:'10px',
-    }
+    },
+    notificationCopied: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
 }));
