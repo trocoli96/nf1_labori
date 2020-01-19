@@ -26,7 +26,6 @@ create table experience
     start_date  date         not null,
     end_date    date,
     user_id     integer      not null,
-    headline    varchar(255) not null,
     description text,
     updated_at  timestamp default current_timestamp(),
     created_at  timestamp default current_timestamp(),

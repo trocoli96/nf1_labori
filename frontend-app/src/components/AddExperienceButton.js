@@ -5,6 +5,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import {CircularProgress} from "@material-ui/core";
 
 function AddExperienceButton() {
 
@@ -17,19 +19,19 @@ function AddExperienceButton() {
         setOpen(false);
     };
 
-    const [selectedDate, handleDateChange] = useState(new Date());
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
 
     const useStyles = makeStyles(theme => ({
         paper: {
             position: 'absolute',
-            width: 400,
+            width: 700,
             backgroundColor: theme.palette.background.paper,
             border: '0px solid #000',
             boxShadow: theme.shadows[5],
             top: "50%",
             left: "50%",
-            marginLeft: "-200px",
+            marginLeft: "-350px",
             marginTop: "-300px"
         },
         popupHeader: {
@@ -85,14 +87,6 @@ function AddExperienceButton() {
                                 />
                             </Grid>
                         </Grid>
-
-                        <p>
-
-
-                        </p>
-                        <p>
-
-                        </p>
                         <p>
                             <TextField
                                 id="description"
@@ -103,7 +97,16 @@ function AddExperienceButton() {
                                 fullWidth
                             />
                         </p>
+                        <p>{error}</p>
+                        {isSubmitting ?
+                            <CircularProgress/> :
+                            <Button variant="contained" color="primary" onClick={() => setIsSubmitting(true)}>
+                                Submit
+                            </Button>
+                        }
+                        {isSubmitting ? null : <Button onClick={() => setOpen(false)}>Cancel</Button>}
                     </div>
+
                 </div>
             </Modal>
         </div>

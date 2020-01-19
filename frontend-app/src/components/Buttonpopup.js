@@ -97,7 +97,9 @@ function ButtonPopup(props) {
 
     // para revisar si hay datos que enviar o los campos estan en blanco
     function isEmpty(obj) {
-        for (var x in obj) { return false; }
+        for (var x in obj) {
+            return false;
+        }
         return true;
     }
 
@@ -174,13 +176,13 @@ function ButtonPopup(props) {
                 })
                 .then(data => {
                     console.log(data);
-                     props.setUserData({
+                    props.setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email
                     });
-                     setOpen(false);
-                     return setIsSubmitting(false);
+                    setOpen(false);
+                    return setIsSubmitting(false);
                 })
                 .catch(error => {
                     if (error === 401) {
@@ -196,7 +198,6 @@ function ButtonPopup(props) {
         fetchData();
 
     }, [isSubmitting]);
-
 
 
     // si cerramos el modal, reseteamos los valores

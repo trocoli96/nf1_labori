@@ -30,7 +30,6 @@ function ExperiencesList() {
                     }
                 })
                 .then(data => {
-                    console.log(data);
                     return setExperiences(data);
                 })
                 .catch(error => {
