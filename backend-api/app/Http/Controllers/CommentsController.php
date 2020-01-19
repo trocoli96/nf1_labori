@@ -21,30 +21,39 @@ class CommentsController extends Controller
 
         return $comment;
     }
-/*
-    public function showComments($id)
+
+public function returnComments (Request $request, $post_id)
     {
-        $error = 'Experience not found';
+        //TODO revisar como evitar el pagination
+        $request = $request->all();
+        $lenght = 5;
 
+        $comments = Comments::select(
+            'comments.id',
+            'comments.author_id',
+            'comments.post_id',
+            'comments.comment_body',
+            'comments.created_at',
+            'comments.updated_at',
+            'posts.id',
+            'posts.user_id',
+            'posts.post_text',
+            'posts.image_link'
+        )
+            ->where('posts.id', '=', $post_id)
+            ->from('comments')
+            ->join('posts', function($query)
+            {
+                $query->on('comments.post_id', '=', 'posts.id');
+            }
+            )
+            ->orderBy('created_at', 'desc')
+            ->paginate($lenght);
 
-        $CommentsId = Experience::where('id',"=",$id)
-            ->first();
-        $CommentsInfo = array($CommentsId['id'],
-            'Body' => $request['comment_body'],
-            'Date' => $request['created_at'],
-            'user_id' => ($request['user_id']),
-            'id' => ($request['id'])
-        );
-            if(!empty($CommentsId)){
-                return $CommentsInfo;
-            }
-            else{
-                return $error;
-            }
+        return $comments;
     }
 
-*/
-    public function modifyComments(Request $request)
+   public function modifyComments(Request $request)
     {
         $errorComments = array("Comments doesn't exist");
         $data = $request->all();

@@ -35,6 +35,8 @@ Route::post('like', 'LikesController@updateLike');
 
 Route::get('comment/{id}', 'CommentsController@showComments');
 Route::post('/comments', 'CommentsController@createComments');
+Route::get('/comments/{post_id}', 'CommentsController@returnComments');
+
 Route::put('comment/{id}', 'Comments@modifyComments');
 
 
