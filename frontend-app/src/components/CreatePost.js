@@ -5,55 +5,14 @@ import getToken from "../utils/tokenHelper";
 
 
 /* COMPONENTS & STYLES */
-import { makeStyles } from '@material-ui/core/styles';
-import '../App.css';
+import {useStyles} from '../styles/styles';
+import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from '@material-ui/core/Button';
 import {CircularProgress, Typography} from "@material-ui/core";
-
-
-const useStyles = makeStyles(theme =>({
-    textfield: {
-        background: 'white',
-        width: '100%',
-        marginLeft: 30,
-        marginTop:0,
-    },
-    paper: {
-        marginTop: 200,
-        marginLeft: 600,
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-    buttonClose: {
-        marginLeft: 100,
-    },
-    title: {
-        marginTop: 0,
-        marginBottom: 0,
-        marginLeft: 20,
-        paddingLeft: 10,
-    },
-    postbutton:{
-        marginLeft:'30px !important',
-        marginTop: '0px !important',
-        marginBottom: '0px !important',
-        marginRight: '0px !important',
-        width:'100%',
-        borderRadius: '0px',
-    },
-    createpost:{
-        marginTop:30,
-    }
-}));
-
 
 
 function CreatePost() {
@@ -102,14 +61,11 @@ function CreatePost() {
         fetchData();
     };
 
-
-
-
         return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={11}>
                     <Grid item xd={10} className={classes.createpost}>
-                        <span className={classes.title}>Create a post</span>
+                        <span className={classes.titlecreatepost}>Create a post</span>
                         <TextField
                             variant="outlined"
                             placeholder="Share your thoughts with other Laboriers..."

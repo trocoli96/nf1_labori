@@ -5,11 +5,12 @@ import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import moment from "moment";
 import {useParams} from 'react-router-dom';
 import getToken from "../utils/tokenHelper";
+import {useStyles} from '../styles/styles';
+
 
 /* COMPONENTS & STYLES */
-import '../App.css';
+import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -20,72 +21,6 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import Modal from '@material-ui/core/Modal';
 
 
-const useStyles = makeStyles(theme =>({
-    postslist:{
-        marginTop: 30,
-        marginLeft: 30,
-        width: '100%',
-    },
-    singlepost:{
-        marginBottom: 20,
-        padding: 10,
-    },
-    profileicon:{
-        width: theme.spacing(6),
-        height: theme.spacing(6),
-        display: 'inline-flex',
-        position:'relative',
-    },
-    authorbox:{
-        display:'flex',
-        position:'relative',
-    },
-    authorinfo:{
-        display:'inline',
-        position:'relative',
-        marginLeft: '10px',
-        marginTop: '-5px',
-    },
-    text:{
-        fontSize: '80%',
-        lineHeight:'2px',
-    },
-    title:{
-        lineHeight:'2px',
-    },
-    postbuttons:{
-        paddingTop:'1px',
-        paddingBottom:'1px',
-    },
-    iconbuttons:{
-        marginRight:'4px',
-    },
-    paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '0px solid #000',
-        boxShadow: theme.shadows[5],
-        top: "50%",
-        left: "50%",
-        marginLeft: "-200px",
-        marginTop: "-150px"
-    },
-    popupHeader: {
-        padding: theme.spacing(2, 4, 3),
-        backgroundColor: "#3f51b5",
-        color: "white"
-    },
-    textPadding: {
-        padding: theme.spacing(2, 4, 3),
-        justifyContent: 'center',
-    },
-    loadmore:{
-        position: 'absolute',
-        right: '48%',
-    }
-}));
-
 function SeePost(props) {
 
     const classes = useStyles();
@@ -95,6 +30,7 @@ function SeePost(props) {
 
     let {name} = useParams();
     const [post, setPost] = useState( []);
+    const [, setError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -119,10 +55,16 @@ function SeePost(props) {
                     setPost(data);
                     console.log(data);
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (error === 401) {
+                        setError(true);
+                        dispatch({type: "DO_LOGOUT"});
+                    }
+                });
         };
 
         fetchData();
+
     }, [dispatch]);
 
     const [open, setOpen] = useState(false);

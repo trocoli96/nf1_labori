@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import '../App.css';
-import {makeStyles} from '@material-ui/core/styles';
+import '../styles/App.css';
+import {useStyles} from '../styles/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
 import TextField from '@material-ui/core/TextField';
@@ -20,28 +20,6 @@ function ButtonPopup(props) {
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
-
-    const useStyles = makeStyles(theme => ({
-        paper: {
-            position: 'absolute',
-            width: 400,
-            backgroundColor: theme.palette.background.paper,
-            border: '0px solid #000',
-            boxShadow: theme.shadows[5],
-            top: "50%",
-            left: "50%",
-            marginLeft: "-200px",
-            marginTop: "-300px"
-        },
-        popupHeader: {
-            padding: theme.spacing(2, 4, 3),
-            backgroundColor: "#3f51b5",
-            color: "white"
-        },
-        textPadding: {
-            padding: theme.spacing(2, 4, 3),
-        }
-    }));
 
     // para gestionar la apertura o cierre del modal
     const classes = useStyles();
