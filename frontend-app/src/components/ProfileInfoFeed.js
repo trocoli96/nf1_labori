@@ -4,53 +4,15 @@ import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
-import '../App.css';
+import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import {makeStyles} from '@material-ui/core/styles';
+import {useStyles} from '../styles/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 
-const useStyles = makeStyles(theme => ({
-    paper: {
-        padding: 2,
-        textAlign: 'center',
-        color: 'blue',
-    },
-    profile: {
-        paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
-        width: '100%',
-        margin: 0,
-    },
-    photocover: {
-        textAlign:'center',
-        marginBottom:'20%',
-    },
-    icon: {
-        display: 'inline-flex',
-        width: theme.spacing(7),
-        height: theme.spacing(7),
-        fontSize: '150%',
-    },
-    userinfo: {
-        paddingTop: '10px',
-        textAlign: 'center',
-    },
-    gridfeed: {
-        padding: '0px !important',
-    },
-    text:{
-        fontSize: '90%',
-        lineHeight:'2px',
-    },
-    title:{
-        lineHeight:'2px',
-    }
-}));
+
 
 function ProfileInfoFeed() {
 
@@ -64,7 +26,8 @@ function ProfileInfoFeed() {
         "first_name": null,
         "last_name": null,
         "email": null,
-        "shortname": null
+        "shortname": null,
+        "color": null
     });
 
     // useEffect para coger los datos del usuario al cargar
@@ -93,7 +56,8 @@ function ProfileInfoFeed() {
                         "first_name": data.first_name,
                         "last_name": data.last_name,
                         "email": data.email,
-                        "shortname": data.shortname
+                        "shortname": data.shortname,
+                        "color": data.color
                     });
                 })
                 .catch(error => {
@@ -117,10 +81,10 @@ function ProfileInfoFeed() {
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
                             <Container className={classes.photocover}>
-                                <Avatar className={classes.icon}>{userData.shortname ? userData.shortname : null}</Avatar>
+                                <Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>
                             </Container>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
-                            <p className={classes.text}>{userData.email ? userData.email : <CircularProgress/>}</p>
+                            <p className={classes.textprofileFeed}>{userData.email ? userData.email : <CircularProgress/>}</p>
                                 <Divider/>
                             <p>Saved Items</p>
                         </Paper>

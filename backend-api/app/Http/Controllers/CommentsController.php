@@ -12,38 +12,48 @@ class CommentsController extends Controller
     public function createComments(Request $request)
     {
         $request = $request->all();
-        $createComments = "";
 
-        $createComments <= Comments::create([
-            'Body' => $request['comment_body'],
-            'Date' => ($request['created_at']),
-            'user_id' => ($request['user_id']),
-            'id' => ($request['id'])
+        $comment = comments::create([
+            'comment_body' => $request['comment_body'],
+            'author_id' => ($request['author_id']),
+            'post_id' => $request['post_id'],
         ]);
 
-        return $createComments;
+        return $comment;
     }
 
-    public function showComments($id)
+public function returnComments (Request $request, $post_id)
     {
-        $error = 'Experience not found';
+        //TODO revisar como evitar el pagination
+        $request = $request->all();
+        $lenght = 5;
 
-        $CommentsId = Experience::where('id',"=",$id)
-            ->first();
-        $CommentsInfo = array($CommentsId['id'],
-            'Body' => $request['comment_body'],
-            'Date' => $request['created_at'],
-            'user_id' => ($request['user_id']),
-            'id' => ($request['id'])
-        );
-            if(!empty($CommentsId)){
-                return $CommentsInfo;
+        $comments = Comments::select(
+            'comments.id',
+            'comments.author_id',
+            'comments.post_id',
+            'comments.comment_body',
+            'comments.created_at',
+            'comments.updated_at',
+            'posts.id',
+            'posts.user_id',
+            'posts.post_text',
+            'posts.image_link'
+        )
+            ->where('posts.id', '=', $post_id)
+            ->from('comments')
+            ->join('posts', function($query)
+            {
+                $query->on('comments.post_id', '=', 'posts.id');
             }
-            else{
-                return $error;
-            }
+            )
+            ->orderBy('created_at', 'desc')
+            ->paginate($lenght);
+
+        return $comments;
     }
-    public function modifyComments(Request $request)
+
+   public function modifyComments(Request $request)
     {
         $errorComments = array("Comments doesn't exist");
         $data = $request->all();

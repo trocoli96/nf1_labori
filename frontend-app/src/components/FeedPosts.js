@@ -1,13 +1,14 @@
 /* BASIC STUFF */
+import {useStyles} from '../styles/styles';
 import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import moment from "moment";
 
+
 /* COMPONENTS & STYLES */
-import '../App.css';
+import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -15,74 +16,10 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Button from "@material-ui/core/Button";
 import ChatIcon from '@material-ui/icons/Chat';
 import ReplyIcon from '@material-ui/icons/Reply';
-import Modal from '@material-ui/core/Modal';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
-
-const useStyles = makeStyles(theme =>({
-    postslist:{
-        marginTop: 30,
-        marginLeft: 30,
-        width: '100%',
-    },
-    singlepost:{
-        marginBottom: 20,
-        padding: 10,
-    },
-    profileicon:{
-        width: theme.spacing(6),
-        height: theme.spacing(6),
-        display: 'inline-flex',
-        position:'relative',
-    },
-    authorbox:{
-        display:'flex',
-        position:'relative',
-    },
-    authorinfo:{
-        display:'inline',
-        position:'relative',
-        marginLeft: '10px',
-        marginTop: '-5px',
-    },
-    text:{
-        fontSize: '80%',
-        lineHeight:'2px',
-    },
-    title:{
-        lineHeight:'2px',
-    },
-    postbuttons:{
-        paddingTop:'1px',
-        paddingBottom:'1px',
-    },
-    iconbuttons:{
-        marginRight:'4px',
-    },
-    paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '0px solid #000',
-        boxShadow: theme.shadows[5],
-        top: "50%",
-        left: "50%",
-        marginLeft: "-200px",
-        marginTop: "-150px"
-    },
-    popupHeader: {
-        padding: theme.spacing(2, 4, 3),
-        backgroundColor: "#3f51b5",
-        color: "white"
-    },
-    textPadding: {
-        padding: theme.spacing(2, 4, 3),
-        justifyContent: 'center',
-    },
-    loadmore:{
-        position: 'absolute',
-        right: '48%',
-    }
-}));
 
 
 function FeedPosts() {
@@ -93,7 +30,7 @@ function FeedPosts() {
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     const [postsData, setPostsData] = useState([]);
-    const [error, setError] = useState(false);
+    const [, setError] = useState(false);
     const [length, setLength] = useState(5);
 
 
@@ -131,50 +68,60 @@ function FeedPosts() {
 
     }, [dispatch, length]);
 
-    const [open, setOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
     const handleClose = () => {
-        setOpen(false);
+        setCopied(false);
     };
 
     return (<AuthContext.Consumer>
             {props =>
                 <Grid item xs={11}>
                     <Grid item xd={10} className={classes.postslist}>
-                        {postsData.data && postsData.data.map((data) => (
-                            <Paper className={classes.singlepost}>
-                                <Grid item xd={10} className={classes.authorbox}>
-                                    <Avatar className={classes.profileicon} style={{ backgroundColor: 'blue'}}>
-                                        {data.shortname}
-                                    </Avatar>
-                                    <span className={classes.authorinfo}>
+                        {postsData.data && postsData.data.map((data) => {
+                            return (
+                                <Paper className={classes.singlepost}>
+                                    <Grid item xd={10} className={classes.authorbox}>
+                                        <Avatar className={classes.profileicon} style={{backgroundColor: data.color}}>
+                                            {data.shortname}
+                                        </Avatar>
+                                        <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
                                         <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                                     </span>
-                                </Grid>
-                                <p>{data.post_text}</p>
-                                <Divider/>
-                                <Grid item xs={11}>
-                                    <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
-                                    <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                    <Button className={classes.postbuttons}><ReplyIcon className={classes.iconbuttons} onClick={() => setOpen(true)}/>Share</Button>
-                                    <Modal open={open} onClose={handleClose}>
-                                        <div className={classes.paper}>
-                                            <div className={classes.popupHeader}>
-                                                <h2>Share this post</h2>
-                                            </div>
-                                            <div className={classes.textPadding}>
-                                                <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
-                                                    <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
-                                                </CopyToClipboard>
-                                                {copied ? <span>Copied!</span> : null}
-                                            </div>
-                                        </div>
-                                    </Modal>
-                                </Grid>
-                            </Paper>
-                        ))}
+                                    </Grid>
+                                    <p style={{marginLeft: 10}}>{data.post_text}</p>
+                                    <Divider/>
+                                    <Grid item xs={11}>
+                                        <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
+                                        <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
+                                        <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
+                                            <Button className={classes.postbuttons} onClick={() => setCopied(true)}><ReplyIcon className={classes.iconbuttons}/>Share</Button>
+                                        </CopyToClipboard>
+
+                                    </Grid>
+                                </Paper>
+                            )
+                        })}
+                        {copied ? <Snackbar
+                                message="Link copied to Clipboard!"
+                                open={copied}
+                                autoHideDuration={2000}
+                                onClose={handleClose}
+                                color="green"
+                                action={
+                                    <React.Fragment>
+                                        <IconButton
+                                            aria-label="close"
+                                            color="inherit"
+                                            onClick={handleClose}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </React.Fragment>
+                                }
+                            />
+                                : null}
                     </Grid>
                         <Grid item xs={11}>
                         <Button

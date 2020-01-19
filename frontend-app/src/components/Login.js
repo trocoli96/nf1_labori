@@ -6,7 +6,7 @@ import {Link, withRouter} from 'react-router-dom';
 import {LOGIN, SIGNUP} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
-import '../App.css';
+import '../styles/App.css';
 import LoginForm from "../views/Login-Form";
 
 function Login() {

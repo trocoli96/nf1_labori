@@ -25,6 +25,7 @@ Route::post('/login', 'AuthController@login');
 Route::post('/post', 'PostsController@createPost');
 Route::get('/posts/{posts}', 'PostsController@returnPosts');
 Route::get('/post/{id}', 'PostsController@returnPost');
+Route::put('/editpost/{id}', 'PostsController@editPost');
 
 Route::get('/experiences', 'ExperienceController@showExperiences');
 Route::post('/experience', 'ExperienceController@createExperience');
@@ -34,7 +35,9 @@ Route::get('likes/{id}', 'LikesController@getLikesFromPost');
 Route::post('like', 'LikesController@updateLike');
 
 Route::get('comment/{id}', 'CommentsController@showComments');
-Route::post('/comments', 'CommentsController@createComents');
+Route::post('/comments', 'CommentsController@createComments');
+Route::get('/comments/{post_id}', 'CommentsController@returnComments');
+
 Route::put('comment/{id}', 'Comments@modifyComments');
 
 

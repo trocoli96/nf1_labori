@@ -7,25 +7,14 @@ import {Link} from "react-router-dom";
 import {PROFILE, SIGNUP, LOGIN, HOME, FEED} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
-import {makeStyles} from '@material-ui/core/styles';
+import {useStyles} from '../styles/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import './Header.css';
+import '../styles/Header.css';
 import getToken from "../utils/tokenHelper";
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-}));
 
 export default function ButtonAppBar() {
     const classes = useStyles();
@@ -35,7 +24,7 @@ export default function ButtonAppBar() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.titleheader}>
                         <Link to={HOME}><span style={{color: "white"}}>Labori</span></Link>
                     </Typography>
                     {getToken() ?
