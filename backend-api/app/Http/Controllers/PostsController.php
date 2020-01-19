@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostsController extends Controller
 {
@@ -72,19 +72,16 @@ class PostsController extends Controller
         $userIdDoesExist = User::find($userId);
 
         if ($userIdDoesExist === null) {
-            // TODO return a response
-            return abort(400, "User doesn't exist");
+            return response()->json(['message' => "User doesn't exist"],400);
         }
         // primero nos aseguramos que hay un parámetro en la URL
         if (empty($id)) {
-            // TODO return a response
-            return abort(400, "Parameter {id} is empty.");
+            return response()->json(['message' => "ID is empty"],400);
         }
 
         // luego nos aseguramos que el post existe
         if (Post::find($id) === null) {
-            // TODO return a response
-            return abort(400, "That postId doesn't exist.");
+            return response()->json(['message' => "Post id doesn't exist"],400);
         }
 
         // y luego devolvemos el post
@@ -95,6 +92,33 @@ class PostsController extends Controller
             ->first();
 
         return response()->json($post);
+    }
+    public function editPost(Request $request, $id)
+    {
+        $postData = $request->all();
+        $userId = Auth::id();
+        $userinfo = User::findOrFail($userId);
+        $newPostData = Post::find($id);
+
+        if ($userinfo === null) {
+            return response()->json(['message' => "User doesn't exist"],400);
+        }
+        // primero nos aseguramos que hay un parámetro en la URL
+        if (empty($id)) {
+            return response()->json(['message' => "ID is empty"],400);
+        }
+        if ($newPostData['user_id'] !== $userId){
+            return response()->json(['message' => "You're not the author of this post"],400);
+        }
+
+        if (!empty($postData['post_text'])){
+            $newPostData['post_text'] = $postData['post_text'];
+        }
+
+        $newPostData->save();
+
+        return response()->json($newPostData, 200);
+
     }
 
 }

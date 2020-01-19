@@ -26,7 +26,7 @@ function CreatePost() {
     const data = {
         post_text: post_text,
     };
-
+debugger;
     const post = (e) => {
         setError(false);
         setIsFetching(true);
@@ -50,6 +50,7 @@ function CreatePost() {
                     return Promise.reject(response.status);
                 }).then(data => {
                     setIsFetching(false);
+                    setPostText('');
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -72,6 +73,7 @@ function CreatePost() {
                             multiline={true}
                             rows={3}
                             rowsMax={3}
+                            value={post_text}
                             className={classes.textfield}
                             borderRadius={0}
                             InputProps={{
@@ -86,7 +88,9 @@ function CreatePost() {
                         {error ?
                             <Typography color="error">There was a problem posting your amazing post!</Typography> : null}
                         {isFetching ?
-                            <CircularProgress/> :
+                            <Button variant="contained" color="primary" className={classes.postbutton}>
+                                Post!
+                            </Button> :
                             <Button variant="contained" color="primary" onClick={post} className={classes.postbutton}>
                                 Post!
                             </Button>

@@ -3,29 +3,29 @@ import heroImage from "../media/marten-bjork-6dW3xyQvcYE-unsplash.jpg";
 
 export const useStyles = makeStyles(theme =>({
     postslist:{
-        marginTop: 30,
-        marginLeft: 30,
-        width: '100%',
+        marginTop: '30px !important',
+        marginLeft: '30px !important',
+        width: '100% !important',
     },
     singlepost:{
         marginBottom: 20,
         padding: 10,
     },
     profileicon:{
-        width: theme.spacing(6),
-        height: theme.spacing(6),
-        display: 'inline-flex',
-        position:'relative',
+        width: `${theme.spacing(7)}px !important`,
+        height: `${theme.spacing(7)}px !important`,
+        display: 'inline-flex !important',
+        position:'relative !important',
     },
     authorbox:{
-        display:'flex',
-        position:'relative',
+        display:'flex !important',
+        position:'relative !important',
     },
     authorinfo:{
-        display:'inline',
-        position:'relative',
-        marginLeft: '10px',
-        marginTop: '-5px',
+        display:'inline !important',
+        position:'relative !important',
+        marginLeft: '10px !important',
+        marginTop: '-5px !important',
     },
     text:{
         fontSize: '80%',
@@ -57,8 +57,8 @@ export const useStyles = makeStyles(theme =>({
         justifyContent: 'center',
     },
     loadmore:{
-        position: 'absolute',
-        right: '48%',
+        position: 'absolute !important',
+        right: '48% !important',
     },
     popupHeader: {
         padding: theme.spacing(2, 4, 3),
@@ -66,9 +66,9 @@ export const useStyles = makeStyles(theme =>({
         color: "white"
     },
     textfield: {
-        background: 'white',
-        width: '100%',
-        marginLeft: 30,
+        background: 'white !important',
+        width: '100% !important',
+        marginLeft: '30px !important',
         marginTop:0,
     },
     titlecreatepost: {
@@ -86,7 +86,7 @@ export const useStyles = makeStyles(theme =>({
         borderRadius: '0px',
     },
     createpost:{
-        marginTop:30,
+        marginTop:'30px !important',
     },
     root: {
         flexGrow: 1,
@@ -110,10 +110,10 @@ export const useStyles = makeStyles(theme =>({
         marginBottom:'20%',
     },
     iconprofileFeed: {
-        display: 'inline-flex',
-        width: theme.spacing(7),
-        height: theme.spacing(7),
-        fontSize: '150%',
+        display: 'inline-flex  !important',
+        width: `${theme.spacing(7)}px !important`,
+        height: `${theme.spacing(7)}px !important`,
+        fontSize: '150% !important',
     },
     userinfo: {
         paddingTop: '10px',
@@ -128,26 +128,26 @@ export const useStyles = makeStyles(theme =>({
     },
     rootFeed: {
         background: 'rgb(241,238,238)',
-        display: 'inline-block',
-        height: 'auto',
-        minHeight: '1500px',
-        width:'100%',
-        paddingTop: '30px',
-        paddingLeft: 200 ,
-        paddingRight: 200 ,
+        display: 'inline-block !important',
+        height: 'auto !important',
+        minHeight: '1500px !important',
+        width:'100% !important',
+        paddingTop: '30px !important',
+        paddingLeft: '200px !important' ,
+        paddingRight: '200px !important' ,
     },
     columnFeedCenter:{
-        float: 'left',
-        width: '50%',
+        float: 'left !important',
+        width: '50% !important',
         backgroundColor: 'rgb(241,238,238)',
-        height: 'auto',
+        height: 'auto !important',
     },
     columnFeedSides: {
-        float: 'left',
-        width: '25%',
+        float: 'left !important',
+        width: '25% !important',
         backgroundColor: 'rgb(241,238,238)',
-        height: '60em',
-        justifyContent: 'center',
+        height: '60em !important',
+        justifyContent: 'center !important',
     },
     paperSignUp: {
         marginTop: theme.spacing(8),
