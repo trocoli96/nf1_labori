@@ -12,21 +12,20 @@ class CommentsController extends Controller
     public function createComments(Request $request)
     {
         $request = $request->all();
-        $createComments = "";
 
-        $createComments <= Comments::create([
-            'Body' => $request['comment_body'],
-            'Date' => ($request['created_at']),
-            'user_id' => ($request['user_id']),
-            'id' => ($request['id'])
+        $comment = comments::create([
+            'comment_body' => $request['comment_body'],
+            'author_id' => ($request['author_id']),
+            'post_id' => $request['post_id'],
         ]);
 
-        return $createComments;
+        return $comment;
     }
-
+/*
     public function showComments($id)
     {
         $error = 'Experience not found';
+
 
         $CommentsId = Experience::where('id',"=",$id)
             ->first();
@@ -43,6 +42,8 @@ class CommentsController extends Controller
                 return $error;
             }
     }
+
+*/
     public function modifyComments(Request $request)
     {
         $errorComments = array("Comments doesn't exist");

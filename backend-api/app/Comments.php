@@ -6,19 +6,19 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-class Comments
+class Comments extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'Comments';
+    protected $table = 'comments';
 
 
     protected $fillable = [
-        'Body'
+        'comment_body','created_at', 'author_id', 'id', 'post_id'
     ];
 
     protected $guarded = [
-        'author_id', 'id'
+        'author_id', 'id', 'post_id'
     ];
 
     protected $hidden = [
