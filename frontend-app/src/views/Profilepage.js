@@ -6,18 +6,17 @@ import getToken from "../utils/tokenHelper";
 /* COMPONENTS & STYLES */
 import ExperiencesList from "../components/ExperiencesList";
 import ButtonPopup from "../components/Buttonpopup";
+import AddExperienceButton from "../components/AddExperienceButton";
 import '../App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from '@material-ui/icons/Add';
 
-const useStyles = makeStyles(theme =>({
+const useStyles = makeStyles(theme => ({
     root: {
         background: 'rgb(241,238,238)',
-        height:'2000px',
+        height: '2000px',
     },
     paper: {
         padding: 2,
@@ -30,14 +29,14 @@ const useStyles = makeStyles(theme =>({
         paddingRight: theme.spacing(5),
     },
     photocover: {
-        height:150,
+        height: 150,
         background: 'blue',
         borderTopLeftRadius: 3,
         borderTopRightRadius: 3,
     },
     userinfo: {
-        paddingLeft:'10px',
-        paddingTop:'10px',
+        paddingLeft: '10px',
+        paddingTop: '10px',
     },
     experience: {
         paddingLeft: theme.spacing(5),
@@ -45,7 +44,7 @@ const useStyles = makeStyles(theme =>({
 
     },
     userexperience: {
-        padding:'10px'
+        padding: '10px'
     },
 
 }));
@@ -112,28 +111,27 @@ function Profilepage() {
         {props =>
             <Container className={classes.root} maxWidth={'xl'}>
                 <Grid container spacing={6} className={classes.profile}>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={8}>
                         <Container className={classes.photocover}> </Container>
                         <Paper className={classes.userinfo}>
-                            <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
+                            <h3>{userData.first_name ? userData.first_name :
+                                <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
-                        <div>
-                            <ButtonPopup setUserData={setUserData}/>
-                        </div>
+                            <div>
+                                <ButtonPopup setUserData={setUserData}/>
+                            </div>
                         </Paper>
                     </Grid>
                 </Grid>
                 <Grid container spacing={6} className={classes.experience}>
-                    <Grid item xs={8}>
+                    <Grid item xs={12} md={8}>
                         <Paper className={classes.userexperience}>
                             <Grid container spacing={5}>
                                 <Grid item xs={6}>
                                     <h3>My experience</h3>
                                 </Grid>
                                 <Grid container item xs={6} justify="flex-end">
-                                    <IconButton color="primary" aria-label="add experience">
-                                        <AddIcon/>
-                                    </IconButton>
+                                    <AddExperienceButton/>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={5}>

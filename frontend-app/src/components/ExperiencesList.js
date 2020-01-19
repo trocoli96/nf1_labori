@@ -6,6 +6,7 @@ function ExperiencesList() {
 
     const [experiences, setExperiences] = useState([]);
 
+
     // useEffect para hacer fetch de la experiencia laboral
     useEffect(() => {
 
@@ -41,11 +42,13 @@ function ExperiencesList() {
 
     }, []);
 
+
     return (
         <Grid container>
-            {experiences.length && experiences.map(experience => {
+            {experiences.length !== 0 ?
+                experiences.map(experience => {
                 return (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} key={experience.id}>
                         <p>{experience.title}</p>
                         <p>{experience.company}</p>
                         <p>{experience.start_date} to {experience.end_date}</p>
@@ -54,7 +57,9 @@ function ExperiencesList() {
                         <hr/>
                     </Grid>
                 )
-            })}
+            })
+            :
+            <p>No experiences. Add your first one!</p>}
         </Grid>
     )
 }

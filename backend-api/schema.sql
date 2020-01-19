@@ -12,7 +12,8 @@ create table user
     current_company integer,
     headline        varchar(255),
     updated_at timestamp default current_timestamp(),
-    created_at timestamp default current_timestamp()
+    created_at timestamp default current_timestamp(),
+    foreign key (current_company) references company (id),
 )
 
 drop table if exists experience;

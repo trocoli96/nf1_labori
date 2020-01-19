@@ -44,6 +44,8 @@ class ExperienceController extends Controller
 
         $experiences = Experience::where('user_id', "=", $userid)->get();
 
+        // TODO que las devuelva de mas nuevas a mas antiguas (basada en la fecha)
+
         return response()->json($experiences, 200);
     }
 
