@@ -25,7 +25,7 @@ class AuthController extends Controller
 
     public function createUser(Request $request)
     {
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $permitted_chars = '0123456789abcdef';
 
         $random = substr(str_shuffle($permitted_chars), 0, 6);
         $color = str_split($random);

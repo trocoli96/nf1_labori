@@ -1,5 +1,5 @@
 import React, {useReducer, useEffect} from 'react';
-import './App.css';
+import './styles/App.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';

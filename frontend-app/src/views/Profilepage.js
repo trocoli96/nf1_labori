@@ -4,39 +4,15 @@ import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
+import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
-import '../App.css';
+import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 
-const useStyles = makeStyles(theme =>({
-    root: {
-        background: 'rgb(241,238,238)',
-        height:'2000px',
-    },
-    paper: {
-        padding: 2,
-        textAlign: 'center',
-        color: 'blue',
-    },
-    profile: {
-        padding: theme.spacing(5),
-    },
-    photocover: {
-        height:150,
-        background: 'blue',
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3,
-    },
-    userinfo: {
-        paddingLeft:'10px',
-        paddingTop:'10px',
-    },
 
-}));
 
 function Profilepage() {
 
@@ -98,11 +74,11 @@ function Profilepage() {
 
     return (<AuthContext.Consumer>
         {props =>
-            <Container className={classes.root} maxWidth={'xl'}>
-                <Grid container spacing={6} className={classes.profile}>
+            <Container className={classes.rootProfile} maxWidth={'xl'}>
+                <Grid container spacing={6} className={classes.profilePaper}>
                     <Grid item xs={8}>
-                        <Container className={classes.photocover}> </Container>
-                        <Paper className={classes.userinfo}>
+                        <Container className={classes.photocoverProfile}> </Container>
+                        <Paper className={classes.userinfoProfile}>
                             <h3>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <p>{userData.email ? userData.email : <CircularProgress size={20}/>}</p>
                         <div>

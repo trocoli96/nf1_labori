@@ -3,6 +3,7 @@ import React from 'react';
 import {AuthContext} from "./utils/AuthFront/context";
 import {AuthReducer} from "./utils/reducer";
 import getToken from "./utils/tokenHelper";
+import './styles/styles';
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
@@ -15,8 +16,8 @@ import Header from "./components/Header";
 import Login from "./components/Login";
 import Homepage from "./views/Homepage";
 import FeedPage from "./views/FeedPage";
-import './App.css';
 import SeePost from "./views/SeePost";
+import './styles/App.css';
 
 const App = () => {
 
