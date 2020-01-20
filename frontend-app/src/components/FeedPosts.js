@@ -2,26 +2,17 @@
 import {useStyles} from '../styles/styles';
 import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
-import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
-import moment from "moment";
+import getToken from "../utils/tokenHelper";
 
 
 /* COMPONENTS & STYLES */
 import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Button from "@material-ui/core/Button";
-import ChatIcon from '@material-ui/icons/Chat';
-import ReplyIcon from '@material-ui/icons/Reply';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import getToken from "../utils/tokenHelper";
 import SinglePost from "./SinglePost";
-
 
 
 function FeedPosts() {
@@ -37,7 +28,7 @@ function FeedPosts() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/posts/` + [length];
+            const url = `http://127.0.0.1/api/posts/` + [length] + '?token=' + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
