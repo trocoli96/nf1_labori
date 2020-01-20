@@ -123,6 +123,20 @@ function AddExperienceButton(props) {
 
     }, [isSubmitting]);
 
+    // si cerramos el modal, reseteamos los valores
+    useEffect(() => {
+        if (!open) {
+            setJobTitle("");
+            setCompany("");
+            setLocation("");
+            setStartDate("2020-01-01");
+            setEndDate("2020-01-02");
+            setDescription("");
+            setCurrentlyWorking(false);
+            setError("");
+        }
+    }, [open]);
+
     return (
         <div>
             <IconButton color="primary" aria-label="add experience" onClick={handleOpen}>
