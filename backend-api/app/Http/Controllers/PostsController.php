@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Redis;
 class PostsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
 
     public function createPost(Request $request)
     {
@@ -67,6 +72,8 @@ class PostsController extends Controller
 
 
         foreach ($posts as $post) {
+
+            $post['owner'] = Auth::id() === $post['user_id'];
 
             // sumarle likes
             $likesFromPost = Redis::get("like_counter_" . $post['id']);
