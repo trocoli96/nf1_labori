@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Redis;
 
 class PostsController extends Controller
 {
@@ -67,6 +68,11 @@ class PostsController extends Controller
 
         foreach ($posts as $post) {
 
+            // sumarle likes
+            $likesFromPost = Redis::get("like_counter_" . $post['id']);
+
+            $post['likes'] = $likesFromPost;
+
             // ver si el post tiene comments
             $comments = DB::table('comments')
                 ->leftJoin('user', 'comments.author_id', '=', 'user.id')
@@ -80,7 +86,9 @@ class PostsController extends Controller
 
         }
 
-        return $posts;
+
+
+        return response()->json($posts, 200);
     }
 
     public function returnPost(Request $request, $id)

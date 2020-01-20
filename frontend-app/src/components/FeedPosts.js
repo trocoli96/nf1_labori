@@ -20,6 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import getToken from "../utils/tokenHelper";
+import SinglePost from "./SinglePost";
 
 
 
@@ -30,8 +31,7 @@ function FeedPosts() {
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
-    const [postsData, setPostsData] = useState([]);
-    const [, setError] = useState(false);
+    const [posts, setPosts] = useState([]);
     const [length, setLength] = useState(5);
 
 
@@ -55,11 +55,10 @@ function FeedPosts() {
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                    return setPostsData(data);
+                    return setPosts(data);
                 })
                 .catch(error => {
                     if (error === 401){
-                        setError(true);
                         dispatch({type: "DO_LOGOUT"});
                     }
                 });
@@ -79,34 +78,9 @@ function FeedPosts() {
             {props =>
                 <Grid item xs={11}>
                     <Grid item xd={10} className={classes.postslist}>
-                        {postsData.data && postsData.data.map((data) => {
-                            return (
-                                <Paper className={classes.singlepost}>
-                                    <Grid item xd={10} className={classes.authorbox}>
-                                        <Avatar className={classes.profileicon} style={{backgroundColor: data.color}}>
-                                            {data.shortname}
-                                        </Avatar>
-                                        <span className={classes.authorinfo}>
-                                        <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
-                                            {data.former_name ? <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
-                                                :
-                                                <p className={classes.text}>{moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
-                                            }
-                                    </span>
-                                    </Grid>
-                                    <p style={{marginLeft: 10}}>{data.post_text}</p>
-                                    <Divider/>
-                                    <Grid item xs={11}>
-                                        <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
-                                        <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                        <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
-                                            <Button className={classes.postbuttons} onClick={() => setCopied(true)}><ReplyIcon className={classes.iconbuttons}/>Share</Button>
-                                        </CopyToClipboard>
-
-                                    </Grid>
-                                </Paper>
-                            )
-                        })}
+                        {posts.data && posts.data.map((post) =>
+                                <SinglePost {...post} setCopied={setCopied}/>)
+                        }
                         {copied ? <Snackbar
                                 message="Link copied to Clipboard!"
                                 open={copied}
