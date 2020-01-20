@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
+use App\Comments;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,32 +57,48 @@ class PostsController extends Controller
             'user.color'
         )
             ->from('posts')
-            ->join('user', function($query)
-            {
+            ->join('user', function ($query) {
                 $query->on('user.id', '=', 'posts.user_id');
             }
-                )
+            )
             ->orderBy('created_at', 'desc')
             ->paginate($length);
 
+
+        foreach ($posts as $post) {
+
+            // ver si el post tiene comments
+            $comments = DB::table('comments')
+                ->leftJoin('user', 'comments.author_id', '=', 'user.id')
+                ->where('post_id', '=', $post['id'])
+                ->orderBy('comments.created_at', 'desc')
+                ->get();
+            // TODO paginar los comments
+
+            // añadirlos en par clave-valor
+            $post['comments'] = $comments;
+
+        }
+
         return $posts;
     }
+
     public function returnPost(Request $request, $id)
     {
         $userId = Auth::id();
         $userIdDoesExist = User::find($userId);
 
         if ($userIdDoesExist === null) {
-            return response()->json(['message' => "User doesn't exist"],400);
+            return response()->json(['message' => "User doesn't exist"], 400);
         }
         // primero nos aseguramos que hay un parámetro en la URL
         if (empty($id)) {
-            return response()->json(['message' => "ID is empty"],400);
+            return response()->json(['message' => "ID is empty"], 400);
         }
 
         // luego nos aseguramos que el post existe
         if (Post::find($id) === null) {
-            return response()->json(['message' => "Post id doesn't exist"],400);
+            return response()->json(['message' => "Post id doesn't exist"], 400);
         }
 
         // y luego devolvemos el post
@@ -93,6 +110,7 @@ class PostsController extends Controller
 
         return response()->json($post);
     }
+
     public function editPost(Request $request, $id)
     {
         $postData = $request->all();
@@ -101,17 +119,17 @@ class PostsController extends Controller
         $newPostData = Post::find($id);
 
         if ($userinfo === null) {
-            return response()->json(['message' => "User doesn't exist"],400);
+            return response()->json(['message' => "User doesn't exist"], 400);
         }
         // primero nos aseguramos que hay un parámetro en la URL
         if (empty($id)) {
-            return response()->json(['message' => "ID is empty"],400);
+            return response()->json(['message' => "ID is empty"], 400);
         }
-        if ($newPostData['user_id'] !== $userId){
-            return response()->json(['message' => "You're not the author of this post"],400);
+        if ($newPostData['user_id'] !== $userId) {
+            return response()->json(['message' => "You're not the author of this post"], 400);
         }
 
-        if (!empty($postData['post_text'])){
+        if (!empty($postData['post_text'])) {
             $newPostData['post_text'] = $postData['post_text'];
         }
 
