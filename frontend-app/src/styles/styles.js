@@ -30,6 +30,7 @@ export const useStyles = makeStyles(theme => ({
     text: {
         fontSize: '80%',
         lineHeight: '2px',
+        color: 'grey'
     },
     title: {
         lineHeight: '2px',
@@ -237,5 +238,21 @@ export const useStyles = makeStyles(theme => ({
         marginLeft: "-350px",
         marginTop: "-300px"
     },
-
+    experienceheader: {
+        display: 'flex',
+        position: 'relative',
+    },
+    experienceheaderinfo: {
+        display: 'inline',
+        position: 'relative',
+        marginLeft: '10px',
+        marginTop: '-5px',
+    },
+    experiencebox: {
+        marginLeft: 30,
+        width: '90%',
+    },
+    experiencedescription:{
+        marginLeft: '90px !important',
+    }
 }));
