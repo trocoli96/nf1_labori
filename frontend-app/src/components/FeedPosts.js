@@ -19,6 +19,7 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import getToken from "../utils/tokenHelper";
 
 
 
@@ -87,7 +88,10 @@ function FeedPosts() {
                                         </Avatar>
                                         <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
-                                        <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
+                                            {data.former_name ? <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
+                                                :
+                                                <p className={classes.text}>{moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
+                                            }
                                     </span>
                                     </Grid>
                                     <p style={{marginLeft: 10}}>{data.post_text}</p>
