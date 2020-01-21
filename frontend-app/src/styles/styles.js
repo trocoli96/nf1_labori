@@ -251,8 +251,5 @@ export const useStyles = makeStyles(theme => ({
     experiencebox: {
         marginLeft: 30,
         width: '90%',
-    },
-    experiencedescription:{
-        marginLeft: '90px !important',
     }
 }));

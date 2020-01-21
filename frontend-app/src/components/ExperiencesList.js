@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from "react";
+/* BASIC STUFF */
+import React, {useState, useEffect, useContext} from "react";
+import getToken from "../utils/tokenHelper";
+import {AuthContext} from "../utils/AuthFront/context";
+
+/* COMPONENTS & STYLES */
 import {useStyles} from '../styles/styles';
 import {Grid} from "@material-ui/core";
-import getToken from "../utils/tokenHelper";
-
-import BusinessIcon from '@material-ui/icons/Business';
-import Avatar from "@material-ui/core/Avatar";
+import SingleExperience from "./SIngleExperience";
 
 function ExperiencesList(props) {
 
     const classes = useStyles();
+
+    // recogemos lo proveído por el context
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     const [experiences, setExperiences] = useState([]);
 
@@ -41,6 +46,11 @@ function ExperiencesList(props) {
                     return setExperiences(data);
                 })
                 .catch(error => {
+                    if (error === 401) {
+                        props.setUpdateExperiences(false);
+                        console.log("Token inválido, probablemente caducado. Hacemos logout.");
+                        dispatch({type: "DO_LOGOUT"});
+                    }
                     props.setUpdateExperiences(false);
                     return console.log(error);
                 })
@@ -55,30 +65,13 @@ function ExperiencesList(props) {
         <Grid className={classes.experiencebox}>
             {experiences.length !== 0 ?
                 experiences.map(experience => {
-                return (
-                    <Grid item xs={12} key={experience.id}>
-                        <Grid item xs={10} className={classes.experienceheader}>
-                            <div style={{padding: 15}}>
-                            <Avatar variant="square" style={{padding: 5}}><BusinessIcon/></Avatar>
-                            </div>
-                            <span className={classes.experienceheaderinfo}>
-                                <h3 className={classes.title}>{experience.title}</h3>
-                                <p className={classes.title}>{experience.company}</p>
-                                <p className={classes.text}>{experience.start_date} to {experience.end_date}</p>
-                                <p className={classes.text}>{experience.location}</p>
-                            </span>
-                        </Grid>
-                        <Grid item xs={10} className={classes.experiencedescription}>
-                            <span>
-                            <p>{experience.description}</p>
-                            </span>
-                        </Grid>
-                        <hr/>
-                    </Grid>
-                )
-            })
-            :
-            <p>No experiences. Add your first one!</p>}
+                    return (
+                        <SingleExperience {...experience} key={experience.id}/>
+                    )
+                })
+                :
+                <p>No experiences. Add your first one!</p>
+            }
         </Grid>
     )
 }
