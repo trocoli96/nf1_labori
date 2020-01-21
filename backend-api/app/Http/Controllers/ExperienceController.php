@@ -38,13 +38,30 @@ class ExperienceController extends Controller
     {
         $userid = Auth::id();
 
-        $experiences = Experience::where('user_id', "=", $userid)->get();
-
-        // TODO que las devuelva de mas nuevas a mas antiguas (basada en la fecha)
+        $experiences = Experience::where('user_id', "=", $userid)->orderBy('start_date', 'desc')->get();
 
         return response()->json($experiences, 200);
     }
 
+    public function deleteExperience(Request $request) {
+
+        $data = $request->all();
+
+        $userId = Auth::id();
+
+        // comprobamos que user_id de la experience corresponda con el user.id
+        if ($userId !== $data['user_id']) {
+            return response()->json("Permission denied.", 403);
+        }
+
+        $experience = Experience::find($data['id']);
+        $experience->delete();
+
+        return response()->json(["Succesfully deleted", $experience], 200);
+
+    }
+
+    // NOT IN USE
     public function modifyExperience(Request $request)
     {
         $errorExperience = array("Experience doesn't exist");

@@ -6,7 +6,7 @@ import {AuthContext} from "../utils/AuthFront/context";
 /* COMPONENTS & STYLES */
 import {useStyles} from '../styles/styles';
 import {Grid} from "@material-ui/core";
-import SingleExperience from "./SIngleExperience";
+import SingleExperience from "./SingleExperience";
 
 function ExperiencesList(props) {
 
@@ -49,7 +49,7 @@ function ExperiencesList(props) {
                     if (error === 401) {
                         props.setUpdateExperiences(false);
                         console.log("Token inválido, probablemente caducado. Hacemos logout.");
-                        dispatch({type: "DO_LOGOUT"});
+                        return dispatch({type: "DO_LOGOUT"});
                     }
                     props.setUpdateExperiences(false);
                     return console.log(error);
@@ -66,7 +66,7 @@ function ExperiencesList(props) {
             {experiences.length !== 0 ?
                 experiences.map(experience => {
                     return (
-                        <SingleExperience {...experience} key={experience.id}/>
+                        <SingleExperience experience={experience} key={experience.id} setUpdateExperiences={props.setUpdateExperiences}/>
                     )
                 })
                 :
