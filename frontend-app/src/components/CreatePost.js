@@ -1,7 +1,9 @@
 /* BASIC STUFF */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
+import {PostContext} from "../utils/postContext";
+import {SET_FLAG} from "../utils/postsReducer";
 
 
 /* COMPONENTS & STYLES */
@@ -22,6 +24,8 @@ function CreatePost() {
     const [post_text, setPostText] = useState('');
     const [error, setError] = useState(false);
     const [isFetching, setIsFetching] = useState(false);
+
+    const {postState, postDispatch} = useContext(PostContext);
 
     const data = {
         post_text: post_text,
@@ -50,6 +54,8 @@ function CreatePost() {
                 }).then(data => {
                     setIsFetching(false);
                     setPostText('');
+                    postDispatch({type: SET_FLAG})
+
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -61,43 +67,50 @@ function CreatePost() {
         fetchData();
     };
 
-        return (<AuthContext.Consumer>
+    return (
+        <AuthContext.Consumer>
             {props =>
-                <Grid item xs={11}>
-                    <Grid item xd={10} className={classes.createpost}>
-                        <span className={classes.titlecreatepost}>Create a post</span>
-                        <TextField
-                            variant="outlined"
-                            placeholder="Share your thoughts with other Laboriers..."
-                            multiline={true}
-                            rows={3}
-                            rowsMax={3}
-                            value={post_text}
-                            className={classes.textfield}
-                            borderRadius={0}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <BorderColorIcon/>
-                                    </InputAdornment>
-                                ),
-                            }}
-                            onChange={(e) => setPostText(e.target.value)}/>
+                <PostContext.Consumer>
+                    {props =>
+                        <Grid item xs={11}>
+                            <Grid item xd={10} className={classes.createpost}>
+                                <span className={classes.titlecreatepost}>Create a post</span>
+                                <TextField
+                                    variant="outlined"
+                                    placeholder="Share your thoughts with other Laboriers..."
+                                    multiline={true}
+                                    rows={3}
+                                    rowsMax={3}
+                                    value={post_text}
+                                    className={classes.textfield}
+                                    borderRadius={0}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <BorderColorIcon/>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    onChange={(e) => setPostText(e.target.value)}/>
 
-                        {error ?
-                            <Typography color="error">There was a problem posting your amazing post!</Typography> : null}
-                        {isFetching ?
-                            <Button variant="contained" color="primary" className={classes.postbutton}>
-                                Post!
-                            </Button> :
-                            <Button variant="contained" color="primary" onClick={post} className={classes.postbutton}>
-                                Post!
-                            </Button>
-                        }
-                    </Grid>
-                </Grid>
+                                {error ?
+                                    <Typography color="error">There was a problem posting your amazing
+                                        post!</Typography> : null}
+                                {isFetching ?
+                                    <Button variant="contained" color="primary" className={classes.postbutton}>
+                                        Post!
+                                    </Button> :
+                                    <Button variant="contained" color="primary" onClick={post}
+                                            className={classes.postbutton}>
+                                        Post!
+                                    </Button>
+                                }
+                            </Grid>
+                        </Grid>
+                    }
+                </PostContext.Consumer>
             }
         </AuthContext.Consumer>)
-    }
+}
 
 export default CreatePost;
