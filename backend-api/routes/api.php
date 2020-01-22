@@ -23,7 +23,7 @@ Route::put('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
 
 Route::post('/post', 'PostsController@createPost');
-Route::get('/posts/{posts}', 'PostsController@returnPosts');
+Route::get('/posts/', 'PostsController@returnPosts');
 Route::get('/post/{id}', 'PostsController@returnPost');
 Route::put('/editpost/{id}', 'PostsController@editPost');
 
