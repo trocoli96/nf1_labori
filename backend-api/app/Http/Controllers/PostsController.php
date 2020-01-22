@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
+use App\Comments;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class PostsController extends Controller
     public function returnPosts(Request $request, $length)
     {
 
-        $posts = Post::select(
+      /*  $posts = Post::select(
             'posts.id',
             'posts.user_id',
             'posts.post_text',
@@ -53,16 +54,26 @@ class PostsController extends Controller
             'user.first_name',
             'user.last_name',
             'user.former_name',
-            'user.color'
+            'user.color',
+            'comments.post_id',
+            'comments.comment_body'
         )
             ->from('posts')
+            ->join('comments', function($query2)
+            {
+                $query2->on('posts.id', '=', 'comments.post_id');
+            }
+            )
             ->join('user', function($query)
             {
                 $query->on('user.id', '=', 'posts.user_id');
             }
                 )
             ->orderBy('created_at', 'desc')
-            ->paginate($length);
+            ->paginate($length);*/
+        DB::table('posts')
+            ->where()
+
 
         return $posts;
     }
