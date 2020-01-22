@@ -63,7 +63,7 @@ function ExperiencesList(props) {
 
     return (
         <Grid className={classes.experiencebox}>
-            {experiences.length !== 0 ?
+            {experiences !== undefined ?
                 experiences.map(experience => {
                     return (
                         <SingleExperience experience={experience} key={experience.id} setUpdateExperiences={props.setUpdateExperiences}/>

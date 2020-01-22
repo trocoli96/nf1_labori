@@ -138,7 +138,7 @@ function AddExperienceButton(props) {
     }, [open]);
 
     return (
-        <div>
+        <Grid>
             <IconButton color="primary" aria-label="add experience" onClick={handleOpen}>
                 <AddCircleIcon/>
             </IconButton>
@@ -228,7 +228,7 @@ function AddExperienceButton(props) {
 
                 </div>
             </Modal>
-        </div>
+        </Grid>
     )
 }
 
