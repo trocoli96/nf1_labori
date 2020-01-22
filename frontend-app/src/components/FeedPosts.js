@@ -2,6 +2,7 @@
 import {useStyles} from '../styles/styles';
 import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import {PostContext} from "../utils/postContext";
 import getToken from "../utils/tokenHelper";
 
 
@@ -21,6 +22,7 @@ function FeedPosts() {
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
+    const {postState} = useContext(PostContext);
 
     const [posts, setPosts] = useState([]);
     const [length, setLength] = useState(5);
@@ -49,7 +51,7 @@ function FeedPosts() {
                     return setPosts(data);
                 })
                 .catch(error => {
-                    if (error === 401){
+                    if (error === 401) {
                         dispatch({type: "DO_LOGOUT"});
                     }
                 });
@@ -57,7 +59,7 @@ function FeedPosts() {
 
         fetchData();
 
-    }, [dispatch, length]);
+    }, [dispatch, length, postState.flag]);
 
     const [copied, setCopied] = useState(false);
 
@@ -65,45 +67,49 @@ function FeedPosts() {
         setCopied(false);
     };
 
-    return (<AuthContext.Consumer>
+    return (
+        <AuthContext.Consumer>
             {props =>
-                <Grid item xs={11}>
-                    <Grid item xd={10} className={classes.postslist}>
-                        {posts.data && posts.data.map((post) =>
-                                <SinglePost {...post} setCopied={setCopied}/>)
-                        }
-                        {copied ? <Snackbar
-                                message="Link copied to Clipboard!"
-                                open={copied}
-                                autoHideDuration={2000}
-                                onClose={handleClose}
-                                color="green"
-                                action={
-                                    <React.Fragment>
-                                        <IconButton
-                                            aria-label="close"
-                                            color="inherit"
-                                            onClick={handleClose}
-                                        >
-                                            <CloseIcon />
-                                        </IconButton>
-                                    </React.Fragment>
-                                }
-                            />
-                                : null}
-                    </Grid>
+                <PostContext.Consumer>
+                    {props =>
                         <Grid item xs={11}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.loadmore}
-                            onClick={() => setLength(length + 5) }
-                            >
-                            LOAD MORE
-                            </Button>
+                            <Grid item xd={10} className={classes.postslist}>
+                                {posts.data && posts.data.map((post) =>
+                                    <SinglePost {...post} setCopied={setCopied}/>)
+                                }
+                                {copied ? <Snackbar
+                                        message="Link copied to Clipboard!"
+                                        open={copied}
+                                        autoHideDuration={2000}
+                                        onClose={handleClose}
+                                        color="green"
+                                        action={
+                                            <React.Fragment>
+                                                <IconButton
+                                                    aria-label="close"
+                                                    color="inherit"
+                                                    onClick={handleClose}
+                                                >
+                                                    <CloseIcon/>
+                                                </IconButton>
+                                            </React.Fragment>
+                                        }
+                                    />
+                                    : null}
+                            </Grid>
+                            <Grid item xs={11}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.loadmore}
+                                    onClick={() => setLength(length + 5)}
+                                >
+                                    LOAD MORE
+                                </Button>
+                            </Grid>
                         </Grid>
-                </Grid>
-
+                    }
+                </PostContext.Consumer>
             }
         </AuthContext.Consumer>
     );

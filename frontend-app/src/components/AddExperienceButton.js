@@ -205,17 +205,16 @@ function AddExperienceButton(props) {
                                 label="Currently working here"
                             />
                         </Grid>
-                        <p>
-                            <TextField
-                                id="description"
-                                label="Description"
-                                multiline
-                                rows="8"
-                                variant="outlined"
-                                onChange={(e) => setDescription(e.target.value)}
-                                fullWidth
-                            />
-                        </p>
+                        <p></p>
+                        <TextField
+                            id="description"
+                            label="Description"
+                            multiline
+                            rows="8"
+                            variant="outlined"
+                            onChange={(e) => setDescription(e.target.value)}
+                            fullWidth
+                        />
                         <p>{error}</p>
                         {isSubmitting ?
                             <CircularProgress/> :
