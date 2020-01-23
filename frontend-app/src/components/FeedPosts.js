@@ -81,7 +81,7 @@ function FeedPosts() {
                                 {copied ? <Snackbar
                                         message="Link copied to Clipboard!"
                                         open={copied}
-                                        autoHideDuration={2000}
+                                        autoHideDuration={1500}
                                         onClose={handleClose}
                                         color="green"
                                         action={

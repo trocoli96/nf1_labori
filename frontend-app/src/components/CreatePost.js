@@ -55,7 +55,6 @@ function CreatePost() {
                     setIsFetching(false);
                     setPostText('');
                     postDispatch({type: SET_FLAG})
-
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
