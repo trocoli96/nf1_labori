@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Experiences\ExperienceHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Experience;
@@ -43,7 +44,7 @@ class ExperienceController extends Controller
         return response()->json($experiences, 200);
     }
 
-    public function deleteExperience(Request $request) {
+    public function deleteExperience(Request $request, ExperienceHandler $experienceHandler) {
 
         $data = $request->all();
 
@@ -54,7 +55,7 @@ class ExperienceController extends Controller
             return response()->json("Permission denied.", 403);
         }
 
-        $experience = Experience::find($data['id']);
+        $experience = $experienceHandler->find($data['id']);
         $experience->delete();
 
         return response()->json(["Succesfully deleted", $experience], 200);
