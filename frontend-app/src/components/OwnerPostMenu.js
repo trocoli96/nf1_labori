@@ -51,6 +51,10 @@ function OwnerPostMenu (props) {
         setAnchorEl(null);
     };
 
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
     const [deletePost, setDeletePost] = useState(false);
 
     useEffect(() => {
@@ -120,7 +124,7 @@ function OwnerPostMenu (props) {
                 },
             }}>
             <MenuItem onClick={ e =>  {handleClickOpen(); handleClose();}}><DeleteIcon/>Delete</MenuItem>
-            <MenuItem onClick={handleClose}><AdjustIcon/><Link to={{pathname: `/post/${props.id}`}}>View post</Link></MenuItem>
+            <MenuItem onClick={handleClose}><Link to={{pathname: `/post/${props.id}`}}><AdjustIcon/> View post</Link></MenuItem>
         </Menu>
             <Dialog
                 open={openDialog}
@@ -135,10 +139,10 @@ function OwnerPostMenu (props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleCloseDialog} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={e => { handleClose(); setDeletePost(true) }} color="primary" autoFocus>
+                    <Button onClick={e => { handleCloseDialog(); setDeletePost(true) }} color="primary" autoFocus>
                         Delete
                     </Button>
                 </DialogActions>

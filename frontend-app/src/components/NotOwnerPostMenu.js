@@ -54,7 +54,7 @@ function NotOwnerPostMenu(props){
                         width: 200,
                     },
                 }}>
-                <MenuItem onClick={handleClose}><AdjustIcon/><Link to={{pathname: `/post/${props.id}`}}>View post</Link></MenuItem>
+                <MenuItem onClick={handleClose}><Link to={{pathname: `/post/${props.id}`}}><AdjustIcon/> View post</Link></MenuItem>
             </Menu>
         </div>
     )
