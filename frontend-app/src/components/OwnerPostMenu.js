@@ -18,6 +18,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import AdjustIcon from "@material-ui/icons/Adjust";
+import {Link} from "react-router-dom";
 
 
 
@@ -117,7 +119,8 @@ function OwnerPostMenu (props) {
                     width: 200,
                 },
             }}>
-            <MenuItem onClick={handleClickOpen}><DeleteIcon/>Delete</MenuItem>
+            <MenuItem onClick={ e =>  {handleClickOpen(); handleClose();}}><DeleteIcon/>Delete</MenuItem>
+            <MenuItem onClick={handleClose}><AdjustIcon/><Link to={{pathname: `/post/${props.id}`}}>View post</Link></MenuItem>
         </Menu>
             <Dialog
                 open={openDialog}
