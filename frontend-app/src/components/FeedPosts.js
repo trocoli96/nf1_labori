@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import SinglePost from "./SinglePost";
 
 
+
 function FeedPosts() {
 
     const classes = useStyles();
@@ -25,17 +26,17 @@ function FeedPosts() {
     const {postState} = useContext(PostContext);
 
     const [posts, setPosts] = useState([]);
-    const [length, setLength] = useState(5);
-
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/posts/` + [length] + '?token=' + getToken();
+            const url = `http://127.0.0.1/api/posts/?page=` + page ;
             const options = {
                 method: 'GET',
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken(),
                 }),
                 mode: 'cors',
             };
@@ -48,7 +49,7 @@ function FeedPosts() {
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                    return setPosts(data);
+                     return setPosts(data);
                 })
                 .catch(error => {
                     if (error === 401) {
@@ -59,7 +60,7 @@ function FeedPosts() {
 
         fetchData();
 
-    }, [dispatch, length, postState.flag]);
+    }, [dispatch, page, postState.flag]);
 
     const [copied, setCopied] = useState(false);
 
@@ -80,7 +81,7 @@ function FeedPosts() {
                                 {copied ? <Snackbar
                                         message="Link copied to Clipboard!"
                                         open={copied}
-                                        autoHideDuration={2000}
+                                        autoHideDuration={1500}
                                         onClose={handleClose}
                                         color="green"
                                         action={
@@ -102,7 +103,7 @@ function FeedPosts() {
                                     variant="contained"
                                     color="primary"
                                     className={classes.loadmore}
-                                    onClick={() => setLength(length + 5)}
+                                    onClick={() => setPage(page + 1)}
                                 >
                                     LOAD MORE
                                 </Button>

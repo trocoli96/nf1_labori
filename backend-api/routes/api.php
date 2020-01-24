@@ -23,9 +23,10 @@ Route::put('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
 
 Route::post('/post', 'PostsController@createPost');
-Route::get('/posts/{posts}', 'PostsController@returnPosts');
+Route::get('/posts/', 'PostsController@returnPosts');
 Route::get('/post/{id}', 'PostsController@returnPost');
 Route::put('/editpost/{id}', 'PostsController@editPost');
+Route::delete('/post/delete/{id}', 'PostsController@deletePost');
 
 Route::get('/experiences', 'ExperienceController@showExperiences');
 Route::post('/experience', 'ExperienceController@createExperience');

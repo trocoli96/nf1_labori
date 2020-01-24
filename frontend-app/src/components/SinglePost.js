@@ -1,15 +1,22 @@
+/*BASIC STUFF*/
 import React from "react";
+import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
+import OwnerPostMenu from "./OwnerPostMenu";
+
+/*UTILS*/
+import {useStyles} from "../styles/styles";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import moment from "moment";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+
+/*ICONS*/
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ChatIcon from "@material-ui/icons/Chat";
-import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import ReplyIcon from "@material-ui/icons/Reply";
-import Paper from "@material-ui/core/Paper";
-import {useStyles} from "../styles/styles";
+import NotOwnerPostMenu from "./NotOwnerPostMenu";
 
 function SinglePost(props) {
 
@@ -28,7 +35,13 @@ function SinglePost(props) {
                         :
                         <p className={classes.text}>{moment(props.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                     }
-                </span>
+                     </span>
+                    {props.owner ?
+                        <OwnerPostMenu {...props}/>
+                        :
+                        <NotOwnerPostMenu {...props}/>
+                    }
+
             </Grid>
             <p style={{marginLeft: 10}}>{props.post_text}</p>
             <Divider/>

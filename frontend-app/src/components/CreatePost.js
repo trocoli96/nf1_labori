@@ -55,7 +55,6 @@ function CreatePost() {
                     setIsFetching(false);
                     setPostText('');
                     postDispatch({type: SET_FLAG})
-
                 }).catch(error => {
                     setIsFetching(false);
                     setError(true);
@@ -74,7 +73,6 @@ function CreatePost() {
                     {props =>
                         <Grid item xs={11}>
                             <Grid item xd={10} className={classes.createpost}>
-                                <span className={classes.titlecreatepost}>Create a post</span>
                                 <TextField
                                     variant="outlined"
                                     placeholder="Share your thoughts with other Laboriers..."
@@ -97,9 +95,7 @@ function CreatePost() {
                                     <Typography color="error">There was a problem posting your amazing
                                         post!</Typography> : null}
                                 {isFetching ?
-                                    <Button variant="contained" color="primary" className={classes.postbutton}>
-                                        Post!
-                                    </Button> :
+                                    <CircularProgress/> :
                                     <Button variant="contained" color="primary" onClick={post}
                                             className={classes.postbutton}>
                                         Post!
