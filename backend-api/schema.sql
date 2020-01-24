@@ -116,3 +116,12 @@ create table company
     headquarters_location varchar(255),
     founded_year          varchar(255)
 )
+
+create table friends
+(
+    id          integer     not null primary key auto_increment,
+    user_id     integer not null,
+    is_following integer not null,
+    foreign key (user_id) references user (id),
+    foreign key (is_following) references user (id)
+)
