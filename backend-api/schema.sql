@@ -5,7 +5,7 @@ create table user
     id              integer      not null primary key auto_increment,
     first_name      varchar(255) not null,
     last_name       varchar(255) not null,
-    shortname varchar(255) not null;
+    shortname       varchar(255) not null,
     email           varchar(255) not null,
     password        varchar(255) not null,
     former_name     varchar(255),
@@ -115,4 +115,13 @@ create table company
     company_size          varchar(255),
     headquarters_location varchar(255),
     founded_year          varchar(255)
+)
+
+create table friends
+(
+    id          integer     not null primary key auto_increment,
+    user_id     integer not null,
+    is_following integer not null,
+    foreign key (user_id) references user (id),
+    foreign key (is_following) references user (id)
 )

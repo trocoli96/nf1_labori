@@ -123,8 +123,22 @@ function AddExperienceButton(props) {
 
     }, [isSubmitting]);
 
+    // si cerramos el modal, reseteamos los valores
+    useEffect(() => {
+        if (!open) {
+            setJobTitle("");
+            setCompany("");
+            setLocation("");
+            setStartDate("2020-01-01");
+            setEndDate("2020-01-02");
+            setDescription("");
+            setCurrentlyWorking(false);
+            setError("");
+        }
+    }, [open]);
+
     return (
-        <div>
+        <Grid>
             <IconButton color="primary" aria-label="add experience" onClick={handleOpen}>
                 <AddCircleIcon/>
             </IconButton>
@@ -191,17 +205,16 @@ function AddExperienceButton(props) {
                                 label="Currently working here"
                             />
                         </Grid>
-                        <p>
-                            <TextField
-                                id="description"
-                                label="Description"
-                                multiline
-                                rows="8"
-                                variant="outlined"
-                                onChange={(e) => setDescription(e.target.value)}
-                                fullWidth
-                            />
-                        </p>
+                        <p></p>
+                        <TextField
+                            id="description"
+                            label="Description"
+                            multiline
+                            rows="8"
+                            variant="outlined"
+                            onChange={(e) => setDescription(e.target.value)}
+                            fullWidth
+                        />
                         <p>{error}</p>
                         {isSubmitting ?
                             <CircularProgress/> :
@@ -214,7 +227,7 @@ function AddExperienceButton(props) {
 
                 </div>
             </Modal>
-        </div>
+        </Grid>
     )
 }
 

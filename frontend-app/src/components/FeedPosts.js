@@ -2,23 +2,18 @@
 import {useStyles} from '../styles/styles';
 import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
-import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
-import moment from "moment";
+import {PostContext} from "../utils/postContext";
+import getToken from "../utils/tokenHelper";
 
 
 /* COMPONENTS & STYLES */
 import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import Button from "@material-ui/core/Button";
-import ChatIcon from '@material-ui/icons/Chat';
-import ReplyIcon from '@material-ui/icons/Reply';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import SinglePost from "./SinglePost";
 
 
 
@@ -28,20 +23,20 @@ function FeedPosts() {
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
+    const {postState} = useContext(PostContext);
 
-    const [postsData, setPostsData] = useState([]);
-    const [, setError] = useState(false);
-    const [length, setLength] = useState(5);
-
+    const [posts, setPosts] = useState([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/posts/` + [length];
+            const url = `http://127.0.0.1/api/posts/?page=` + page ;
             const options = {
                 method: 'GET',
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken(),
                 }),
                 mode: 'cors',
             };
@@ -54,11 +49,10 @@ function FeedPosts() {
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                    return setPostsData(data);
+                     return setPosts(data);
                 })
                 .catch(error => {
-                    if (error === 401){
-                        setError(true);
+                    if (error === 401) {
                         dispatch({type: "DO_LOGOUT"});
                     }
                 });
@@ -66,7 +60,7 @@ function FeedPosts() {
 
         fetchData();
 
-    }, [dispatch, length]);
+    }, [dispatch, page, postState.flag]);
 
     const [copied, setCopied] = useState(false);
 
@@ -74,70 +68,49 @@ function FeedPosts() {
         setCopied(false);
     };
 
-    return (<AuthContext.Consumer>
+    return (
+        <AuthContext.Consumer>
             {props =>
-                <Grid item xs={11}>
-                    <Grid item xd={10} className={classes.postslist}>
-                        {postsData.data && postsData.data.map((data) => {
-                            return (
-                                <Paper className={classes.singlepost}>
-                                    <Grid item xd={10} className={classes.authorbox}>
-                                        <Avatar className={classes.profileicon} style={{backgroundColor: data.color}}>
-                                            {data.shortname}
-                                        </Avatar>
-                                        <span className={classes.authorinfo}>
-                                        <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
-                                            {data.former_name ? <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
-                                                :
-                                                <p className={classes.text}>{moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
-                                            }
-                                    </span>
-                                    </Grid>
-                                    <p style={{marginLeft: 10}}>{data.post_text}</p>
-                                    <Divider/>
-                                    <Grid item xs={11}>
-                                        <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
-                                        <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                        <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
-                                            <Button className={classes.postbuttons} onClick={() => setCopied(true)}><ReplyIcon className={classes.iconbuttons}/>Share</Button>
-                                        </CopyToClipboard>
-
-                                    </Grid>
-                                </Paper>
-                            )
-                        })}
-                        {copied ? <Snackbar
-                                message="Link copied to Clipboard!"
-                                open={copied}
-                                autoHideDuration={2000}
-                                onClose={handleClose}
-                                color="green"
-                                action={
-                                    <React.Fragment>
-                                        <IconButton
-                                            aria-label="close"
-                                            color="inherit"
-                                            onClick={handleClose}
-                                        >
-                                            <CloseIcon />
-                                        </IconButton>
-                                    </React.Fragment>
-                                }
-                            />
-                                : null}
-                    </Grid>
+                <PostContext.Consumer>
+                    {props =>
                         <Grid item xs={11}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.loadmore}
-                            onClick={() => setLength(length + 5) }
-                            >
-                            LOAD MORE
-                            </Button>
+                            <Grid item xd={10} className={classes.postslist}>
+                                {posts.data && posts.data.map((post) =>
+                                    <SinglePost {...post} setCopied={setCopied}/>)
+                                }
+                                {copied ? <Snackbar
+                                        message="Link copied to Clipboard!"
+                                        open={copied}
+                                        autoHideDuration={1500}
+                                        onClose={handleClose}
+                                        color="green"
+                                        action={
+                                            <React.Fragment>
+                                                <IconButton
+                                                    aria-label="close"
+                                                    color="inherit"
+                                                    onClick={handleClose}
+                                                >
+                                                    <CloseIcon/>
+                                                </IconButton>
+                                            </React.Fragment>
+                                        }
+                                    />
+                                    : null}
+                            </Grid>
+                            <Grid item xs={11}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.loadmore}
+                                    onClick={() => setPage(page + 1)}
+                                >
+                                    LOAD MORE
+                                </Button>
+                            </Grid>
                         </Grid>
-                </Grid>
-
+                    }
+                </PostContext.Consumer>
             }
         </AuthContext.Consumer>
     );

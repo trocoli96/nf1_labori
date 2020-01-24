@@ -21,6 +21,12 @@ export const useStyles = makeStyles(theme => ({
         display: 'flex !important',
         position: 'relative !important',
     },
+    menuposts: {
+        display: 'flex !important',
+        position: 'absolute !important',
+        right: '-0.5em',
+        marginTop: '-1em',
+    },
     authorinfo: {
         display: 'inline !important',
         position: 'relative !important',
@@ -251,8 +257,5 @@ export const useStyles = makeStyles(theme => ({
     experiencebox: {
         marginLeft: 30,
         width: '90%',
-    },
-    experiencedescription:{
-        marginLeft: '90px !important',
     }
 }));

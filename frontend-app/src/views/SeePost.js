@@ -82,7 +82,7 @@ function SeePost(props) {
                         {post ?
                             <Paper className={classes.singlepost}>
                                 <Grid item xd={10} className={classes.authorbox}>
-                                    <Avatar className={classes.profileicon}>
+                                    <Avatar className={classes.profileicon} style={{backgroundColor: post.color}}>
                                         {post.shortname}
                                     </Avatar>
                                     <span className={classes.authorinfo}>

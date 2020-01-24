@@ -1,6 +1,8 @@
 /* BASIC STUFF */
-import React from 'react';
+import React, {useReducer, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import {PostContext} from "../utils/postContext";
+import {PostReducer} from "../utils/postsReducer";
 import {useStyles} from '../styles/styles';
 
 /* COMPONENTS & STYLES */
@@ -12,30 +14,37 @@ import ProfileInfoFeed from "../components/ProfileInfoFeed";
 import FeedPosts from "../components/FeedPosts";
 
 
-function FeedPage(){
+function FeedPage() {
 
     const classes = useStyles();
 
-    return (<AuthContext.Consumer>
-        {props =>
-            <Container className={classes.rootFeed} maxWidth={'xl'}>
-                <div className={classes.columnFeedSides}>
-                    <ProfileInfoFeed/>
-                </div>
-                <div className={classes.columnFeedCenter}>
-                    <Grid container spacing={6}>
-                    <CreatePost/>
-                    </Grid>
-                    <Grid container spacing={6}>
-                    <FeedPosts/>
-                    </Grid>
-                </div>
+    const [postState, postDispatch] = PostReducer();
 
-            <div className={classes.columnFeedSides}>
-            </div>
-            </Container>
-        }
-    </AuthContext.Consumer>)
+
+    return (
+        <PostContext.Provider value={{postState, postDispatch}}>
+            <AuthContext.Consumer>
+            {props =>
+                <Container className={classes.rootFeed} maxWidth={'xl'}>
+                    <div className={classes.columnFeedSides}>
+                        <ProfileInfoFeed/>
+                    </div>
+                    <div className={classes.columnFeedCenter}>
+                        <Grid container spacing={6}>
+                            <CreatePost/>
+                        </Grid>
+                        <Grid container spacing={6}>
+                            <FeedPosts/>
+                        </Grid>
+                    </div>
+
+                    <div className={classes.columnFeedSides}>
+                    </div>
+                </Container>
+            }
+            </AuthContext.Consumer>
+        </PostContext.Provider>
+)
 }
 
 
