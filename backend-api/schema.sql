@@ -117,11 +117,14 @@ create table company
     founded_year          varchar(255)
 )
 
+drop table if exists friends;
 create table friends
 (
     id          integer     not null primary key auto_increment,
     user_id     integer not null,
     is_following integer not null,
+    updated_at  timestamp default current_timestamp(),
+    created_at  timestamp default current_timestamp(),
     foreign key (user_id) references user (id),
     foreign key (is_following) references user (id)
 )
