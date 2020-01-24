@@ -46,7 +46,7 @@ class PostsController extends Controller
         }
     }
 
-    public function returnPosts(Request $request, $length)
+    public function returnPosts(Request $request)
     {
 
         $posts = Post::select(
@@ -68,15 +68,19 @@ class PostsController extends Controller
             }
             )
             ->orderBy('created_at', 'desc')
-            ->paginate($length);
+            ->paginate(5);
 
 
         foreach ($posts as $post) {
+
+            $userId = Auth::id();
 
             $post['owner'] = Auth::id() === $post['user_id'];
 
             // sumarle likes
             $likesFromPost = Redis::get("like_counter_" . $post['id']);
+
+
 
             $post['likes'] = $likesFromPost;
 
@@ -153,6 +157,26 @@ class PostsController extends Controller
         return response()->json($newPostData, 200);
 
     }
+
+    public function deletePost(Request $request, $id){
+
+        $data = $request->all();
+
+        $userId = Auth::id();
+        $post = Post::find($id);
+
+        // comprobamos que user_id del post corresponda con el user.id
+        if ($userId !== $post['user_id']) {
+            return response()->json("Permission denied.", 403);
+        }
+
+
+        $post->delete();
+
+        return response()->json(["Succesfully deleted", $post], 200);
+    }
+
+
 
 }
 
