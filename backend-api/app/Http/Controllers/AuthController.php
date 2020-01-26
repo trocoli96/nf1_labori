@@ -160,5 +160,13 @@ class AuthController extends Controller
 
     }
 
+    public function getUserById(Request $request, $id) {
+
+        $user = User::findOrFail($id);
+
+        return response()->json($user, 200);
+
+    }
+
 
 }

@@ -17,9 +17,12 @@ import Paper from '@material-ui/core/Paper';
 import {Router, Redirect} from "react-router-dom";
 
 
-function Profilepage(props) {
+function Friendsprofilepage(props) {
 
     const classes = useStyles();
+
+    let params = useParams();
+    let userId = params['id'];
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
@@ -37,7 +40,7 @@ function Profilepage(props) {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/`;
+            const url = `http://127.0.0.1/api/user/${userId}`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -68,6 +71,15 @@ function Profilepage(props) {
                     if (error === 401) {
                         console.log("Token inválido, probablemente caducado. Hacemos logout.");
                         return dispatch({type: "DO_LOGOUT"});
+                    }
+                    if (error === 404) {
+                        console.log("aqui");
+                        props.history.push(PAGE404);
+                        return (
+                            <Router>
+                                <Redirect to={PAGE404}/>
+                            </Router>
+                        );
                     }
                 });
         };
@@ -118,4 +130,4 @@ function Profilepage(props) {
     </AuthContext.Consumer>)
 }
 
-export default withRouter(Profilepage);
+export default withRouter(Friendsprofilepage);
