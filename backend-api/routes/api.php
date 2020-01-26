@@ -30,6 +30,7 @@ Route::put('/editpost/{id}', 'PostsController@editPost');
 Route::delete('/post/delete/{id}', 'PostsController@deletePost');
 
 Route::get('/experiences', 'ExperienceController@showExperiences');
+Route::get('/experiences/{id}', 'ExperienceController@showExperiencesById');
 Route::post('/experience', 'ExperienceController@createExperience');
 Route::put('experience/{id}', 'ExperienceController@modifyExperience');
 Route::delete('experience/delete', 'ExperienceController@deleteExperience');

@@ -8,7 +8,7 @@ import {useStyles} from '../styles/styles';
 import {Grid} from "@material-ui/core";
 import SingleExperience from "./SingleExperience";
 
-function ExperiencesList(props) {
+function FriendsExperiencesList(props) {
 
     const classes = useStyles();
 
@@ -23,13 +23,12 @@ function ExperiencesList(props) {
         if (!props.updateExperiences) return;
 
         const fetchData = async () => {
-            const url = 'http://127.0.0.1/api/experiences';
+            const url = 'http://127.0.0.1/api/experiences/' + props.userId;
             const options = {
                 method: 'GET',
                 headers: new Headers({
                     Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getToken()
+                    'Content-Type': 'application/json'
                 }),
                 mode: 'cors'
             };
@@ -44,6 +43,7 @@ function ExperiencesList(props) {
                 })
                 .then(data => {
                     props.setUpdateExperiences(false);
+                    console.log(data);
                     return setExperiences(data);
                 })
                 .catch(error => {
@@ -64,18 +64,19 @@ function ExperiencesList(props) {
 
     return (
         <Grid className={classes.experiencebox}>
-            {experiences.length !== 0 ?
+            {experiences.length !== 0
+                ?
                 experiences.map(experience => {
                     return (
-                        <SingleExperience experience={experience} key={experience.id} setUpdateExperiences={props.setUpdateExperiences}/>
+                        <SingleExperience experience={experience} key={experience.id}/>
                     )
                 })
                 :
-                <p>No experiences. Add your first one!</p>
+                <p>This user has not added any experience.</p>
             }
         </Grid>
     )
 }
 
-export default ExperiencesList;
+export default FriendsExperiencesList;
 

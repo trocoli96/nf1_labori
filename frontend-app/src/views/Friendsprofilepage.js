@@ -6,7 +6,7 @@ import getToken from "../utils/tokenHelper";
 import {PAGE404} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
-import ExperiencesList from "../components/ExperiencesList";
+import FriendsExperiencesList from "../components/FriendsExperiencesList";
 import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
 import AddExperienceButton from "../components/AddExperienceButton";
@@ -99,9 +99,6 @@ function Friendsprofilepage(props) {
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
-                            <div>
-                                <ButtonPopup setUserData={setUserData}/>
-                            </div>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -112,14 +109,10 @@ function Friendsprofilepage(props) {
                                 <Grid item xs={6} style={{paddingLeft: 50}}>
                                     <h3>Experience</h3>
                                 </Grid>
-                                <Grid container item xs={6} justify="flex-end">
-                                    <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
-                                </Grid>
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item xs={12}>
-                                    <ExperiencesList updateExperiences={updateExperiences}
-                                                     setUpdateExperiences={setUpdateExperiences}/>
+                                    <FriendsExperiencesList updateExperiences={updateExperiences} setUpdateExperiences={setUpdateExperiences} userId={userId}/>
                                 </Grid>
                             </Grid>
                         </Paper>
