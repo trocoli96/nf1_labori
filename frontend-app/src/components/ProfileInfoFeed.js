@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import UserPhoto from "./UserPhoto";
 
 
 
@@ -81,7 +82,8 @@ function ProfileInfoFeed() {
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
                             <Container className={classes.photocover}>
-                                <Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>
+                                {/*<Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>*/}
+                            <UserPhoto/>
                             </Container>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
                             <p className={classes.textprofileFeed}>{userData.email ? userData.email : <CircularProgress/>}</p>

@@ -15,6 +15,8 @@ import {CircularProgress, Container} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {Router, Redirect} from "react-router-dom";
+import UserPhoto from "../components/UserPhoto";
+import EditUserPhoto from "../components/EditUserPhoto";
 
 
 function Profilepage(props) {
@@ -84,6 +86,7 @@ function Profilepage(props) {
                     <Grid item xs={12} md={8}>
                         <Container className={classes.photocoverProfile}> </Container>
                         <Paper className={classes.userinfoProfile}>
+                            <UserPhoto/>
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>

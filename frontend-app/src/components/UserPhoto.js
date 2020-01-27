@@ -31,7 +31,7 @@ function UserPhoto() {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/users/`;
+            const url = `http://127.0.0.1/api/user/`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
