@@ -28,22 +28,22 @@ class FriendsController extends Controller
         $userIdDoesExist = User::find($userId);
         $followingIdDoesExist = User::find($following_id);
 
-        $followId = Friend::where('user_id', "=", $userId)
-            ->where('is_following', "=", $following_id);
+        $followalreadyexists = DB::table('friends')
+            ->where('user_id', $userId)
+            ->where('is_following', $following_id)
+            ->get();
 
         if ($userIdDoesExist === null) {
             return response()->json(['message' => "User doesn't exist"], 400);
         }
-
-        if ($followId === null) {
-            return response()->json(['message' => "You're already following him"], 400);
-        }
-
         // nos aseguramos que el usuario a seguir existe
         if($followingIdDoesExist === null){
-            return response ()->json(['message' => "The user you want to follow doesn't exist"], 400);
+            return response()->json(['message' => "The user you want to follow doesn't exist"], 400);
         }
-
+        // vemos si ya existe el follow
+        if (!($followalreadyexists->isEmpty())) {
+            return response()->json(['message' => "You're already following him"], 400);
+        }
         //hacemos el follow
         $follow = Friend::create([
             'user_id' => $userId,
@@ -59,10 +59,11 @@ class FriendsController extends Controller
         $userId = Auth::id();
         $userIdDoesExist = User::find($userId);
         $followingIdDoesExist = User::find($followed_id);
-        $followId = Friend::where('user_id', "=", $userId)
-            ->where('is_following', "=", $followed_id);
 
-
+        $followId = DB::table('friends')
+            ->where('user_id', $userId)
+            ->where('is_following', $followed_id)
+            ->get();
 
         if ($userIdDoesExist === null) {
             return response()->json(['message' => "User doesn't exist"], 400);
@@ -73,8 +74,16 @@ class FriendsController extends Controller
             return response ()->json(['message' => "The user you want to follow doesn't exist"], 400);
         }
 
+        // vemos si existe el follow
+        if ($followId->isEmpty()) {
+            return response()->json(['message' => "You don't follow him"], 400);
+        }
+
         //hacemos el unfollow
-        $followId->get();
+        $deletefollow = DB::table('friends')
+            ->where('user_id', $userId)
+            ->where('is_following', $followed_id)
+            ->delete();
 
         return response()->json(['message' => "Succesfully deleted"], 200);
     }
