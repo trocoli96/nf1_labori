@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useContext, useState, useEffect  } from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
@@ -45,7 +45,7 @@ function SingleExperience(props) {
         if (!deleteExperience) return;
 
         const experience = props.experience;
-        
+
         const fetchData = async () => {
             const url = 'http://127.0.0.1/api/experience/delete?token=' + getToken();
             const options = {
@@ -100,13 +100,18 @@ function SingleExperience(props) {
                     <p>{props.experience.description}</p>
                 </span>
                 </Grid>
-                <Grid item xs={2}>
-                    <Box display={visible}>
-                        <IconButton color="default" aria-label="delete experience" onClick={handleClickOpen}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Box>
-                </Grid>
+                {props.setUpdateExperiences ?
+                    <Grid item xs={2}>
+                        <Box display={visible}>
+                            <IconButton color="default" aria-label="delete experience" onClick={handleClickOpen}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        </Box>
+                    </Grid>
+                    :
+                    null
+                }
+
             </Grid>
             <hr/>
             <Dialog
@@ -125,7 +130,10 @@ function SingleExperience(props) {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={e => { handleClose(); setDeleteExperience(true) }} color="primary" autoFocus>
+                    <Button onClick={e => {
+                        handleClose();
+                        setDeleteExperience(true)
+                    }} color="primary" autoFocus>
                         Delete
                     </Button>
                 </DialogActions>

@@ -13,7 +13,7 @@ class ExperienceController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => ['showExperiencesById']]);
     }
 
 
@@ -40,6 +40,13 @@ class ExperienceController extends Controller
         $userid = Auth::id();
 
         $experiences = Experience::where('user_id', "=", $userid)->orderBy('start_date', 'desc')->get();
+
+        return response()->json($experiences, 200);
+    }
+
+    public function showExperiencesById(Request $request, $id)
+    {
+        $experiences = Experience::where('user_id', "=", $id)->orderBy('start_date', 'desc')->get();
 
         return response()->json($experiences, 200);
     }

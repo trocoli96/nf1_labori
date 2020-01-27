@@ -7,16 +7,18 @@ import './styles/styles';
 
 /* ROUTER & ROUTES */
 import {BrowserRouter as Router, Redirect, Route, withRouter, Switch} from 'react-router-dom';
-import {HOME, SIGNUP, LOGIN, PROFILE, FEED, POST} from "./routes/routes";
+import {HOME, SIGNUP, LOGIN, PROFILE, FRIEND_PROFILE, FEED, POST, PAGE404} from "./routes/routes";
 
 /* COMPONENTS & STYLES */
 import Profilepage from "./views/Profilepage";
+import Friendsprofilepage from "./views/Friendsprofilepage";
 import FormSignUp from './views/FormSignUp';
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Homepage from "./views/Homepage";
 import FeedPage from "./views/FeedPage";
 import SeePost from "./views/SeePost";
+import Page404 from "./views/404";
 import './styles/App.css';
 
 const App = () => {
@@ -42,9 +44,11 @@ const App = () => {
                             <Route exact path={PROFILE}>
                                 <Redirect to={LOGIN}/>
                             </Route>
+                            <Route exact path={FRIEND_PROFILE} component={Friendsprofilepage}/>
                             <Route exact path={FEED}>
                                 <Redirect to={LOGIN}/>
                             </Route>
+                            <Route exact path={PAGE404} component={Page404}/>
                         </Switch>
                     </AuthContext.Provider>
                 </Router>
@@ -68,8 +72,10 @@ const App = () => {
                             <Redirect to={FEED}/>
                         </Route>
                         <Route exact path={PROFILE} component={Profilepage}/>
+                        <Route exact path={FRIEND_PROFILE} component={Friendsprofilepage}/>
                         <Route exact path={FEED} component={FeedPage}/>
                         <Route exact path={POST} component={SeePost}/>
+                        <Route exact path={PAGE404} component={Page404}/>
                     </Switch>
                 </AuthContext.Provider>
             </Router>

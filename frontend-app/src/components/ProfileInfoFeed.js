@@ -33,7 +33,7 @@ function ProfileInfoFeed() {
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/users/?token=` + getToken();
+            const url = `http://127.0.0.1/api/user/?token=` + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
