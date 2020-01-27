@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Users\UserHandler;
+use App\Http\Traits\CloudinaryTrait;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    use CloudinaryTrait;
+
     /**
      * Create a new AuthController instance.
      *
@@ -140,4 +145,20 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 1
         ]);
     }
+
+    public function updateProfilePic(Request $request, UserHandler $userHandler) {
+
+        $data = $request->all();
+
+        $cloudinaryResponse = $this->uploadPictureToCloudinary($data['image']);
+
+        $user = auth()->user();
+
+        $userHandler->updateUserPicture($user, $cloudinaryResponse['url']);
+
+        return response()->json($user, 200);
+
+    }
+
+
 }

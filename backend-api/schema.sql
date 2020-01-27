@@ -16,6 +16,8 @@ create table user
     created_at timestamp default current_timestamp(),
     foreign key (current_company) references company (id),
 )
+alter table user add column profile_photo varchar(510);
+alter table user add column cover_photo varchar(510);
 
 drop table if exists experience;
 create table experience

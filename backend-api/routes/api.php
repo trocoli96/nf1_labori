@@ -21,6 +21,7 @@ Route::get('user/', 'AuthController@me');//ruta para ver usuario cuando sean ami
 Route::post('/user', 'AuthController@createUser');
 Route::put('/edituser', 'AuthController@editUser');
 Route::post('/login', 'AuthController@login');
+Route::put('/profilepicture', 'AuthController@updateProfilePic');
 
 Route::post('/post', 'PostsController@createPost');
 Route::get('/posts/', 'PostsController@returnPosts');
