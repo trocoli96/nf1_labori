@@ -6,7 +6,7 @@ import getToken from "../utils/tokenHelper";
 import {PAGE404} from "../routes/routes";
 
 /* COMPONENTS & STYLES */
-import ExperiencesList from "../components/ExperiencesList";
+import FriendsExperiencesList from "../components/FriendsExperiencesList";
 import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
 import AddExperienceButton from "../components/AddExperienceButton";
@@ -17,9 +17,12 @@ import Paper from '@material-ui/core/Paper';
 import {Router, Redirect} from "react-router-dom";
 
 
-function Profilepage(props) {
+function Friendsprofilepage(props) {
 
     const classes = useStyles();
+
+    let params = useParams();
+    let userId = params['id'];
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
@@ -37,7 +40,7 @@ function Profilepage(props) {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/`;
+            const url = `http://127.0.0.1/api/user/${userId}`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -69,6 +72,15 @@ function Profilepage(props) {
                         console.log("Token inválido, probablemente caducado. Hacemos logout.");
                         return dispatch({type: "DO_LOGOUT"});
                     }
+                    if (error === 404) {
+                        console.log("aqui");
+                        props.history.push(PAGE404);
+                        return (
+                            <Router>
+                                <Redirect to={PAGE404}/>
+                            </Router>
+                        );
+                    }
                 });
         };
 
@@ -87,9 +99,6 @@ function Profilepage(props) {
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
-                            <div>
-                                <ButtonPopup setUserData={setUserData}/>
-                            </div>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -100,14 +109,10 @@ function Profilepage(props) {
                                 <Grid item xs={6} style={{paddingLeft: 50}}>
                                     <h3>Experience</h3>
                                 </Grid>
-                                <Grid container item xs={6} justify="flex-end">
-                                    <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
-                                </Grid>
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item xs={12}>
-                                    <ExperiencesList updateExperiences={updateExperiences}
-                                                     setUpdateExperiences={setUpdateExperiences}/>
+                                    <FriendsExperiencesList updateExperiences={updateExperiences} setUpdateExperiences={setUpdateExperiences} userId={userId}/>
                                 </Grid>
                             </Grid>
                         </Paper>
@@ -118,4 +123,4 @@ function Profilepage(props) {
     </AuthContext.Consumer>)
 }
 
-export default withRouter(Profilepage);
+export default withRouter(Friendsprofilepage);
