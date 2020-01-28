@@ -25,7 +25,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'createUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'createUser', 'getUserById']]);
     }
 
     public function createUser(Request $request)
@@ -155,6 +155,14 @@ class AuthController extends Controller
         $user = auth()->user();
 
         $userHandler->updateUserPicture($user, $cloudinaryResponse['url']);
+
+        return response()->json($user, 200);
+
+    }
+
+    public function getUserById(Request $request, $id) {
+
+        $user = User::findOrFail($id);
 
         return response()->json($user, 200);
 

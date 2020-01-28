@@ -15,8 +15,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('users/', 'AuthController@me');
-Route::get('user/', 'AuthController@me');//ruta para ver usuario cuando sean amigos
+Route::get('user/', 'AuthController@me');
+Route::get('user/{id}', 'AuthController@getUserById');
 
 Route::post('/user', 'AuthController@createUser');
 Route::put('/edituser', 'AuthController@editUser');
@@ -30,6 +30,7 @@ Route::put('/editpost/{id}', 'PostsController@editPost');
 Route::delete('/post/delete/{id}', 'PostsController@deletePost');
 
 Route::get('/experiences', 'ExperienceController@showExperiences');
+Route::get('/experiences/{id}', 'ExperienceController@showExperiencesById');
 Route::post('/experience', 'ExperienceController@createExperience');
 Route::put('experience/{id}', 'ExperienceController@modifyExperience');
 Route::delete('experience/delete', 'ExperienceController@deleteExperience');
