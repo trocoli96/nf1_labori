@@ -49,7 +49,7 @@ function ButtonUnfollow (props) {
     };
 
     return (
-        <div>
+        <div className={classes.buttonfollowing}>
             <Button variant="contained" color="primary" onClick={unFollow}>
                 Unfollow
             </Button>

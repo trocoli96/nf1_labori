@@ -89,9 +89,11 @@ function Friendsprofilepage(props) {
                     <Grid item xs={12} md={8}>
                         <Container className={classes.photocoverProfile}> </Container>
                         <Paper className={classes.userinfoProfile}>
+                            <div className={classes.profilebasicinfo}>
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
+                            </div>
                             {
                                 userData.isfollowed ?
                                     <ButtonUnfollow {...userData} setFollowed={setFollowed}/>

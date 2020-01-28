@@ -259,5 +259,15 @@ export const useStyles = makeStyles(theme => ({
     experiencebox: {
         marginLeft: 30,
         width: '90%',
+    },
+    profilebasicinfo: {
+        display: 'inline-block',
+        width: '80%',
+    },
+    buttonfollowing: {
+        position: 'absolute',
+        display: 'inline-block',
+        width: '20%',
+        paddingLeft: '2em',
     }
 }));

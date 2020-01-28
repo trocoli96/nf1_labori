@@ -49,7 +49,7 @@ function ButtonFollow (props) {
     };
 
     return (
-        <div>
+        <div className={classes.buttonfollowing}>
         <Button variant="contained" color="primary" onClick={follow}>
             Follow
         </Button>
