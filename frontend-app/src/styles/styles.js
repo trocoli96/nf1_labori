@@ -16,6 +16,7 @@ export const useStyles = makeStyles(theme => ({
         height: `${theme.spacing(7)}px !important`,
         display: 'inline-flex !important',
         position: 'relative !important',
+        fontStyle: 'normal',
     },
     authorbox: {
         display: 'flex !important',
@@ -40,6 +41,7 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         lineHeight: '2px',
+        color: 'black',
     },
     postbuttons: {
         paddingTop: '1px',
