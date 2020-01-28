@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 
 
 use App\Contracts\Users\UserHandler;
+use App\Friend;
 use App\Http\Traits\CloudinaryTrait;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -162,7 +164,18 @@ class AuthController extends Controller
 
     public function getUserById(Request $request, $id) {
 
+        $userId = Auth::id();
+
+        $areYouFollowing = Friend::where('user_id', '=', $userId)
+            ->where('is_following', $id)
+            ->first();
         $user = User::findOrFail($id);
+
+
+        //si lo sigue es true si no es false
+        if ($areYouFollowing !== null) {
+            $user['isfollowed'] = true;
+        } else $user['isfollowed'] = false;
 
         return response()->json($user, 200);
 
