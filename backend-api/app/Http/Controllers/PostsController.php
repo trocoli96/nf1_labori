@@ -82,7 +82,7 @@ class PostsController extends Controller
 
 
 
-            $post['likes'] = $likesFromPost;
+            $post['likes'] = (int)$likesFromPost;
 
             // ver si el post tiene comments
             $comments = DB::table('comments')
