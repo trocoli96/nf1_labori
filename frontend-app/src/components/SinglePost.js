@@ -2,6 +2,7 @@
 import React from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import OwnerPostMenu from "./OwnerPostMenu";
+import {Link} from "react-router-dom";
 
 /*UTILS*/
 import {useStyles} from "../styles/styles";
@@ -25,11 +26,13 @@ function SinglePost(props) {
     return (
         <Paper className={classes.singlepost}>
             <Grid item xd={10} className={classes.authorbox}>
-                <Avatar className={classes.profileicon} style={{backgroundColor: props.color}}>
-                    {props.shortname}
-                </Avatar>
+                <Link to={`/profile/${props.user_id}`}>
+                    <Avatar className={classes.profileicon} style={{backgroundColor: props.color}}>
+                        {props.shortname}
+                    </Avatar>
+                </Link>
                 <span className={classes.authorinfo}>
-                    <h3 className={classes.title}>{props.first_name} {props.last_name}</h3>
+                    <Link to={`/profile/${props.user_id}`}><h3 className={classes.title}>{props.first_name} {props.last_name}</h3></Link>
                     {props.former_name ?
                         <p className={classes.text}>{props.former_name} - {moment(props.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
                         :

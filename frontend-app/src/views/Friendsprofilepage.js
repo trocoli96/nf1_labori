@@ -8,8 +8,8 @@ import {PAGE404} from "../routes/routes";
 /* COMPONENTS & STYLES */
 import FriendsExperiencesList from "../components/FriendsExperiencesList";
 import {useStyles} from '../styles/styles';
-import ButtonPopup from "../components/Buttonpopup";
-import AddExperienceButton from "../components/AddExperienceButton";
+import ButtonFollow from "../components/ButtonFollow";
+import ButtonUnfollow from '../components/ButtonUnfollow';
 import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
@@ -28,11 +28,8 @@ function Friendsprofilepage(props) {
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     // creamos los hooks de estado con los datos del usuario
-    const [userData, setUserData] = useState({
-        "first_name": null,
-        "last_name": null,
-        "email": null
-    });
+    const [userData, setUserData] = useState([]);
+    const [followed, setFollowed] = useState(null);
 
     const [updateExperiences, setUpdateExperiences] = useState(true);
 
@@ -60,20 +57,15 @@ function Friendsprofilepage(props) {
                     }
                 })
                 .then(data => {
-                    return setUserData({
-                        "first_name": data.first_name,
-                        "last_name": data.last_name,
-                        "email": data.email
-                    });
+                    console.log(followed);
+                    setUserData(data);
+                    setFollowed(userData.isfollowed);
                 })
                 .catch(error => {
-                    console.log("Error al hacer el fetch de usuario. Error: " + error);
                     if (error === 401) {
-                        console.log("Token inválido, probablemente caducado. Hacemos logout.");
                         return dispatch({type: "DO_LOGOUT"});
                     }
                     if (error === 404) {
-                        console.log("aqui");
                         props.history.push(PAGE404);
                         return (
                             <Router>
@@ -86,7 +78,8 @@ function Friendsprofilepage(props) {
 
         fetchData();
 
-    }, [dispatch]);
+    }, [dispatch, followed]);
+
 
 
     return (<AuthContext.Consumer>
@@ -96,9 +89,17 @@ function Friendsprofilepage(props) {
                     <Grid item xs={12} md={8}>
                         <Container className={classes.photocoverProfile}> </Container>
                         <Paper className={classes.userinfoProfile}>
+                            <div className={classes.profilebasicinfo}>
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
+                            </div>
+                            {
+                                userData.isfollowed ?
+                                    <ButtonUnfollow {...userData} setFollowed={setFollowed}/>
+                                    :
+                                    <ButtonFollow {...userData} setFollowed={setFollowed}/>
+                            }
                         </Paper>
                     </Grid>
                 </Grid>

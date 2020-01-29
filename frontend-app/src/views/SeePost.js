@@ -3,7 +3,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import moment from "moment";
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import getToken from "../utils/tokenHelper";
 import {useStyles} from '../styles/styles';
 
@@ -82,12 +82,18 @@ function SeePost(props) {
                         {post ?
                             <Paper className={classes.singlepost}>
                                 <Grid item xd={10} className={classes.authorbox}>
+                                    <Link to={`/profile/${post.user_id}`}>
                                     <Avatar className={classes.profileicon} style={{backgroundColor: post.color}}>
                                         {post.shortname}
                                     </Avatar>
+                                    </Link>
                                     <span className={classes.authorinfo}>
-                                        <h3 className={classes.title}>{post.first_name} {post.last_name}</h3>
-                                        <p className={classes.text}>{post.former_name} - {moment(post.created_at, "YYYY-MM-DD hh:mm:ss").endOf('hour').fromNow()}</p>
+                                        <Link to={`/profile/${post.user_id}`}><h3 className={classes.title}>{post.first_name} {post.last_name}</h3></Link>
+                                        {props.former_name ?
+                                            <p className={classes.text}>{post.former_name} - {moment(post.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
+                                            :
+                                            <p className={classes.text}>{moment(post.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>
+                                        }
                                     </span>
                                 </Grid>
                                 <p>{post.post_text}</p>
