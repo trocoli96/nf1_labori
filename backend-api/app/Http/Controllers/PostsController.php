@@ -80,8 +80,6 @@ class PostsController extends Controller
             // sumarle likes
             $likesFromPost = Redis::get("like_counter_" . $post['id']);
 
-
-
             $post['likes'] = $likesFromPost;
 
             // ver si el post tiene comments

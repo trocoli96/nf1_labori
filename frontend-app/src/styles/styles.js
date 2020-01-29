@@ -43,6 +43,11 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: '2px',
         color: 'black',
     },
+    subtitle: {
+        fontSize:'90%',
+        lineHeight: '2px',
+        color: 'grey',
+    },
     postbuttons: {
         paddingTop: '1px',
         paddingBottom: '1px',
@@ -109,8 +114,8 @@ export const useStyles = makeStyles(theme => ({
     profile: {
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
+        paddingRight: `${theme.spacing(3)}px !important`,
+        paddingLeft: `${theme.spacing(3)}px !important`,
         width: '100%',
         margin: 0,
     },
@@ -202,6 +207,8 @@ export const useStyles = makeStyles(theme => ({
     rootProfile: {
         background: 'rgb(241,238,238)',
         height: '2000px',
+        paddingRight: `${theme.spacing(12)}px !important`,
+        paddingLeft: `${theme.spacing(12)}px !important`,
     },
     paperProfile: {
         padding: 2,

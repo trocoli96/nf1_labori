@@ -75,7 +75,17 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        // 1. conseguir el ID del usuario a partir del token
+        $userId = Auth::id();
+        $user = auth()->user();
+
+        $user['followers'] = Friend::where('is_following', '=', $userId)
+            ->count();
+
+        $user['followings'] = Friend::where('user_id', '=', $userId)
+            ->count();
+
+        return response()->json($user);
     }
 
     /**
@@ -171,6 +181,13 @@ class AuthController extends Controller
             ->first();
         $user = User::findOrFail($id);
 
+        //contamos los followers
+        $user['followers'] = Friend::where('is_following', '=', $id)
+            ->count();
+
+        //contamos los followings
+        $user['followings'] = Friend::where('user_id', '=', $id)
+            ->count();
 
         //si lo sigue es true si no es false
         if ($areYouFollowing !== null) {

@@ -10,6 +10,7 @@ import ExperiencesList from "../components/ExperiencesList";
 import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
 import AddExperienceButton from "../components/AddExperienceButton";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
@@ -28,7 +29,9 @@ function Profilepage(props) {
     const [userData, setUserData] = useState({
         "first_name": null,
         "last_name": null,
-        "email": null
+        "email": null,
+        "followers": null,
+        "followings": null
     });
 
     const [updateExperiences, setUpdateExperiences] = useState(true);
@@ -60,7 +63,9 @@ function Profilepage(props) {
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
-                        "email": data.email
+                        "email": data.email,
+                        "followers": data.followers,
+                        "followings": data.followings
                     });
                 })
                 .catch(error => {
@@ -80,39 +85,43 @@ function Profilepage(props) {
     return (<AuthContext.Consumer>
         {props =>
             <Container className={classes.rootProfile} maxWidth={'xl'}>
-                <Grid container spacing={6} className={classes.profilePaper}>
-                    <Grid item xs={12} md={8}>
-                        <Container className={classes.photocoverProfile}> </Container>
-                        <Paper className={classes.userinfoProfile}>
-                            <h3>{userData.first_name ? userData.first_name :
-                                <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
-                            <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
-                            <div>
-                                <ButtonPopup setUserData={setUserData}/>
-                            </div>
-                        </Paper>
+                <Grid container spacing={3}>
+                    <Grid container className={classes.profilePaper}>
+                        <Grid item xs={12} md={8}>
+                            <Container className={classes.photocoverProfile}> </Container>
+                            <Paper className={classes.userinfoProfile}>
+                                <h3>{userData.first_name ? userData.first_name :
+                                    <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
+                                <p className={classes.subtitle}>{userData.followers} Followers - {userData.followings} Followings</p>
+                                <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
+                                <div>
+                                    <ButtonPopup setUserData={setUserData}/>
+                                </div>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={6} className={classes.experience}>
+                        <Grid item xs={12} md={8}>
+                            <Paper className={classes.userexperience}>
+                                <Grid container spacing={5}>
+                                    <Grid item xs={6} style={{paddingLeft: 50}}>
+                                        <h3>Experience</h3>
+                                    </Grid>
+                                    <Grid container item xs={6} justify="flex-end">
+                                        <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={5}>
+                                    <Grid item xs={12}>
+                                        <ExperiencesList updateExperiences={updateExperiences}
+                                                         setUpdateExperiences={setUpdateExperiences}/>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
-                <Grid container spacing={6} className={classes.experience}>
-                    <Grid item xs={12} md={8}>
-                        <Paper className={classes.userexperience}>
-                            <Grid container spacing={5}>
-                                <Grid item xs={6} style={{paddingLeft: 50}}>
-                                    <h3>Experience</h3>
-                                </Grid>
-                                <Grid container item xs={6} justify="flex-end">
-                                    <AddExperienceButton setUpdateExperiences={setUpdateExperiences}/>
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={5}>
-                                <Grid item xs={12}>
-                                    <ExperiencesList updateExperiences={updateExperiences}
-                                                     setUpdateExperiences={setUpdateExperiences}/>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                </Grid>
+                    <PeopleWhoMaybeYouKnow/>
             </Container>
         }
     </AuthContext.Consumer>)
