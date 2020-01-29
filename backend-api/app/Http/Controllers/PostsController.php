@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\User;
-use App\Comments;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redis;
 
 class PostsController extends Controller
@@ -95,9 +92,15 @@ class PostsController extends Controller
             // añadirlos en par clave-valor
             $post['comments'] = $comments;
 
+
+            // ver si el post está likeado por nosotros
+            $likedByMe = Like::where('user_id', $userId)
+                ->where('post_id', $post->id)
+                ->get();
+
+            $post['liked'] = !$likedByMe->isEmpty();
+
         }
-
-
 
         return response()->json($posts, 200);
     }

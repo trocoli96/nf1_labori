@@ -52,7 +52,7 @@ function SinglePost(props) {
             <Divider/>
             <Grid container item justify="space-between">
                 <Grid container item xs justify="flex-start" alignItems="center">
-                    <LikeBtn likes={props.likes} postid={props.id}/>
+                    <LikeBtn likes={props.likes} postid={props.id} liked={props.liked}/>
                 </Grid>
                 <Grid item xs justify="center">
                     <Button className={classes.postbuttons}>

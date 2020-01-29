@@ -65,6 +65,10 @@ class LikesController extends Controller
 
             // luego decrementamos en Redis
             $postLikeCounter = Redis::decr("like_counter_" . $data['post_id']);
+
+            // y anotaremos en la respuesta que ese post no está likeado
+            $liked = false;
+
         } else {
             // si no existe, añadimos fila en MySQL
             $newLike = Like::create([
@@ -76,6 +80,9 @@ class LikesController extends Controller
 
             // e incrementamos también en Redis
             $postLikeCounter = Redis::incr("like_counter_" . $data['post_id']);
+
+            // y anotaremos en la respuesta que ese post no está likeado
+            $liked = true;
         }
 
         // devolvemos el post en cuestión, añadiéndole los likes
@@ -84,6 +91,7 @@ class LikesController extends Controller
         $likesFromThatPost = Redis::get("like_counter_" . $data['post_id']);
 
         $postToReturn['likes'] = (int)$likesFromThatPost;
+        $postToReturn['liked'] = $liked;
 
         return response()->json($postToReturn, 200);
 

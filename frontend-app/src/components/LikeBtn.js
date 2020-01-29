@@ -9,6 +9,7 @@ export default function LikeBtn(props) {
     const classes = useStyles();
     const [likesPost, setLikesPost] = useState(props.likes);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [liked, setLiked] = useState(props.liked);
 
     const likePost = () => {
 
@@ -42,6 +43,7 @@ export default function LikeBtn(props) {
                     }
                 ).then(data => {
                     setLikesPost(data.likes);
+                    setLiked(data.liked);
                     return setIsSubmitting(false);
                 }
             ).catch(error => {
@@ -57,7 +59,7 @@ export default function LikeBtn(props) {
 
     return (
         <Button className={classes.postbuttons} onClick={likePost} disabled={isSubmitting}>
-            <ThumbUpIcon className={classes.iconbuttons}/>
+            <ThumbUpIcon color={liked ? "primary" : ""} className={classes.iconbuttons}/>
             Like
             <span className={classes.likeCounter}>{likesPost ? likesPost : 0}</span>
         </Button>
