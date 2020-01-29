@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "../styles/styles";
 import getToken from "../utils/tokenHelper";
+import {AuthContext} from "../utils/AuthFront/context";
 
 export default function LikeBtn(props) {
 
     const classes = useStyles();
+    const {dispatch} = useContext(AuthContext); // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
+
     const [likesPost, setLikesPost] = useState(props.likes);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [liked, setLiked] = useState(props.liked);
@@ -47,6 +50,10 @@ export default function LikeBtn(props) {
                     return setIsSubmitting(false);
                 }
             ).catch(error => {
+                    if (error === 401) {
+                        console.log("Token inválido, probablemente caducado. Hacemos logout.");
+                        return dispatch({type: "DO_LOGOUT"});
+                    }
                     console.log(error.status);
                     return setIsSubmitting(false);
                 }
