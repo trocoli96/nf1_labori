@@ -76,10 +76,13 @@ class PostsController extends Controller
 
             // sumarle likes
             $likesFromPost = Redis::get("like_counter_" . $post['id']);
-
-
-
             $post['likes'] = (int)$likesFromPost;
+
+            // ver si el post está likeado por nosotros
+            $likedByMe = Like::where('user_id', $userId)
+                ->where('post_id', $post->id)
+                ->get();
+            $post['liked'] = !$likedByMe->isEmpty();
 
             // ver si el post tiene comments
             $comments = DB::table('comments')
@@ -88,17 +91,8 @@ class PostsController extends Controller
                 ->orderBy('comments.created_at', 'desc')
                 ->get();
             // TODO paginar los comments
-
             // añadirlos en par clave-valor
             $post['comments'] = $comments;
-
-
-            // ver si el post está likeado por nosotros
-            $likedByMe = Like::where('user_id', $userId)
-                ->where('post_id', $post->id)
-                ->get();
-
-            $post['liked'] = !$likedByMe->isEmpty();
 
         }
 
@@ -107,12 +101,6 @@ class PostsController extends Controller
 
     public function returnPost(Request $request, $id)
     {
-        $userId = Auth::id();
-        $userIdDoesExist = User::find($userId);
-
-        if ($userIdDoesExist === null) {
-            return response()->json(['message' => "User doesn't exist"], 400);
-        }
         // primero nos aseguramos que hay un parámetro en la URL
         if (empty($id)) {
             return response()->json(['message' => "ID is empty"], 400);
@@ -124,13 +112,49 @@ class PostsController extends Controller
         }
 
         // y luego devolvemos el post
-
-        $post = DB::table('posts')
-            ->leftJoin('user', 'posts.user_id', '=', 'user.id')
+        $post = (array)DB::table('posts')
+            ->join('user', 'posts.user_id', '=', 'user.id')
+            ->select(
+                'posts.id',
+                'posts.user_id',
+                'posts.post_text',
+                'posts.created_at',
+                'posts.updated_at',
+                'posts.image_link',
+                'user.first_name',
+                'user.last_name',
+                'user.former_name',
+                'user.shortname',
+                'user.color'
+            )
             ->where('posts.id', $id)
             ->first();
 
-        return response()->json($post);
+        // para añadirle si somos owner
+        $userId = Auth::id();
+        $post['owner'] = $userId === $post['user_id'];
+
+        // sumarle likes
+        $likesFromPost = Redis::get("like_counter_" . $id);
+        $post['likes'] = (int)$likesFromPost;
+
+        // ver si el post está likeado por nosotros
+        $likedByMe = Like::where('user_id', $userId)
+            ->where('post_id', $id)
+            ->get();
+        $post['liked'] = !$likedByMe->isEmpty();
+
+        // ver si el post tiene comments
+        $comments = DB::table('comments')
+            ->leftJoin('user', 'comments.author_id', '=', 'user.id')
+            ->where('comments.post_id', '=', $id)
+            ->orderBy('comments.created_at', 'desc')
+            ->get();
+        // añadirlos en par clave-valor
+        $post['comments'] = $comments;
+
+
+        return response()->json($post, 200);
     }
 
     public function editPost(Request $request, $id)
@@ -161,7 +185,8 @@ class PostsController extends Controller
 
     }
 
-    public function deletePost(Request $request, $id){
+    public function deletePost(Request $request, $id)
+    {
 
         $data = $request->all();
 
@@ -177,8 +202,8 @@ class PostsController extends Controller
         $post->delete();
 
         return response()->json(["Succesfully deleted", $post], 200);
-    }
 
+    }
 
 
 }

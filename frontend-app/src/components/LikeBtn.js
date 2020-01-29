@@ -59,7 +59,7 @@ export default function LikeBtn(props) {
 
     return (
         <Button className={classes.postbuttons} onClick={likePost} disabled={isSubmitting}>
-            <ThumbUpIcon color={liked ? "primary" : ""} className={classes.iconbuttons}/>
+            <ThumbUpIcon color={liked ? "primary" : "inherit"} className={classes.iconbuttons}/>
             Like
             <span className={classes.likeCounter}>{likesPost ? likesPost : 0}</span>
         </Button>
