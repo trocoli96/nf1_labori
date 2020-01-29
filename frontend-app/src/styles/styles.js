@@ -269,5 +269,9 @@ export const useStyles = makeStyles(theme => ({
         display: 'inline-block',
         width: '20%',
         paddingLeft: '2em',
+    },
+    likeCounter: {
+        marginLeft: "9px",
+        fontWeight: 700
     }
 }));
