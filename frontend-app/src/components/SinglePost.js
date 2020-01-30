@@ -67,6 +67,19 @@ function SinglePost(props) {
                     </CopyToClipboard>
                 </Grid>
             </Grid>
+            <Grid container xs>
+                <Grid item xs>
+                    {props.comments.map(comment => {
+                        return (
+                            <Paper width="100%" className={classes.commentBox}>
+                                <p className={classes.nameOnComment}>{comment.first_name} {comment.last_name}</p>
+                                <p className={classes.bodyComment}>{comment.comment_body}</p>
+                            </Paper>
+                        )
+                    })}
+                </Grid>
+
+            </Grid>
         </Paper>
     )
 }
