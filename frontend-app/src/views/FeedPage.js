@@ -25,16 +25,16 @@ function FeedPage() {
         <PostContext.Provider value={{postState, postDispatch}}>
             <AuthContext.Consumer>
             {props =>
-                <Container className={classes.rootFeed} maxWidth={'xl'}>
+                <Container className={classes.rootFeed} maxWidth='xl'>
                     <Grid container xs>
-                        <Grid item xs={4} className={classes.columnFeedSides}>
+                        <Grid container item xs={4} xl={3} className={classes.columnFeedSides}>
                             <ProfileInfoFeed/>
                         </Grid>
-                        <Grid item xs={8} className={classes.columnFeedCenter}>
-                            <Grid container spacing={6}>
+                        <Grid container item xs xl className={classes.columnFeedCenter}>
+                            <Grid container item spacing={6}>
                                 <CreatePost/>
                             </Grid>
-                            <Grid container spacing={6}>
+                            <Grid container item spacing={6}>
                                 <FeedPosts/>
                             </Grid>
                         </Grid>

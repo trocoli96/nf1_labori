@@ -137,25 +137,15 @@ export const useStyles = makeStyles(theme => ({
     },
     rootFeed: {
         background: 'rgb(241,238,238)',
-        display: 'inline-block !important',
-        height: 'auto !important',
-        minHeight: '1500px !important',
-        width: '100% !important',
         paddingTop: '30px !important',
         paddingLeft: '200px !important',
         paddingRight: '200px !important',
     },
     columnFeedCenter: {
-        float: 'left !important',
-        width: '50% !important',
         backgroundColor: 'rgb(241,238,238)',
-        height: 'auto !important',
     },
     columnFeedSides: {
-        float: 'left !important',
-        width: '25% !important',
         backgroundColor: 'rgb(241,238,238)',
-        height: '60em !important',
         justifyContent: 'center !important',
     },
     paperSignUp: {
@@ -201,7 +191,6 @@ export const useStyles = makeStyles(theme => ({
     },
     rootProfile: {
         background: 'rgb(241,238,238)',
-        height: '2000px',
     },
     paperProfile: {
         padding: 2,
