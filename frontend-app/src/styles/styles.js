@@ -273,5 +273,19 @@ export const useStyles = makeStyles(theme => ({
     likeCounter: {
         marginLeft: "9px",
         fontWeight: 700
+    },
+    commentBox: {
+        padding: '12px',
+        marginTop: '8px',
+        backgroundColor: '#f3f6f8 !important'
+    },
+    nameOnComment: {
+        fontSize: '14px',
+        fontWeight: 700,
+        marginTop: 0
+    },
+    bodyComment: {
+        fontSize: '14px',
+        marginBottom: 0
     }
 }));
