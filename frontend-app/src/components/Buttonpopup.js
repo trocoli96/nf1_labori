@@ -216,7 +216,7 @@ function ButtonPopup(props) {
                             justify="center"
                             alignItems="center"
                         >
-                        <UserPhoto/>
+                        <UserPhoto size={classes.avatarBig}/>
                         <EditUserPhoto/>
                         </Grid>
                         <form>

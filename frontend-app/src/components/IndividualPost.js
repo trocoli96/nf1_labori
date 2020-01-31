@@ -19,6 +19,7 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import UserPhoto from "./UserPhoto";
 
 function IndividualPost() {
 
@@ -70,14 +71,12 @@ function IndividualPost() {
         return (<AuthContext.Consumer>
                 {props =>
                     // eliminated global container
-                        <Grid item xd={10} className={classes.postslist}>
+                        <Grid item xs={10} className={classes.postslist}>
                             {postData.data && postData.data.map((data) => {
                                 return (
                                     <Paper className={classes.singlepost}>
-                                        <Grid item xd={10} className={classes.authorbox}>
-                                            <Avatar className={classes.profileicon} style={{backgroundColor: data.color}}>
-                                                {data.shortname}
-                                            </Avatar>
+                                        <Grid item xs={10} className={classes.authorbox}>
+                                            <UserPhoto />
                                             <span className={classes.authorinfo}>
                                         <h3 className={classes.title}>{data.first_name} {data.last_name}</h3>
                                         <p className={classes.text}>{data.former_name} - {moment(data.created_at, "YYYY-MM-DD hh:mm:ss").fromNow()}</p>

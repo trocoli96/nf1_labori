@@ -84,7 +84,7 @@ function ProfileInfoFeed() {
                             <Grid container item justify="center">
                                 {/*<Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>*/}
 
-                            <UserPhoto/>
+                            <UserPhoto size={classes.avatarBig}/>
 
                             </Grid>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>

@@ -23,6 +23,7 @@ import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
+import UserPhoto from "./UserPhoto";
 
 
 function SinglePost(props) {
@@ -93,9 +94,7 @@ function SinglePost(props) {
         <Paper className={classes.singlepost}>
             <Grid item xd={10} className={classes.authorbox}>
                 <Link to={`/profile/${props.user_id}`}>
-                    <Avatar className={classes.profileicon} style={{backgroundColor: props.color}}>
-                        {props.shortname}
-                    </Avatar>
+                    <UserPhoto className={classes.avatarSmall}/>
                 </Link>
                 <span className={classes.authorinfo}>
                     <Link to={`/profile/${props.user_id}`}><h3
