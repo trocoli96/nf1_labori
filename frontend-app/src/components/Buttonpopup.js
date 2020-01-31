@@ -17,6 +17,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {CircularProgress} from "@material-ui/core";
+import EditUserPhoto from "./EditUserPhoto";
+import UserPhoto from "./UserPhoto";
 
 
 function ButtonPopup(props) {
@@ -207,6 +209,8 @@ function ButtonPopup(props) {
                         <h2>Edit your profile</h2>
                     </div>
                     <div className={classes.textPadding}>
+                        <UserPhoto/>
+                        <EditUserPhoto/>
                         <form>
                             <TextField id="change-name" label="First name" variant="outlined" fullWidth
                                        onChange={event => setFirstName(event.target.value)}/>
