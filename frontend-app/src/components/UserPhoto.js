@@ -72,7 +72,7 @@ function UserPhoto() {
 
     return (<AuthContext.Consumer>
         { props =>
-            <Avatar src={userPic.profile_photo}/>
+            <Avatar src={userPic.profile_photo} className={classes.avatarBig}/>
         }
     </AuthContext.Consumer>);
 }

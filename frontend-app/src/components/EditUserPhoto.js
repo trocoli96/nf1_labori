@@ -141,6 +141,7 @@ function ButtonUserPhoto(props) {
                         <h2>Edit your photo</h2>
                     </div>
                     <div className={classes.textPadding}>
+
                         <UserPhoto/>
                         <form>
                             <input type="file" onChange={e => setProfilePhoto(e.target.files[0])}/>

@@ -81,10 +81,12 @@ function ProfileInfoFeed() {
                 <Grid container spacing={6} className={classes.profile}>
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
-                            <Container className={classes.photocover}>
+                            <Grid container item justify="center">
                                 {/*<Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>*/}
+
                             <UserPhoto/>
-                            </Container>
+
+                            </Grid>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
                             <p className={classes.textprofileFeed}>{userData.email ? userData.email : <CircularProgress/>}</p>
                                 <Divider/>
