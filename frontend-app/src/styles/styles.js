@@ -189,6 +189,7 @@ export const useStyles = makeStyles(theme => ({
     },
     formPaperHomePage: {
         padding: theme.spacing(8, 5),
+        height: '100%'
     },
     marginNegativeHomePage: {
         marginTop: '-90px'
