@@ -10,6 +10,7 @@ import ExperiencesList from "../components/ExperiencesList";
 import {useStyles} from '../styles/styles';
 import ButtonPopup from "../components/Buttonpopup";
 import AddExperienceButton from "../components/AddExperienceButton";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
@@ -30,7 +31,9 @@ function Profilepage(props) {
     const [userData, setUserData] = useState({
         "first_name": null,
         "last_name": null,
-        "email": null
+        "email": null,
+        "followers": null,
+        "followings": null
     });
 
     const [updateExperiences, setUpdateExperiences] = useState(true);
@@ -62,7 +65,9 @@ function Profilepage(props) {
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
-                        "email": data.email
+                        "email": data.email,
+                        "followers": data.followers,
+                        "followings": data.followings
                     });
                 })
                 .catch(error => {

@@ -12,6 +12,7 @@ import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
 import ProfileInfoFeed from "../components/ProfileInfoFeed";
 import FeedPosts from "../components/FeedPosts";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 
 
 function FeedPage() {
@@ -25,21 +26,23 @@ function FeedPage() {
         <PostContext.Provider value={{postState, postDispatch}}>
             <AuthContext.Consumer>
             {props =>
-                <Container className={classes.rootFeed} maxWidth={'xl'}>
-                    <div className={classes.columnFeedSides}>
-                        <ProfileInfoFeed/>
-                    </div>
-                    <div className={classes.columnFeedCenter}>
-                        <Grid container spacing={6}>
-                            <CreatePost/>
+                <Container className={classes.rootFeed} maxWidth='xl'>
+                    <Grid container xs>
+                        <div className={classes.columnFeedSides}>
+                            <ProfileInfoFeed/>
+                        </div>
+                        <Grid container item xs xl className={classes.columnFeedCenter}>
+                            <Grid container item spacing={6}>
+                                <CreatePost/>
+                            </Grid>
+                            <Grid container item spacing={6}>
+                                <FeedPosts/>
+                            </Grid>
                         </Grid>
-                        <Grid container spacing={6}>
-                            <FeedPosts/>
-                        </Grid>
-                    </div>
-
                     <div className={classes.columnFeedSides}>
+                        <PeopleWhoMaybeYouKnow/>
                     </div>
+                    </Grid>
                 </Container>
             }
             </AuthContext.Consumer>

@@ -16,6 +16,7 @@ export const useStyles = makeStyles(theme => ({
         height: `${theme.spacing(7)}px !important`,
         display: 'inline-flex !important',
         position: 'relative !important',
+        fontStyle: 'normal',
     },
     authorbox: {
         display: 'flex !important',
@@ -40,6 +41,12 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         lineHeight: '2px',
+        color: 'black',
+    },
+    subtitle: {
+        fontSize:'90%',
+        lineHeight: '2px',
+        color: 'grey',
     },
     postbuttons: {
         paddingTop: '1px',
@@ -145,13 +152,13 @@ export const useStyles = makeStyles(theme => ({
     },
     columnFeedCenter: {
         float: 'left !important',
-        width: '50% !important',
+        width: '60% !important',
         backgroundColor: 'rgb(241,238,238)',
         height: 'auto !important',
     },
     columnFeedSides: {
         float: 'left !important',
-        width: '25% !important',
+        width: '20% !important',
         backgroundColor: 'rgb(241,238,238)',
         height: '60em !important',
         justifyContent: 'center !important',
@@ -199,7 +206,6 @@ export const useStyles = makeStyles(theme => ({
     },
     rootProfile: {
         background: 'rgb(241,238,238)',
-        height: '2000px',
     },
     paperProfile: {
         padding: 2,
@@ -257,5 +263,38 @@ export const useStyles = makeStyles(theme => ({
     experiencebox: {
         marginLeft: 30,
         width: '90%',
+    },
+    profilebasicinfo: {
+        display: 'inline-block',
+        width: '80%',
+    },
+    buttonfollowing: {
+        position: 'absolute',
+        display: 'inline-block',
+        width: '20%',
+        paddingLeft: '2em',
+    },
+    likeCounter: {
+        marginLeft: "9px",
+        fontWeight: 700
+    },
+    commentBox: {
+        padding: '12px',
+        marginTop: '8px',
+        backgroundColor: '#f3f6f8 !important'
+    },
+    nameOnComment: {
+        fontSize: '14px',
+        fontWeight: 700,
+        marginTop: 0,
+        marginBottom: 0,
+    },
+    bodyComment: {
+        fontSize: '14px',
+        marginBottom: 0,
+        marginTop: '2px'
+    },
+    peopleyoumaybeknow: {
+        marginTop: theme.spacing(4),
     }
 }));

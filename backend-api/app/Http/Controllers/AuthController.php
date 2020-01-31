@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 
 
 use App\Contracts\Users\UserHandler;
+use App\Friend;
 use App\Http\Traits\CloudinaryTrait;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -73,7 +75,17 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        // 1. conseguir el ID del usuario a partir del token
+        $userId = Auth::id();
+        $user = auth()->user();
+
+        $user['followers'] = Friend::where('is_following', '=', $userId)
+            ->count();
+
+        $user['followings'] = Friend::where('user_id', '=', $userId)
+            ->count();
+
+        return response()->json($user);
     }
 
     /**
@@ -162,7 +174,25 @@ class AuthController extends Controller
 
     public function getUserById(Request $request, $id) {
 
+        $userId = Auth::id();
+
+        $areYouFollowing = Friend::where('user_id', '=', $userId)
+            ->where('is_following', $id)
+            ->first();
         $user = User::findOrFail($id);
+
+        //contamos los followers
+        $user['followers'] = Friend::where('is_following', '=', $id)
+            ->count();
+
+        //contamos los followings
+        $user['followings'] = Friend::where('user_id', '=', $id)
+            ->count();
+
+        //si lo sigue es true si no es false
+        if ($areYouFollowing !== null) {
+            $user['isfollowed'] = true;
+        } else $user['isfollowed'] = false;
 
         return response()->json($user, 200);
 
