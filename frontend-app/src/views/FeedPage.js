@@ -12,6 +12,7 @@ import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
 import ProfileInfoFeed from "../components/ProfileInfoFeed";
 import FeedPosts from "../components/FeedPosts";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 
 
 function FeedPage() {
@@ -39,6 +40,7 @@ function FeedPage() {
                     </div>
 
                     <div className={classes.columnFeedSides}>
+                        <PeopleWhoMaybeYouKnow/>
                     </div>
                 </Container>
             }

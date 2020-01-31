@@ -121,7 +121,6 @@ function Profilepage(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-                    <PeopleWhoMaybeYouKnow/>
             </Container>
         }
     </AuthContext.Consumer>)
