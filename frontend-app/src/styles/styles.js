@@ -152,13 +152,13 @@ export const useStyles = makeStyles(theme => ({
     },
     columnFeedCenter: {
         float: 'left !important',
-        width: '50% !important',
+        width: '60% !important',
         backgroundColor: 'rgb(241,238,238)',
         height: 'auto !important',
     },
     columnFeedSides: {
         float: 'left !important',
-        width: '25% !important',
+        width: '20% !important',
         backgroundColor: 'rgb(241,238,238)',
         height: '60em !important',
         justifyContent: 'center !important',
@@ -291,5 +291,8 @@ export const useStyles = makeStyles(theme => ({
     bodyComment: {
         fontSize: '14px',
         marginBottom: 0
+    },
+    peopleyoumaybeknow: {
+        marginTop: theme.spacing(4),
     }
 }));

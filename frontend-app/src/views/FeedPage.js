@@ -28,9 +28,9 @@ function FeedPage() {
             {props =>
                 <Container className={classes.rootFeed} maxWidth='xl'>
                     <Grid container xs>
-                        <Grid container item xs={4} xl={3} className={classes.columnFeedSides}>
+                        <div className={classes.columnFeedSides}>
                             <ProfileInfoFeed/>
-                        </Grid>
+                        </div>
                         <Grid container item xs xl className={classes.columnFeedCenter}>
                             <Grid container item spacing={6}>
                                 <CreatePost/>
@@ -39,8 +39,6 @@ function FeedPage() {
                                 <FeedPosts/>
                             </Grid>
                         </Grid>
-                    </div>
-
                     <div className={classes.columnFeedSides}>
                         <PeopleWhoMaybeYouKnow/>
                     </div>

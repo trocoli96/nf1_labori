@@ -5,12 +5,14 @@ import getToken from "../utils/tokenHelper";
 
 /*STYLES & COMPONENTS*/
 import {Grid} from "@material-ui/core";
-import {CircularProgress} from "@material-ui/core";
-import SinglePost from "./SinglePost";
+import Avatar from "@material-ui/core/Avatar";
+import {useStyles} from "../styles/styles";
+import {Link} from "react-router-dom";
 
 
 function PeopleWhoMaybeYouKnow(){
 
+    const classes = useStyles();
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
@@ -61,8 +63,18 @@ function PeopleWhoMaybeYouKnow(){
         {props =>
             <Grid>
                 <Grid>
+                    <p>People who maybe you know...</p>
                     {persons.data && persons.data.map((person) =>
-                        <p>{person.is_following}</p>)
+                        <Grid className={classes.peopleyoumaybeknow}>
+
+                            <Link to={`/profile/${person.person.is_following}`}>
+                                <Avatar style={{backgroundColor: person.person.color, float: 'left', marginRight: '3px'}}>{person.person.shortname}</Avatar>
+                            </Link>
+                            <Link to={`/profile/${person.person.is_following}`}>
+                                <p style={{paddingTop: '0.5em', color: 'black'}}>{person.person.first_name} {person.person.last_name}</p>
+                            </Link>
+
+                        </Grid>)
                     }
                 </Grid>
             </Grid>
