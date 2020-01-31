@@ -19,6 +19,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {CircularProgress} from "@material-ui/core";
 import EditUserPhoto from "./EditUserPhoto";
 import UserPhoto from "./UserPhoto";
+import Grid from "@material-ui/core/Grid";
 
 
 function ButtonPopup(props) {
@@ -209,8 +210,15 @@ function ButtonPopup(props) {
                         <h2>Edit your profile</h2>
                     </div>
                     <div className={classes.textPadding}>
-                        <UserPhoto/>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                        <UserPhoto size={classes.avatarBig}/>
                         <EditUserPhoto/>
+                        </Grid>
                         <form>
                             <TextField id="change-name" label="First name" variant="outlined" fullWidth
                                        onChange={event => setFirstName(event.target.value)}/>

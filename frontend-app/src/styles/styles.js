@@ -53,7 +53,7 @@ export const useStyles = makeStyles(theme => ({
         paddingBottom: '1px',
     },
     iconbuttons: {
-        marginRight: '4px',
+        marginRight: '0px',
     },
     paper: {
         position: 'absolute',
@@ -64,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
         top: "50%",
         left: "50%",
         marginLeft: "-200px",
-        marginTop: "-150px"
+        marginTop: "-350px"
     },
     textPadding: {
         padding: theme.spacing(2, 4, 3),
@@ -297,5 +297,16 @@ export const useStyles = makeStyles(theme => ({
     },
     peopleyoumaybeknow: {
         marginTop: theme.spacing(4),
-    }
+    },
+
+    avatarSmall: {
+            width: theme.spacing(3),
+            height: theme.spacing(3),
+        },
+
+    avatarBig: {
+            width: `${theme.spacing(10)}px !important`,
+            height: `${theme.spacing(10)}px !important`,
+        },
+
 }));

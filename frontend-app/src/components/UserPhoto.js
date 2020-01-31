@@ -15,17 +15,17 @@ import ButtonPopup from "./Buttonpopup";
 import AddExperienceButton from "./AddExperienceButton";
 import ExperiencesList from "./ExperiencesList";
 
-function UserPhoto() {
+function UserPhoto(props) {
 
     const classes = useStyles();
+
+    const size=props.size;
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     // creamos los hooks de estado con los datos del usuario
-    const [userPic, setUserPic] = useState({
-        "profile_photo": "",
-    });
+    const [userPic, setUserPic] = useState("");
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
@@ -51,9 +51,8 @@ function UserPhoto() {
                     }
                 })
                 .then(data => {
-                    return setUserPic({
-                        "profile_photo": data.profile_photo,
-                    });
+                    console.log(data['profile_photo']);
+                    return setUserPic(data['profile_photo']);
                 })
                 .catch(error => {
                     console.log("Error al hacer el fetch de @me. Error: " + error);
@@ -72,7 +71,7 @@ function UserPhoto() {
 
     return (<AuthContext.Consumer>
         { props =>
-            <Avatar src={userPic.profile_photo}/>
+            <Avatar src={userPic} className={size}/>
         }
     </AuthContext.Consumer>);
 }

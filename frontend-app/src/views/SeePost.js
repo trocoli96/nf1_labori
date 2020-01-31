@@ -19,6 +19,7 @@ import Button from "@material-ui/core/Button";
 import ChatIcon from '@material-ui/icons/Chat';
 import ReplyIcon from '@material-ui/icons/Reply';
 import Modal from '@material-ui/core/Modal';
+import UserPhoto from "../components/UserPhoto";
 
 
 function SeePost(props) {
@@ -83,9 +84,7 @@ function SeePost(props) {
                             <Paper className={classes.singlepost}>
                                 <Grid item xd={10} className={classes.authorbox}>
                                     <Link to={`/profile/${post.user_id}`}>
-                                    <Avatar className={classes.profileicon} style={{backgroundColor: post.color}}>
-                                        {post.shortname}
-                                    </Avatar>
+                                    <UserPhoto/>
                                     </Link>
                                     <span className={classes.authorinfo}>
                                         <Link to={`/profile/${post.user_id}`}><h3 className={classes.title}>{post.first_name} {post.last_name}</h3></Link>
