@@ -76,7 +76,7 @@ function FeedPosts() {
                         <Grid item xs={11}>
                             <Grid item xd={10} className={classes.postslist}>
                                 {posts.data && posts.data.map((post) =>
-                                    <SinglePost {...post} setCopied={setCopied}/>)
+                                    <SinglePost {...post} setCopied={setCopied} key={post.id}/>)
                                 }
                                 {copied ? <Snackbar
                                         message="Link copied to Clipboard!"
