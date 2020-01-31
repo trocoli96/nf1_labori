@@ -155,4 +155,38 @@ class FriendsController extends Controller
         return response()->json($followings,200);
 
     }
+
+    public function peopleWhoMaybeYouKnow(){
+
+        $userId = Auth::id();
+
+        $friends = Friend::select(
+            'is_following'
+        )
+            ->where('user_id', '=', $userId)
+            ->inRandomOrder()
+            ->paginate(5);
+
+        foreach ($friends as $friend){
+
+            $friend['person'] = Friend::select(
+                'is_following',
+                'user.shortname',
+                'user.first_name',
+                'user.last_name',
+                'user.former_name',
+                'user.color'
+            )
+                ->where('user_id', '=', $friend['is_following'])
+                ->join('user', function ($query) {
+                    $query->on('user.id', '=', 'friends.is_following');
+                }
+                )
+                ->first();
+
+        }
+        return $friends;
+    }
+
+
 }

@@ -43,6 +43,11 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: '2px',
         color: 'black',
     },
+    subtitle: {
+        fontSize:'90%',
+        lineHeight: '2px',
+        color: 'grey',
+    },
     postbuttons: {
         paddingTop: '1px',
         paddingBottom: '1px',
@@ -137,15 +142,25 @@ export const useStyles = makeStyles(theme => ({
     },
     rootFeed: {
         background: 'rgb(241,238,238)',
+        display: 'inline-block !important',
+        height: 'auto !important',
+        minHeight: '1500px !important',
+        width: '100% !important',
         paddingTop: '30px !important',
         paddingLeft: '200px !important',
         paddingRight: '200px !important',
     },
     columnFeedCenter: {
+        float: 'left !important',
+        width: '60% !important',
         backgroundColor: 'rgb(241,238,238)',
+        height: 'auto !important',
     },
     columnFeedSides: {
+        float: 'left !important',
+        width: '20% !important',
         backgroundColor: 'rgb(241,238,238)',
+        height: '60em !important',
         justifyContent: 'center !important',
     },
     paperSignUp: {
@@ -276,5 +291,8 @@ export const useStyles = makeStyles(theme => ({
     bodyComment: {
         fontSize: '14px',
         marginBottom: 0
+    },
+    peopleyoumaybeknow: {
+        marginTop: theme.spacing(4),
     }
 }));

@@ -12,6 +12,7 @@ import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
 import ProfileInfoFeed from "../components/ProfileInfoFeed";
 import FeedPosts from "../components/FeedPosts";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 
 
 function FeedPage() {
@@ -27,9 +28,9 @@ function FeedPage() {
             {props =>
                 <Container className={classes.rootFeed} maxWidth='xl'>
                     <Grid container xs>
-                        <Grid container item xs={4} xl={3} className={classes.columnFeedSides}>
+                        <div className={classes.columnFeedSides}>
                             <ProfileInfoFeed/>
-                        </Grid>
+                        </div>
                         <Grid container item xs xl className={classes.columnFeedCenter}>
                             <Grid container item spacing={6}>
                                 <CreatePost/>
@@ -38,6 +39,9 @@ function FeedPage() {
                                 <FeedPosts/>
                             </Grid>
                         </Grid>
+                    <div className={classes.columnFeedSides}>
+                        <PeopleWhoMaybeYouKnow/>
+                    </div>
                     </Grid>
                 </Container>
             }
