@@ -2,31 +2,20 @@
 
 
 namespace App\Http\Controllers;
+
 use App\Comments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 
 
 class CommentsController extends Controller
 {
-    public function createComments(Request $request)
-    {
-        $request = $request->all();
 
-        $comment = comments::create([
-            'comment_body' => $request['comment_body'],
-            'author_id' => ($request['author_id']),
-            'post_id' => $request['post_id'],
-        ]);
-
-        return $comment;
-    }
-
-public function returnComments (Request $request, $post_id)
+    public function returnComments(Request $request, $post_id)
     {
         //TODO revisar como evitar el pagination
         $request = $request->all();
-        $lenght = 5;
 
         $comments = Comments::select(
             'comments.id',
@@ -42,25 +31,40 @@ public function returnComments (Request $request, $post_id)
         )
             ->where('posts.id', '=', $post_id)
             ->from('comments')
-            ->join('posts', function($query)
-            {
+            ->join('posts', function ($query) {
                 $query->on('comments.post_id', '=', 'posts.id');
             }
             )
             ->orderBy('created_at', 'desc')
-            ->paginate($lenght);
+            ->get();
 
         return $comments;
     }
 
-   public function modifyComments(Request $request)
+    public function createComments(Request $request)
+    {
+        $data = $request->all();
+        $userId = Auth::id();
+
+        $comment = comments::create([
+            'comment_body' => $data['comment_body'],
+            'author_id' => ($userId),
+            'post_id' => $data['post_id'],
+        ]);
+
+        // devolvemos todos los comentarios de ese post
+        $allCommentsFromThatPost = $this->returnComments($request, $request['post_id']);
+
+        return response()->json($allCommentsFromThatPost, 200);
+    }
+
+    public function modifyComments(Request $request)
     {
         $errorComments = array("Comments doesn't exist");
         $data = $request->all();
         if (Comments::find($data['id']) === null) {
             return $errorComments;
-        }
-        else {
+        } else {
             $data = Comments::find($request->id);
 
             $data->body = $request->body;
@@ -73,4 +77,6 @@ public function returnComments (Request $request, $post_id)
 
         return response()->json($CommentsRecord, 200);
     }
-};
+}
+
+;
