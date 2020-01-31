@@ -40,7 +40,7 @@ function SinglePost(props) {
     useEffect(() => {
 
         if (!isSubmitting) return;
-        if (!newComment) return;
+        if (!newComment) return setIsSubmitting(false);
 
         setIsSubmitting(true);
 
