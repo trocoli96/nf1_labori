@@ -114,8 +114,8 @@ export const useStyles = makeStyles(theme => ({
     profile: {
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
-        paddingRight: `${theme.spacing(3)}px !important`,
-        paddingLeft: `${theme.spacing(3)}px !important`,
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
         width: '100%',
         margin: 0,
     },
@@ -206,9 +206,6 @@ export const useStyles = makeStyles(theme => ({
     },
     rootProfile: {
         background: 'rgb(241,238,238)',
-        height: '2000px',
-        paddingRight: `${theme.spacing(12)}px !important`,
-        paddingLeft: `${theme.spacing(12)}px !important`,
     },
     paperProfile: {
         padding: 2,
@@ -276,5 +273,23 @@ export const useStyles = makeStyles(theme => ({
         display: 'inline-block',
         width: '20%',
         paddingLeft: '2em',
+    },
+    likeCounter: {
+        marginLeft: "9px",
+        fontWeight: 700
+    },
+    commentBox: {
+        padding: '12px',
+        marginTop: '8px',
+        backgroundColor: '#f3f6f8 !important'
+    },
+    nameOnComment: {
+        fontSize: '14px',
+        fontWeight: 700,
+        marginTop: 0
+    },
+    bodyComment: {
+        fontSize: '14px',
+        marginBottom: 0
     }
 }));
