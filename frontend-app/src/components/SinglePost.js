@@ -70,6 +70,7 @@ function SinglePost(props) {
                 })
                 .then(data => {
                     setComments(data);
+                    setNewComment("");
                     return setIsSubmitting(false);
                 })
                 .catch(error => {
@@ -143,6 +144,7 @@ function SinglePost(props) {
                             fullWidth
                             placeholder="Leave a comment..."
                             disabled={isSubmitting}
+                            value={newComment}
                             onChange={e => setNewComment(e.target.value)}
                         />
                     </Grid>
