@@ -64,7 +64,7 @@ function PeopleWhoMaybeYouKnow(){
             <Grid>
                 <Grid>
                     <p>People who maybe you know...</p>
-                    {persons && persons.map((person) =>
+                    {persons.data && persons.data.map((person) =>
                         <Grid className={classes.peopleyoumaybeknow}>
 
                             <Link to={`/profile/${person.person.is_following}`}>
