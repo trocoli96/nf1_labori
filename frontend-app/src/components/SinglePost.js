@@ -1,5 +1,5 @@
 /*BASIC STUFF*/
-import React, {useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard/lib/Component";
 import OwnerPostMenu from "./OwnerPostMenu";
 import {Link} from "react-router-dom";
@@ -19,16 +19,25 @@ import ChatIcon from "@material-ui/icons/Chat";
 import ReplyIcon from "@material-ui/icons/Reply";
 import NotOwnerPostMenu from "./NotOwnerPostMenu";
 import SendIcon from '@material-ui/icons/Send';
+import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
+import {AuthContext} from "../utils/AuthFront/context";
+import getToken from "../utils/tokenHelper";
 
 
 function SinglePost(props) {
 
     const classes = useStyles();
-    const [comments, setComments] = useState(props.comments = "");
+
+    // recogemos lo proveído por el context
+    const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
+
+
+    const [comments, setComments] = useState(props.comments);
     const [newComment, setNewComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const SubmitComment = () => {
+    useEffect(() => {
 
         if (!isSubmitting) return;
         if (!newComment) return;
@@ -40,11 +49,12 @@ function SinglePost(props) {
             method: 'POST',
             body: JSON.stringify({
                 comment_body: newComment,
-                post_id: props.post_id
+                post_id: props.id
             }),
             headers: new Headers({
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getToken()
             }),
             mode: 'cors'
         };
@@ -75,7 +85,8 @@ function SinglePost(props) {
 
         fetchData();
 
-    };
+    }, [dispatch, isSubmitting]);
+
 
 
     return (
@@ -104,23 +115,13 @@ function SinglePost(props) {
             </Grid>
             <p style={{marginLeft: 10}}>{props.post_text}</p>
             <Divider/>
-            <Grid container item justify="space-between">
-                <Grid container item xs justify="flex-start" alignItems="center">
+            <Grid container item>
                     <LikeBtn likes={props.likes} postid={props.id} liked={props.liked}/>
-                </Grid>
-                <Grid item xs justify="center">
-                    <Button className={classes.postbuttons}>
-                        <ChatIcon className={classes.iconbuttons}/>
-                        Comment
-                    </Button>
-                </Grid>
-                <Grid item xs justify="flex-end">
-                    <CopyToClipboard text={`http://localhost:3000/post/${props.id}`}>
-                        <Button className={classes.postbuttons} onClick={() => props.setCopied(true)}>
-                            <ReplyIcon
-                                className={classes.iconbuttons}/>Share</Button>
-                    </CopyToClipboard>
-                </Grid>
+                <CopyToClipboard text={`http://localhost:3000/post/${props.id}`}>
+                    <Button className={classes.postbuttons} onClick={() => props.setCopied(true)}>
+                        <ReplyIcon
+                            className={classes.iconbuttons}/>Share</Button>
+                </CopyToClipboard>
             </Grid>
             <Grid container xs>
                 <Grid item xs>
@@ -135,25 +136,26 @@ function SinglePost(props) {
                 </Grid>
 
             </Grid>
-            <Grid container xs>
-                <Grid item xs={8}>
-                    <TextField
-                        id="commentField"
-                        fullWidth
-                        disabled={isSubmitting}
-                        onChange={e => setNewComment(e.target.value)}
-                    />
+                <Grid container alignItems="center">
+                    <Grid item xs={10}>
+                        <TextField
+                            id="commentField"
+                            fullWidth
+                            placeholder="Leave a comment..."
+                            disabled={isSubmitting}
+                            onChange={e => setNewComment(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <IconButton
+                            color="primary"
+                            aria-label="Send comment"
+                            onClick={e => setIsSubmitting(true)}
+                        >
+                            <SendIcon/>
+                        </IconButton>
+                    </Grid>
                 </Grid>
-                <Grid>
-                    <IconButton
-                        color="primary"
-                        aria-label="add to shopping cart"
-                        onClick={SubmitComment}
-                    >
-                        <SendIcon/>
-                    </IconButton>
-                </Grid>
-            </Grid>
         </Paper>
     )
 }

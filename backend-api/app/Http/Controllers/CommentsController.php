@@ -12,6 +12,13 @@ use Illuminate\Http\JsonResponse;
 class CommentsController extends Controller
 {
 
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['returnComments', 'modifyComments']]);
+    }
+
+
     public function returnComments(Request $request, $post_id)
     {
         //TODO revisar como evitar el pagination
@@ -27,14 +34,18 @@ class CommentsController extends Controller
             'posts.id',
             'posts.user_id',
             'posts.post_text',
-            'posts.image_link'
+            'posts.image_link',
+            'user.first_name',
+            'user.last_name'
         )
             ->where('posts.id', '=', $post_id)
             ->from('comments')
             ->join('posts', function ($query) {
                 $query->on('comments.post_id', '=', 'posts.id');
-            }
-            )
+            })
+            ->join('user', function ($query) {
+                $query->on('user.id', '=', 'comments.author_id');
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 

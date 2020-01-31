@@ -286,11 +286,13 @@ export const useStyles = makeStyles(theme => ({
     nameOnComment: {
         fontSize: '14px',
         fontWeight: 700,
-        marginTop: 0
+        marginTop: 0,
+        marginBottom: 0,
     },
     bodyComment: {
         fontSize: '14px',
-        marginBottom: 0
+        marginBottom: 0,
+        marginTop: '2px'
     },
     peopleyoumaybeknow: {
         marginTop: theme.spacing(4),
