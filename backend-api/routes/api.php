@@ -49,6 +49,8 @@ Route::delete('/unfollow/{followed_id}', 'FriendsController@unfollow');
 Route::get('/followers/{id}', 'FriendsController@returnFollowers');
 Route::get('/followings/{id}', 'FriendsController@returnFollowings');
 
+Route::get('/peoplemaybeyouknow', 'FriendsController@peopleWhoMaybeYouKnow');
+
 
 
 

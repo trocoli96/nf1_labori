@@ -21,7 +21,8 @@ class FriendsController extends Controller
         $this->middleware('auth:api');
     }
 
-    public function follow(Request $request, $following_id){
+    public function follow(Request $request, $following_id)
+    {
 
         // nos aseguramos que el id a partir del token exista
         $userId = Auth::id();
@@ -37,7 +38,7 @@ class FriendsController extends Controller
             return response()->json(['message' => "User doesn't exist"], 400);
         }
         // nos aseguramos que el usuario a seguir existe
-        if($followingIdDoesExist === null){
+        if ($followingIdDoesExist === null) {
             return response()->json(['message' => "The user you want to follow doesn't exist"], 400);
         }
         // vemos si ya existe el follow
@@ -50,10 +51,11 @@ class FriendsController extends Controller
             'is_following' => $following_id,
         ]);
 
-        return response ()->json($follow);
+        return response()->json($follow);
     }
 
-    public function unfollow(Request $request, $followed_id){
+    public function unfollow(Request $request, $followed_id)
+    {
 
         // nos aseguramos que el id a partir del token exista
         $userId = Auth::id();
@@ -70,8 +72,8 @@ class FriendsController extends Controller
         }
 
         // nos aseguramos que el usuario a seguir existe
-        if($followingIdDoesExist === null){
-            return response ()->json(['message' => "The user you want to follow doesn't exist"], 400);
+        if ($followingIdDoesExist === null) {
+            return response()->json(['message' => "The user you want to follow doesn't exist"], 400);
         }
 
         // vemos si existe el follow
@@ -88,7 +90,8 @@ class FriendsController extends Controller
         return response()->json(['message' => "Succesfully deleted"], 200);
     }
 
-    public function returnFollowers(Request $request, $id){
+    public function returnFollowers(Request $request, $id)
+    {
 
         // nos aseguramos que el id a partir del token exista
         $userId = Auth::id();
@@ -103,7 +106,7 @@ class FriendsController extends Controller
             'friends.id',
             'friends.user_id',
             'friends.is_following'
-,           'user.shortname',
+            , 'user.shortname',
             'user.first_name',
             'user.last_name',
             'user.former_name',
@@ -118,11 +121,12 @@ class FriendsController extends Controller
             ->orderBy('friends.created_at', 'desc')
             ->paginate(10);
 
-        return response()->json($followers,200);
+        return response()->json($followers, 200);
 
     }
 
-    public function returnFollowings(Request $request, $id){
+    public function returnFollowings(Request $request, $id)
+    {
 
         // nos aseguramos que el id a partir del token exista
         $userId = Auth::id();
@@ -137,7 +141,7 @@ class FriendsController extends Controller
             'friends.id',
             'friends.user_id',
             'friends.is_following'
-,           'user.shortname',
+            , 'user.shortname',
             'user.first_name',
             'user.last_name',
             'user.former_name',
@@ -152,14 +156,13 @@ class FriendsController extends Controller
             ->orderBy('friends.created_at', 'desc')
             ->paginate(10);
 
-        return response()->json($followings,200);
+        return response()->json($followings, 200);
 
     }
 
     public function peopleWhoMaybeYouKnow(){
-
         $userId = Auth::id();
-
+        $peopleWhoMaybeYouKnow = array();
         $friends = Friend::select(
             'is_following'
         )
@@ -167,10 +170,11 @@ class FriendsController extends Controller
             ->inRandomOrder()
             ->paginate(5);
 
-        foreach ($friends as $friend){
 
-            $friend['person'] = Friend::select(
+        foreach ($friends as $friend){
+            $possibleFriend = Friend::select(
                 'is_following',
+                'user.id',
                 'user.shortname',
                 'user.first_name',
                 'user.last_name',
@@ -180,13 +184,28 @@ class FriendsController extends Controller
                 ->where('user_id', '=', $friend['is_following'])
                 ->join('user', function ($query) {
                     $query->on('user.id', '=', 'friends.is_following');
-                }
-                )
+                })
                 ->first();
 
+            if (isset($possibleFriend)) {
+                $peopleWhoMaybeYouKnow[] = $possibleFriend;
+            }
         }
-        return $friends;
+
+
+        $possibleFriendsThatWeStillNeed = null;
+        $numberOfPossibleFriendsThatWeStillNeed = (5 - sizeof($peopleWhoMaybeYouKnow));
+        if($numberOfPossibleFriendsThatWeStillNeed > 0) {
+            $possibleFriendsThatWeStillNeed = User::select(
+                'user.id',
+                'user.shortname',
+                'user.first_name',
+                'user.last_name',
+                'user.former_name',
+                'user.color')
+                ->inRandomOrder()
+                ->paginate($numberOfPossibleFriendsThatWeStillNeed);
+        }
+        return array_merge($possibleFriendsThatWeStillNeed->toArray()["data"], $peopleWhoMaybeYouKnow);
     }
-
-
 }
