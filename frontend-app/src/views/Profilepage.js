@@ -94,6 +94,8 @@ function Profilepage(props) {
                             <UserPhoto/>
                             <h3>{userData.first_name ? userData.first_name :
                                 <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : null}</h3>
+                            <p className={classes.subtitle}>{userData.followers} Followers
+                                - {userData.followings} Followings</p>
                             <div>{userData.email ? <p>{userData.email}</p> : <CircularProgress size={20}/>}</div>
                             <div>
                                 <ButtonPopup setUserData={setUserData}/>
