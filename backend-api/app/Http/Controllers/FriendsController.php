@@ -122,7 +122,7 @@ class FriendsController extends Controller
 
     }
 
-    public function returnFollowings(Request $request, $id){
+    public function returnFollowings(Request $request){
 
         // nos aseguramos que el id a partir del token exista
         $userId = Auth::id();
@@ -136,15 +136,15 @@ class FriendsController extends Controller
         $followings = Friend::select(
             'friends.id',
             'friends.user_id',
-            'friends.is_following'
-,           'user.shortname',
+            'friends.is_following',
+            'user.shortname',
             'user.first_name',
             'user.last_name',
             'user.former_name',
             'user.color'
         )
             ->from('friends')
-            ->where('friends.user_id', '=', $id)
+            ->where('friends.user_id', '=', $userId)
             ->join('user', function ($query) {
                 $query->on('user.id', '=', 'friends.is_following');
             }

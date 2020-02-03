@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
 use App\Post;
 use App\User;
 use App\Like;
@@ -45,6 +46,20 @@ class PostsController extends Controller
 
     public function returnPosts(Request $request)
     {
+        $userId = Auth::id();
+
+        $followings = Friend::select(
+            'friends.id',
+            'friends.user_id',
+            'friends.is_following'
+        )
+            ->from('friends')
+            ->where('friends.user_id', '=', $userId)
+            ->join('user', function ($query) {
+                $query->on('user.id', '=', 'friends.is_following');
+            }
+            )
+            ->get();
 
         $posts = Post::select(
             'posts.id',
@@ -60,10 +75,13 @@ class PostsController extends Controller
             'user.color'
         )
             ->from('posts')
+            ->whereExists(function ($query) {
+                $query->select(DB::table('friends')
+                    ->whereRaw('friends.is_following = post.user_id'));
+            })
             ->join('user', function ($query) {
-                $query->on('user.id', '=', 'posts.user_id');
-            }
-            )
+                $query->on('user.id', '=', 'post.user_id');
+            })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
 
