@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useReducer, useContext} from 'react';
+import React from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {PostContext} from "../utils/postContext";
 import {PostReducer} from "../utils/postsReducer";

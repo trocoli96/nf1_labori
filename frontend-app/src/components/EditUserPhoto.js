@@ -8,16 +8,7 @@ import '../styles/App.css';
 import {useStyles} from '../styles/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import FilledInput from '@material-ui/core/FilledInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {CircularProgress} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
 import UserPhoto from "./UserPhoto";
 
 

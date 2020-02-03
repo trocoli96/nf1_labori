@@ -14,7 +14,6 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
 /*ICONS*/
-import ChatIcon from "@material-ui/icons/Chat";
 import ReplyIcon from "@material-ui/icons/Reply";
 import NotOwnerPostMenu from "./NotOwnerPostMenu";
 import SendIcon from '@material-ui/icons/Send';
