@@ -88,7 +88,7 @@ function ProfileInfoFeed() {
 
                             </Grid>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
-                            <p className={classes.textprofileFeed}>{userData.email ? userData.email : <CircularProgress/>}</p>
+                            {userData.email ? <p className={classes.textprofileFeed}>{userData.email}</p> : <CircularProgress/>}
                                 <Divider/>
                             <p>Saved Items</p>
                         </Paper>

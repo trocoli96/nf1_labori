@@ -8,7 +8,6 @@ import LikeBtn from "./LikeBtn";
 /*UTILS*/
 import {useStyles} from "../styles/styles";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
 import moment from "moment";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
@@ -123,7 +122,7 @@ function SinglePost(props) {
                             className={classes.iconbuttons}/>Share</Button>
                 </CopyToClipboard>
             </Grid>
-            <Grid container xs>
+            <Grid container item xs>
                 <Grid item xs>
                     {comments.map(comment => {
                         return (

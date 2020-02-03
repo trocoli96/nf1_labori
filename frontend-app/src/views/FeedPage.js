@@ -27,7 +27,7 @@ function FeedPage() {
             <AuthContext.Consumer>
             {props =>
                 <Container className={classes.rootFeed} maxWidth='xl'>
-                    <Grid container xs>
+                    <Grid container item xs>
                         <div className={classes.columnFeedSides}>
                             <ProfileInfoFeed/>
                         </div>
