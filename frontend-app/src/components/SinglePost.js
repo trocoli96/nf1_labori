@@ -127,7 +127,7 @@ function SinglePost(props) {
                 <Grid item xs>
                     {comments.map(comment => {
                         return (
-                            <Paper width="100%" className={classes.commentBox}>
+                            <Paper width="100%" className={classes.commentBox} key={comment.id}>
                                 <p className={classes.nameOnComment}>{comment.first_name} {comment.last_name}</p>
                                 <p className={classes.bodyComment}>{comment.comment_body}</p>
                             </Paper>
