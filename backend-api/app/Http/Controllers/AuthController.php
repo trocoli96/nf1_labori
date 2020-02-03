@@ -4,14 +4,22 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Users\UserHandler;
+use App\Friend;
+use App\Http\Traits\CloudinaryTrait;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    use CloudinaryTrait;
+
     /**
      * Create a new AuthController instance.
      *
@@ -19,11 +27,15 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'createUser']]);
+        $this->middleware('auth:api', ['except' => ['login', 'createUser', 'getUserById']]);
     }
 
     public function createUser(Request $request)
     {
+        $permitted_chars = '0123456789abcdef';
+
+        $random = substr(str_shuffle($permitted_chars), 0, 6);
+        $color = str_split($random);
 
         $inputData = $request->all();
         $userValidator = Validator::make($inputData, [
@@ -41,7 +53,9 @@ class AuthController extends Controller
             'last_name' => $inputData['last_name'],
             'email' => $inputData['email'],
             'password' => bcrypt($inputData['password']),
-        ]);
+            'color' => '#'.$random,
+            'shortname' => strtoupper(substr($inputData['first_name'], 0,1).substr($inputData['last_name'],0,1)),
+            ]);
         return $this->login($request);
     }
 
@@ -61,7 +75,17 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        // 1. conseguir el ID del usuario a partir del token
+        $userId = Auth::id();
+        $user = auth()->user();
+
+        $user['followers'] = Friend::where('is_following', '=', $userId)
+            ->count();
+
+        $user['followings'] = Friend::where('user_id', '=', $userId)
+            ->count();
+
+        return response()->json($user);
     }
 
     /**
@@ -89,32 +113,40 @@ class AuthController extends Controller
     {
         $data = $request->all();
 
-        User::findOrFail($data['id']);
+        // 1. conseguir el ID del usuario a partir del token
+        $userId = Auth::id();
 
-        $olduserRecord = User::where("id", "=", $data['id'])
-            ->first();
-        $oldnameGetter = $olduserRecord['first_name'];
+        // 2. crear el modelo de put en base a los datos que vienen por el request
+        $newData = User::find($userId);
 
-        $data = User::find($request->id);
-
-        $data->first_name = $request->first_name;
-
-        $data->email = $request->email;
-
-
-        $data->save();
-
-        $userRecord = User::where("id", "=", $data['id'])
-            ->first();
-
-        $emailGetter = $userRecord['email'];
-        $firstnameGetter = $userRecord['first_name'];
-
-        if ($olduserRecord['first_name'] === $data['first_name'])
-            return response()->json(["error" => "Username is the same as previous"], 400);
-        else {
-            return response()->json([$oldnameGetter, $emailGetter, $firstnameGetter], 200);
+        if (!empty($data['first_name'])) {
+            $newData['first_name'] = $data['first_name'];
         }
+
+        if (!empty($data['last_name'])) {
+            $newData['last_name'] = $data['last_name'];
+        }
+
+        if (!empty($data['email'])) {
+            $newData['email'] = $data['email'];
+        }
+
+        if (!empty($data['former_name'])) {
+            $newData['former_name'] = $data['former_name'];
+        }
+
+        if (!empty($data['password'])) {
+            $newData['password'] = $data['password'];
+        }
+
+        $newData['shortname'] = substr($newData['first_name'], 0,1).substr($newData['last_name'],0,1);
+
+        // TODO: validacion de email y password
+
+        // 3. enviar ese modelo de put
+        $newData->save();
+
+        return response()->json($newData, 200);
     }
 
     protected function respondWithToken($token)
@@ -125,4 +157,46 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 1
         ]);
     }
+
+    public function updateProfilePic(Request $request, UserHandler $userHandler) {
+
+        $data = $request->all();
+
+        $cloudinaryResponse = $this->uploadPictureToCloudinary($data['image']);
+
+        $user = auth()->user();
+
+        $userHandler->updateUserPicture($user, $cloudinaryResponse['url']);
+
+        return response()->json($user, 200);
+
+    }
+
+    public function getUserById(Request $request, $id) {
+
+        $userId = Auth::id();
+
+        $areYouFollowing = Friend::where('user_id', '=', $userId)
+            ->where('is_following', $id)
+            ->first();
+        $user = User::findOrFail($id);
+
+        //contamos los followers
+        $user['followers'] = Friend::where('is_following', '=', $id)
+            ->count();
+
+        //contamos los followings
+        $user['followings'] = Friend::where('user_id', '=', $id)
+            ->count();
+
+        //si lo sigue es true si no es false
+        if ($areYouFollowing !== null) {
+            $user['isfollowed'] = true;
+        } else $user['isfollowed'] = false;
+
+        return response()->json($user, 200);
+
+    }
+
+
 }

@@ -4,51 +4,16 @@ import {AuthContext} from "../utils/AuthFront/context";
 import getToken from "../utils/tokenHelper";
 
 /* COMPONENTS & STYLES */
-import ButtonPopup from "../components/Buttonpopup";
-import '../App.css';
+import '../styles/App.css';
 import {CircularProgress, Container} from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import {useStyles} from '../styles/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import UserPhoto from "./UserPhoto";
 
-const useStyles = makeStyles(theme =>({
-    paper: {
-        padding: 2,
-        textAlign: 'center',
-        color: 'blue',
-    },
-    profile: {
-        paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
-        width:'100%',
-        margin:0,
-    },
-    photocover: {
-        textAlign:'center',
-        marginBottom:'20%',
-    },
-    icon: {
-        display: 'inline-flex',
-    },
-    userinfo: {
-        paddingTop:'10px',
-        textAlign: 'center',
-    },
-    gridfeed:{
-        padding: '0px !important',
-    },
-    text:{
-        fontSize: '90%',
-        lineHeight:'2px',
-    },
-    title:{
-        lineHeight:'2px',
-    }
-}));
+
 
 function ProfileInfoFeed() {
 
@@ -61,13 +26,15 @@ function ProfileInfoFeed() {
     const [userData, setUserData] = useState({
         "first_name": null,
         "last_name": null,
-        "email": null
+        "email": null,
+        "shortname": null,
+        "color": null
     });
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/users/?token=` + getToken();
+            const url = `http://127.0.0.1/api/user/?token=` + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -89,7 +56,9 @@ function ProfileInfoFeed() {
                     return setUserData({
                         "first_name": data.first_name,
                         "last_name": data.last_name,
-                        "email": data.email
+                        "email": data.email,
+                        "shortname": data.shortname,
+                        "color": data.color
                     });
                 })
                 .catch(error => {
@@ -112,11 +81,14 @@ function ProfileInfoFeed() {
                 <Grid container spacing={6} className={classes.profile}>
                     <Grid item xs={12} className={classes.gridfeed}>
                         <Paper className={classes.userinfo}>
-                            <Container className={classes.photocover}>
-                                <Avatar className={classes.icon}>H</Avatar>
-                            </Container>
+                            <Grid container item justify="center">
+                                {/*<Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>*/}
+
+                            <UserPhoto size={classes.avatarBig}/>
+
+                            </Grid>
                             <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
-                            <p className={classes.text}>{userData.email ? userData.email : <CircularProgress/>}</p>
+                            {userData.email ? <p className={classes.textprofileFeed}>{userData.email}</p> : <CircularProgress/>}
                                 <Divider/>
                             <p>Saved Items</p>
                         </Paper>

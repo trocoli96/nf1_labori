@@ -1,0 +1,20 @@
+name: Build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Yarn Install
+        run: yarn install
+        working-directory: frontend-app
+      - name: Yarn Build
+        run: yarn build
+        working-directory: frontend-app

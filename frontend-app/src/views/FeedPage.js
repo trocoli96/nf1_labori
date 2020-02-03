@@ -1,61 +1,53 @@
 /* BASIC STUFF */
 import React from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
+import {PostContext} from "../utils/postContext";
+import {PostReducer} from "../utils/postsReducer";
+import {useStyles} from '../styles/styles';
 
 /* COMPONENTS & STYLES */
-import { makeStyles } from '@material-ui/core/styles';
-import '../App.css';
+import '../styles/App.css';
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
 import CreatePost from "../components/CreatePost";
 import ProfileInfoFeed from "../components/ProfileInfoFeed";
+import FeedPosts from "../components/FeedPosts";
+import PeopleWhoMaybeYouKnow from "../components/PeopleWhoMaybeYouKnow";
 
-const useStyles = makeStyles(theme =>({
-    root: {
-        background: 'rgb(241,238,238)',
-        height:'2000px',
-        width:'100%',
-        paddingTop: '30px',
-        paddingLeft: 200 ,
-        paddingRight: 200 ,
-    },
-    columnCenter:{
-        float: 'left',
-        width: '50%',
-        backgroundColor: 'rgb(241,238,238)',
-        height: '60em',
-    },
-    columnSides: {
-        float: 'left',
-        width: '25%',
-        backgroundColor: 'rgb(241,238,238)',
-        height: '60em',
-        justifyContent: 'center',
-    },
 
-}));
-
-function FeedPage(){
+function FeedPage() {
 
     const classes = useStyles();
 
-    return (<AuthContext.Consumer>
-        {props =>
-            <Container className={classes.root} maxWidth={'xl'}>
-                <div className={classes.columnSides}>
-                    <ProfileInfoFeed/>
-                </div>
-                <div className={classes.columnCenter}>
-                            <Grid container spacing={6} className={classes.profile}>
+    const [postState, postDispatch] = PostReducer();
+
+
+    return (
+        <PostContext.Provider value={{postState, postDispatch}}>
+            <AuthContext.Consumer>
+            {props =>
+                <Container className={classes.rootFeed} maxWidth='xl'>
+                    <Grid container item xs>
+                        <div className={classes.columnFeedSides}>
+                            <ProfileInfoFeed/>
+                        </div>
+                        <Grid container item xs xl className={classes.columnFeedCenter}>
+                            <Grid container item spacing={6}>
                                 <CreatePost/>
                             </Grid>
-                        </div>
-
-            <div className={classes.columnSides}>
-            </div>
-            </Container>
-        }
-    </AuthContext.Consumer>)
+                            <Grid container item spacing={6}>
+                                <FeedPosts/>
+                            </Grid>
+                        </Grid>
+                    <div className={classes.columnFeedSides}>
+                        <PeopleWhoMaybeYouKnow/>
+                    </div>
+                    </Grid>
+                </Container>
+            }
+            </AuthContext.Consumer>
+        </PostContext.Provider>
+)
 }
 
 
