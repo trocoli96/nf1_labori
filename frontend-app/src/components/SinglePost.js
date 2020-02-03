@@ -8,14 +8,12 @@ import LikeBtn from "./LikeBtn";
 /*UTILS*/
 import {useStyles} from "../styles/styles";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
 import moment from "moment";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
 /*ICONS*/
-import ChatIcon from "@material-ui/icons/Chat";
 import ReplyIcon from "@material-ui/icons/Reply";
 import NotOwnerPostMenu from "./NotOwnerPostMenu";
 import SendIcon from '@material-ui/icons/Send';
@@ -123,11 +121,11 @@ function SinglePost(props) {
                             className={classes.iconbuttons}/>Share</Button>
                 </CopyToClipboard>
             </Grid>
-            <Grid container xs>
+            <Grid container item xs>
                 <Grid item xs>
                     {comments.map(comment => {
                         return (
-                            <Paper width="100%" className={classes.commentBox}>
+                            <Paper width="100%" className={classes.commentBox} key={comment.id}>
                                 <p className={classes.nameOnComment}>{comment.first_name} {comment.last_name}</p>
                                 <p className={classes.bodyComment}>{comment.comment_body}</p>
                             </Paper>

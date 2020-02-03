@@ -96,8 +96,7 @@ export const useStyles = makeStyles(theme => ({
         marginTop: '0px !important',
         marginBottom: '0px !important',
         marginRight: '0px !important',
-        width: '100%',
-        borderRadius: '0px',
+        width: '100%'
     },
     createpost: {
         marginTop: '30px !important',

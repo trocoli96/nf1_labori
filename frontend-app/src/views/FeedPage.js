@@ -1,5 +1,5 @@
 /* BASIC STUFF */
-import React, {useReducer, useContext} from 'react';
+import React from 'react';
 import {AuthContext} from "../utils/AuthFront/context";
 import {PostContext} from "../utils/postContext";
 import {PostReducer} from "../utils/postsReducer";
@@ -27,7 +27,7 @@ function FeedPage() {
             <AuthContext.Consumer>
             {props =>
                 <Container className={classes.rootFeed} maxWidth='xl'>
-                    <Grid container xs>
+                    <Grid container item xs>
                         <div className={classes.columnFeedSides}>
                             <ProfileInfoFeed/>
                         </div>

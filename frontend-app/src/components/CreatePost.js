@@ -81,7 +81,6 @@ function CreatePost() {
                                     rowsMax={3}
                                     value={post_text}
                                     className={classes.textfield}
-                                    borderRadius={0}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
