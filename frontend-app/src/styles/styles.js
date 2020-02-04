@@ -279,9 +279,11 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 700
     },
     commentBox: {
-        padding: '12px',
+        padding: '7px 14px 14px 10px',
+        backgroundColor: '#f3f6f8 !important',
+        width:'85%',
         marginTop: '8px',
-        backgroundColor: '#f3f6f8 !important'
+        borderRadius: '5px 15px 15px !important'
     },
     nameOnComment: {
         fontSize: '14px',

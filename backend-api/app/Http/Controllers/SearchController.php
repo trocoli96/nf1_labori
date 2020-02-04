@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
 
-function ReturnSearch (Request $request) {
+function returnSearch (Request $request) {
 
     $orders = User::search('first_name')->get();
 

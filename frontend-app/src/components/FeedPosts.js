@@ -40,7 +40,6 @@ function FeedPosts() {
                 }),
                 mode: 'cors',
             };
-
             return fetch(url, options)
                 .then(response => {
                     if (response.status === 200) {
@@ -49,7 +48,8 @@ function FeedPosts() {
                     return Promise.reject(response.status);
                 })
                 .then(data => {
-                     return setPosts(data);
+                        setPosts(data);
+                     console.log(data);
                 })
                 .catch(error => {
                     if (error === 401) {

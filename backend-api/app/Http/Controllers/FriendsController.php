@@ -125,7 +125,7 @@ class FriendsController extends Controller
 
     }
 
-    public function returnFollowings(Request $request, $id)
+    public function returnFollowings(Request $request)
     {
 
         // nos aseguramos que el id a partir del token exista
@@ -138,17 +138,17 @@ class FriendsController extends Controller
 
         //listamos las filas donde nuestro id aparece en la columna user_id y lo joineamos con la tabla user
         $followings = Friend::select(
-            'friends.id',
             'friends.user_id',
-            'friends.is_following'
-            , 'user.shortname',
+            'friends.is_following',
+            'user.id',
+            'user.shortname',
             'user.first_name',
             'user.last_name',
             'user.former_name',
             'user.color'
         )
             ->from('friends')
-            ->where('friends.user_id', '=', $id)
+            ->where('friends.user_id', '=', $userId)
             ->join('user', function ($query) {
                 $query->on('user.id', '=', 'friends.is_following');
             }
@@ -156,7 +156,7 @@ class FriendsController extends Controller
             ->orderBy('friends.created_at', 'desc')
             ->paginate(10);
 
-        return response()->json($followings, 200);
+        return response()->json($followings->toArray(), 200);
 
     }
 
@@ -182,6 +182,7 @@ class FriendsController extends Controller
                 'user.color'
             )
                 ->where('user_id', '=', $friend['is_following'])
+                ->where('user.id', '!=', $userId)
                 ->join('user', function ($query) {
                     $query->on('user.id', '=', 'friends.is_following');
                 })
@@ -203,6 +204,7 @@ class FriendsController extends Controller
                 'user.last_name',
                 'user.former_name',
                 'user.color')
+                ->where('user.id', '!=', $userId)
                 ->inRandomOrder()
                 ->paginate($numberOfPossibleFriendsThatWeStillNeed);
         }

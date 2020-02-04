@@ -3,6 +3,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comments;
+use App\Friend;
 use App\Post;
 use App\User;
 use App\Like;
@@ -45,6 +47,27 @@ class PostsController extends Controller
 
     public function returnPosts(Request $request)
     {
+        $userId = Auth::id();
+
+        //listamos las filas donde nuestro id aparece en la columna user_id y lo joineamos con la tabla user
+        $followings = Friend::select(
+            'friends.user_id',
+            'friends.is_following',
+            'user.id',
+            'user.shortname',
+            'user.first_name',
+            'user.last_name',
+            'user.former_name',
+            'user.color'
+        )
+            ->from('friends')
+            ->where('friends.user_id', '=', $userId)
+            ->join('user', function ($query) {
+                $query->on('user.id', '=', 'friends.is_following');
+            }
+            )
+            ->orderBy('friends.created_at', 'desc')
+            ->get();
 
         $posts = Post::select(
             'posts.id',
@@ -193,14 +216,19 @@ class PostsController extends Controller
 
         $userId = Auth::id();
         $post = Post::find($id);
+        $commentsToDelete = Comments::where('post_id', $id);
+        $likesToDelete = Like::where('post_id', $id);
+
 
         // comprobamos que user_id del post corresponda con el user.id
         if ($userId !== $post['user_id']) {
             return response()->json("Permission denied.", 403);
         }
 
-
+        $commentsToDelete->delete();
+        $likesToDelete->delete();
         $post->delete();
+
 
         return response()->json(["Succesfully deleted", $post], 200);
 

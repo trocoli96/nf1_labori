@@ -12,6 +12,7 @@ import moment from "moment";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
 
 /*ICONS*/
 import ReplyIcon from "@material-ui/icons/Reply";
@@ -125,10 +126,13 @@ function SinglePost(props) {
                 <Grid item xs>
                     {comments.map(comment => {
                         return (
-                            <Paper width="100%" className={classes.commentBox} key={comment.id}>
-                                <p className={classes.nameOnComment}>{comment.first_name} {comment.last_name}</p>
-                                <p className={classes.bodyComment}>{comment.comment_body}</p>
-                            </Paper>
+                            <Grid style={{display: 'flex'}}>
+                                <Avatar style={{backgroundColor: comment.color, marginRight: '3px', marginTop: '8px'}}>{comment.shortname}</Avatar>
+                                <Paper width="100%" className={classes.commentBox} key={comment.id}>
+                                    <p className={classes.nameOnComment}>{comment.first_name} {comment.last_name}</p>
+                                    <p className={classes.bodyComment}>{comment.comment_body}</p>
+                                </Paper>
+                            </Grid>
                         )
                     })}
                 </Grid>

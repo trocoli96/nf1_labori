@@ -47,9 +47,11 @@ Route::put('comment/{id}', 'Comments@modifyComments');
 Route::post('/follow/{following_id}', 'FriendsController@follow');
 Route::delete('/unfollow/{followed_id}', 'FriendsController@unfollow');
 Route::get('/followers/{id}', 'FriendsController@returnFollowers');
-Route::get('/followings/{id}', 'FriendsController@returnFollowings');
+Route::get('/followings/', 'FriendsController@returnFollowings');
 
 Route::get('/peoplemaybeyouknow', 'FriendsController@peopleWhoMaybeYouKnow');
+
+Route::get('/search/{search}', 'SearchController@returnSearch');
 
 
 
