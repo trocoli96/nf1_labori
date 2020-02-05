@@ -37,7 +37,6 @@ function Homepage() {
                                             fullWidth
                                             variant="contained"
                                             color="primary"
-                                            href={SIGNUP}
                                             endIcon={<KeyboardArrowRightIcon/>}
                                         >Create my Labori account</Button>
                                     </Link>
