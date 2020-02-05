@@ -139,7 +139,8 @@ class PostsController extends Controller
                 'user.last_name',
                 'user.former_name',
                 'user.shortname',
-                'user.color'
+                'user.color',
+                'user.profile_photo'
             )
             ->where('posts.id', $id)
             ->first();

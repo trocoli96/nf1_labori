@@ -53,7 +53,7 @@ export const useStyles = makeStyles(theme => ({
         paddingBottom: '1px',
     },
     iconbuttons: {
-        marginRight: '4px',
+        marginRight: '0px',
     },
     paper: {
         position: 'absolute',
@@ -64,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
         top: "50%",
         left: "50%",
         marginLeft: "-200px",
-        marginTop: "-150px"
+        marginTop: "-350px"
     },
     textPadding: {
         padding: theme.spacing(2, 4, 3),
@@ -96,8 +96,7 @@ export const useStyles = makeStyles(theme => ({
         marginTop: '0px !important',
         marginBottom: '0px !important',
         marginRight: '0px !important',
-        width: '100%',
-        borderRadius: '0px',
+        width: '100%'
     },
     createpost: {
         marginTop: '30px !important',
@@ -189,6 +188,7 @@ export const useStyles = makeStyles(theme => ({
     },
     formPaperHomePage: {
         padding: theme.spacing(8, 5),
+        height: '100%'
     },
     marginNegativeHomePage: {
         marginTop: '-90px'
@@ -286,13 +286,26 @@ export const useStyles = makeStyles(theme => ({
     nameOnComment: {
         fontSize: '14px',
         fontWeight: 700,
-        marginTop: 0
+        marginTop: 0,
+        marginBottom: 0,
     },
     bodyComment: {
         fontSize: '14px',
-        marginBottom: 0
+        marginBottom: 0,
+        marginTop: '2px'
     },
     peopleyoumaybeknow: {
         marginTop: theme.spacing(4),
-    }
+    },
+
+    avatarSmall: {
+            width: theme.spacing(3),
+            height: theme.spacing(3),
+        },
+
+    avatarBig: {
+            width: `${theme.spacing(10)}px !important`,
+            height: `${theme.spacing(10)}px !important`,
+        },
+
 }));

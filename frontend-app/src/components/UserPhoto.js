@@ -11,35 +11,33 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import UserPhoto from "./UserPhoto";
+import ButtonPopup from "./Buttonpopup";
+import AddExperienceButton from "./AddExperienceButton";
+import ExperiencesList from "./ExperiencesList";
 
-
-
-function ProfileInfoFeed() {
+function UserPhoto(props) {
 
     const classes = useStyles();
+
+    const size=props.size;
 
     // recogemos lo proveído por el context
     const {dispatch} = useContext(AuthContext);  // no incluyo state porque no lo estamos usando. reañadir si hiciera falta
 
     // creamos los hooks de estado con los datos del usuario
-    const [userData, setUserData] = useState({
-        "first_name": null,
-        "last_name": null,
-        "email": null,
-        "shortname": null,
-        "color": null
-    });
+    const [userPic, setUserPic] = useState("");
 
     // useEffect para coger los datos del usuario al cargar
     useEffect(() => {
+
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/?token=` + getToken();
+            const url = `http://127.0.0.1/api/user/`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
                     Accept: 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken()
                 }),
                 mode: 'cors'
             };
@@ -53,13 +51,8 @@ function ProfileInfoFeed() {
                     }
                 })
                 .then(data => {
-                    return setUserData({
-                        "first_name": data.first_name,
-                        "last_name": data.last_name,
-                        "email": data.email,
-                        "shortname": data.shortname,
-                        "color": data.color
-                    });
+                    console.log(data['profile_photo']);
+                    return setUserPic(data['profile_photo']);
                 })
                 .catch(error => {
                     console.log("Error al hacer el fetch de @me. Error: " + error);
@@ -77,25 +70,10 @@ function ProfileInfoFeed() {
 
 
     return (<AuthContext.Consumer>
-        {props =>
-                <Grid container spacing={6} className={classes.profile}>
-                    <Grid item xs={12} className={classes.gridfeed}>
-                        <Paper className={classes.userinfo}>
-                            <Grid container item justify="center">
-                                {/*<Avatar className={classes.iconprofileFeed} style={{backgroundColor: userData.color}}>{userData.shortname ? userData.shortname : null}</Avatar>*/}
-
-                            <UserPhoto size={classes.avatarBig}/>
-
-                            </Grid>
-                            <h3 className={classes.title}>{userData.first_name ? userData.first_name : <CircularProgress size={20}/>} {userData.last_name ? userData.last_name : <CircularProgress size={20}/>}</h3>
-                            {userData.email ? <p className={classes.textprofileFeed}>{userData.email}</p> : <CircularProgress/>}
-                                <Divider/>
-                            <p>Saved Items</p>
-                        </Paper>
-                    </Grid>
-                </Grid>
+        { props =>
+            <Avatar src={userPic} className={size}/>
         }
-    </AuthContext.Consumer>)
+    </AuthContext.Consumer>);
 }
 
-export default ProfileInfoFeed;
+export default UserPhoto;
