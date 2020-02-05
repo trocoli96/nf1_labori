@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import {SIGNUP} from "../routes/routes";
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import {Link} from 'react-router-dom';
 
 
 
@@ -30,14 +31,15 @@ function Homepage() {
                             <Grid container spacing={3}>
                                 <Grid item xs></Grid>
                                 <Grid item xs={9}>
-                                    <Button
-                                        size="large"
-                                        fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        href={SIGNUP}
-                                        endIcon={<KeyboardArrowRightIcon/>}
-                                    >Create my Labori account</Button>
+                                    <Link to={SIGNUP}>
+                                        <Button
+                                            size="large"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            endIcon={<KeyboardArrowRightIcon/>}
+                                        >Create my Labori account</Button>
+                                    </Link>
                                 </Grid>
                                 <Grid item xs></Grid>
                             </Grid>

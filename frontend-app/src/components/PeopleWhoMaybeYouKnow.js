@@ -59,12 +59,11 @@ function PeopleWhoMaybeYouKnow(){
 
     }, [dispatch]);
 
-
     return(<AuthContext.Consumer>
         {props =>
             <Grid>
                 <Grid>
-                    <p>People that you might know...</p>
+                    <p>People who maybe you know...</p>
                     {persons && persons.map((person) =>
                         <Grid className={classes.peopleyoumaybeknow}>
 
