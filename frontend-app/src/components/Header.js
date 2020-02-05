@@ -45,8 +45,8 @@ export default function ButtonAppBar() {
                         </>
                         :
                         <>
-                            <Button color="inherit" href={SIGNUP}>Sign up</Button>
-                            <Button color="inherit" href={LOGIN}>Login</Button>
+                            <Link to={SIGNUP}><Button><span className={classes.whiteText}>Sign up</span></Button></Link>
+                            <Link to={LOGIN}><Button><span className={classes.whiteText}>Login</span></Button></Link>
                         </>
                     }
                 </Toolbar>

@@ -307,5 +307,8 @@ export const useStyles = makeStyles(theme => ({
             width: `${theme.spacing(10)}px !important`,
             height: `${theme.spacing(10)}px !important`,
         },
+    whiteText:{
+        color: 'white',
+    },
 
 }));
