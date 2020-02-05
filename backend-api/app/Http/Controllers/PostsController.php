@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comments;
 use App\Friend;
 use App\Post;
 use App\User;
@@ -207,14 +208,19 @@ class PostsController extends Controller
 
         $userId = Auth::id();
         $post = Post::find($id);
+        $commentsToDelete = Comments::where('post_id', $id);
+        $likesToDelete = Like::where('post_id', $id);
+
 
         // comprobamos que user_id del post corresponda con el user.id
         if ($userId !== $post['user_id']) {
             return response()->json("Permission denied.", 403);
         }
 
-
+        $commentsToDelete->delete();
+        $likesToDelete->delete();
         $post->delete();
+
 
         return response()->json(["Succesfully deleted", $post], 200);
 
