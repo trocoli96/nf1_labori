@@ -75,12 +75,8 @@ class PostsController extends Controller
             'user.color'
         )
             ->from('posts')
-            ->whereExists(function ($query) {
-                $query->select(DB::table('friends')
-                    ->whereRaw('friends.is_following = post.user_id'));
-            })
             ->join('user', function ($query) {
-                $query->on('user.id', '=', 'post.user_id');
+                $query->on('user.id', '=', 'posts.user_id');
             })
             ->orderBy('created_at', 'desc')
             ->paginate(5);
