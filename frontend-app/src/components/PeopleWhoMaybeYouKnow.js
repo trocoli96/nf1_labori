@@ -64,14 +64,14 @@ function PeopleWhoMaybeYouKnow(){
             <Grid>
                 <Grid>
                     <p>People who maybe you know...</p>
-                    {persons.data && persons.data.map((person) =>
+                    {persons && persons.map((person) =>
                         <Grid className={classes.peopleyoumaybeknow}>
 
-                            <Link to={`/profile/${person.person.is_following}`}>
-                                <Avatar style={{backgroundColor: person.person.color, float: 'left', marginRight: '3px'}}>{person.person.shortname}</Avatar>
+                            <Link to={`/profile/${person.id}`}>
+                                <Avatar style={{backgroundColor: person.color, float: 'left', marginRight: '3px'}}>{person.shortname}</Avatar>
                             </Link>
-                            <Link to={`/profile/${person.person.is_following}`}>
-                                <p style={{paddingTop: '0.5em', color: 'black'}}>{person.person.first_name} {person.person.last_name}</p>
+                            <Link to={`/profile/${person.id}`}>
+                                <p style={{paddingTop: '0.5em', color: 'black'}}>{person.first_name} {person.last_name}</p>
                             </Link>
 
                         </Grid>)

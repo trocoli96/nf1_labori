@@ -157,9 +157,8 @@ class FriendsController extends Controller
     }
 
     public function peopleWhoMaybeYouKnow(){
-
         $userId = Auth::id();
-
+        $peopleWhoMaybeYouKnow = array();
         $friends = Friend::select(
             'is_following'
         )
@@ -167,10 +166,11 @@ class FriendsController extends Controller
             ->inRandomOrder()
             ->paginate(5);
 
-        foreach ($friends as $friend){
 
-            $friend['person'] = Friend::select(
+        foreach ($friends as $friend){
+            $possibleFriend = Friend::select(
                 'is_following',
+                'user.id',
                 'user.shortname',
                 'user.first_name',
                 'user.last_name',
@@ -178,15 +178,32 @@ class FriendsController extends Controller
                 'user.color'
             )
                 ->where('user_id', '=', $friend['is_following'])
+                ->where('user_id', '!=', $userId)
                 ->join('user', function ($query) {
                     $query->on('user.id', '=', 'friends.is_following');
-                }
-                )
+                })
                 ->first();
 
+            if (isset($possibleFriend)) {
+                $peopleWhoMaybeYouKnow[] = $possibleFriend;
+            }
         }
-        return $friends;
+
+
+        $possibleFriendsThatWeStillNeed = null;
+        $numberOfPossibleFriendsThatWeStillNeed = (5 - sizeof($peopleWhoMaybeYouKnow));
+        if($numberOfPossibleFriendsThatWeStillNeed > 0) {
+            $possibleFriendsThatWeStillNeed = User::select(
+                'user.id',
+                'user.shortname',
+                'user.first_name',
+                'user.last_name',
+                'user.former_name',
+                'user.color')
+                ->inRandomOrder()
+                ->where('user.id', '!=', $userId)
+                ->paginate($numberOfPossibleFriendsThatWeStillNeed);
+        }
+        return array_merge($possibleFriendsThatWeStillNeed->toArray()["data"], $peopleWhoMaybeYouKnow);
     }
-
-
 }
