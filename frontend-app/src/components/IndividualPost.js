@@ -32,7 +32,7 @@ function IndividualPost() {
     useEffect(() => {
         const fetchData = async () => {
             // turn into api url for individual post
-            const url = `http://127.0.0.1/api/post/` + ['id'];
+            const url = `http://api.labori-app.xyz/api/post/` + ['id'];
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -87,7 +87,7 @@ function IndividualPost() {
                                         <Grid item xs={11}>
                                             <Button className={classes.postbuttons}><ThumbUpIcon className={classes.iconbuttons}/> Like</Button>
                                             <Button className={classes.postbuttons}><ChatIcon className={classes.iconbuttons}/> Comment</Button>
-                                            <CopyToClipboard text={`http://localhost:3000/post/${data.id}`}>
+                                            <CopyToClipboard text={`http://${window.location.hostname}/post/${data.id}`}>
                                                 <Button className={classes.postbuttons} onClick={() => setCopied(true)}><ReplyIcon className={classes.iconbuttons}/>Share</Button>
                                             </CopyToClipboard>
 

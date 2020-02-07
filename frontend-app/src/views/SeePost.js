@@ -35,7 +35,7 @@ function SeePost(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/post/${name}?token=` + getToken();
+            const url = `http://api.labori-app.xyz/api/post/${name}?token=` + getToken();
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -107,7 +107,7 @@ function SeePost(props) {
                                                 <h2>Share this post</h2>
                                             </div>
                                             <div className={classes.textPadding}>
-                                                <CopyToClipboard text={`http://localhost:3000/post/${post.id}`}>
+                                                <CopyToClipboard text={`http://${window.location.hostname}/post/${post.id}`}>
                                                     <Button onClick={() => setCopied(true)}>Copy Link and Share!</Button>
                                                 </CopyToClipboard>
                                                 {copied ? <span>Copied!</span> : null}

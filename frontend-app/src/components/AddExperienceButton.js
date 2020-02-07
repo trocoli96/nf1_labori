@@ -84,7 +84,7 @@ function AddExperienceButton(props) {
 
         const fetchData = async () => {
 
-            const url = 'http://127.0.0.1/api/experience?token=' + getToken();
+            const url = 'http://api.labori-app.xyz/api/experience?token=' + getToken();
             const options = {
                 body: JSON.stringify(dataToSend),
                 method: 'POST',

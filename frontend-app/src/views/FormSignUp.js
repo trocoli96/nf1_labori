@@ -76,7 +76,7 @@ function SignUpForm({history}) {
 
         const fetchdata = async () => {
             setIsFetching(true);
-            const url = "http://127.0.0.1:80/api/user";
+            const url = "http://api.labori-app.xyz/api/user";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),

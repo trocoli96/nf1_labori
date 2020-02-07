@@ -20,7 +20,7 @@ export default function LikeBtn(props) {
 
         setIsSubmitting(true);
 
-        const url = "http://127.0.0.1/api/like";
+        const url = "http://api.labori-app.xyz/api/like";
         const options = {
             method: 'POST',
             body: JSON.stringify({

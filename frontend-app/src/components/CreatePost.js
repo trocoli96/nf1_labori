@@ -34,7 +34,7 @@ function CreatePost() {
         setError(false);
         setIsFetching(true);
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/post/?token=` + getToken();
+            const url = `http://api.labori-app.xyz/api/post/?token=` + getToken();
             const options = {
                 method: 'POST',
                 body: JSON.stringify(data),

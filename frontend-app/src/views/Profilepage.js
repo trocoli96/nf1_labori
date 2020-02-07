@@ -42,7 +42,7 @@ function Profilepage(props) {
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/`;
+            const url = `http://api.labori-app.xyz/api/user/`;
             const options = {
                 method: 'GET',
                 headers: new Headers({

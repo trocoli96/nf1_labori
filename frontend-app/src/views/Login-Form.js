@@ -34,7 +34,7 @@ function LoginForm({history}) {
         setError(false);
         setIsFetching(true);
         const fetchData = async () => {
-            const url = "http://127.0.0.1:80/api/login";
+            const url = "http://api.labori-app.xyz/api/login";
             const options = {
                 method: "POST",
                 body: JSON.stringify(data),

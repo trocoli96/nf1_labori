@@ -23,7 +23,7 @@ function FriendsExperiencesList(props) {
         if (!props.updateExperiences) return;
 
         const fetchData = async () => {
-            const url = 'http://127.0.0.1/api/experiences/' + props.userId;
+            const url = 'http://api.labori-app.xyz/api/experiences/' + props.userId;
             const options = {
                 method: 'GET',
                 headers: new Headers({

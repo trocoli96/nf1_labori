@@ -137,7 +137,7 @@ function ButtonPopup(props) {
         }
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/edituser/?token=` + getToken();
+            const url = `http://api.labori-app.xyz/api/edituser/?token=` + getToken();
             const options = {
                 body: JSON.stringify(newUserData),
                 method: 'PUT',

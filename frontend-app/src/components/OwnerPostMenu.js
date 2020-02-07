@@ -64,7 +64,7 @@ function OwnerPostMenu (props) {
         const postId = props.id;
 
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/post/delete/` + postId;
+            const url = `http://api.labori-app.xyz/api/post/delete/` + postId;
             const options = {
                 method: 'DELETE',
                 headers: new Headers({

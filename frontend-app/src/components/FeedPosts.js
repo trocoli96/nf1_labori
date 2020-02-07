@@ -30,7 +30,7 @@ function FeedPosts() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/posts/?page=` + page ;
+            const url = `http://api.labori-app.xyz/api/posts/?page=` + page ;
             const options = {
                 method: 'GET',
                 headers: new Headers({

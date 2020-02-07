@@ -43,7 +43,7 @@ function SinglePost(props) {
 
         setIsSubmitting(true);
 
-        const url = `http://127.0.0.1/api/comments`;
+        const url = `http://api.labori-app.xyz/api/comments`;
         const options = {
             method: 'POST',
             body: JSON.stringify({
@@ -115,7 +115,7 @@ function SinglePost(props) {
             <Divider/>
             <Grid container item>
                     <LikeBtn likes={props.likes} postid={props.id} liked={props.liked}/>
-                <CopyToClipboard text={`http://localhost:3000/post/${props.id}`}>
+                <CopyToClipboard text={`http://${window.location.hostname}/post/${props.id}`}>
                     <Button className={classes.postbuttons} onClick={() => props.setCopied(true)}>
                         <ReplyIcon
                             className={classes.iconbuttons}/>Share</Button>

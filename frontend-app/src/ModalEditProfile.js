@@ -59,7 +59,7 @@ function ModaleditProfile () {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/${id}`;
+            const url = `http://api.labori-app.xyz/api/user/${id}`;
             const options = {
                 method: 'GET',
                 headers: new Headers({
@@ -89,7 +89,7 @@ function ModaleditProfile () {
 
     function SaveNew() {
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/user/${id}`;
+            const url = `http://api.labori-app.xyz/api/user/${id}`;
             const options = {
                 method: 'POST',
                 headers: new Headers({

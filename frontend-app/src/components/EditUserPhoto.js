@@ -63,7 +63,7 @@ function ButtonUserPhoto(props) {
             };
 
             const fetchData = async () => {
-                const url = `http://127.0.0.1/api/profilepicture`;
+                const url = `http://api.labori-app.xyz/api/profilepicture`;
                 const options = {
                     body: JSON.stringify(profilePhotoBase64),
                     method: 'PUT',

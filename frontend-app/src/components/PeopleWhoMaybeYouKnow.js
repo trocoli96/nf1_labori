@@ -24,7 +24,7 @@ function PeopleWhoMaybeYouKnow(){
     useEffect(() => {
 
         const fetchData = async () => {
-            const url = 'http://127.0.0.1/api/peoplemaybeyouknow';
+            const url = 'http://api.labori-app.xyz/api/peoplemaybeyouknow';
             const options = {
                 method: 'GET',
                 headers: new Headers({

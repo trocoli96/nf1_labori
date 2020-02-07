@@ -18,7 +18,7 @@ function ButtonUnfollow (props) {
         setError(false);
         setIsFetching(true);
         const fetchData = async () => {
-            const url = `http://127.0.0.1/api/unfollow/${props.id}`;
+            const url = `http://api.labori-app.xyz/api/unfollow/${props.id}`;
             const options = {
                 method: 'DELETE',
                 headers: new Headers({

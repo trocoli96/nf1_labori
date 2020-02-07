@@ -47,7 +47,7 @@ function SingleExperience(props) {
         const experience = props.experience;
 
         const fetchData = async () => {
-            const url = 'http://127.0.0.1/api/experience/delete?token=' + getToken();
+            const url = 'http://api.labori-app.xyz/api/experience/delete?token=' + getToken();
             const options = {
                 body: JSON.stringify(experience),
                 method: 'DELETE',
